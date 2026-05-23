@@ -2,7 +2,7 @@ import Link from "next/link";
 import { promos } from "@/data/menu";
 
 // Кольори для карток — чергуємо бордовий і золотий
-const cardColors = ["#8b1a2e", "#c49a3c", "#8b1a2e", "#c49a3c"];
+const cardColors = ["#8b1a2e", "#c49a3c"];
 
 export default function PromoCards() {
   return (
@@ -27,7 +27,7 @@ export default function PromoCards() {
         {/* 4 картки в ряд */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {promos.map((promo, i) => {
-            const color = cardColors[i];
+            const color = cardColors[i % cardColors.length];
             return (
               <Link
                 key={promo.id}

@@ -9,10 +9,10 @@ export default function Home() {
   return (
     <>
       <HeroSlider />
-      <CategoryGrid />
       <PromoCards />
       <PopularScroll />
       <NewItems />
+      <CategoryGrid />
       <BookingBanner />
     </>
   );

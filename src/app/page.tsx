@@ -1,6 +1,5 @@
 import HeroSlider from "@/components/home/HeroSlider";
 import CategoryGrid from "@/components/home/CategoryGrid";
-import WhyBrasa from "@/components/home/WhyBrasa";
 import PromoCards from "@/components/home/PromoCards";
 import PopularScroll from "@/components/home/PopularScroll";
 import NewItems from "@/components/home/NewItems";
@@ -11,7 +10,6 @@ export default function Home() {
     <>
       <HeroSlider />
       <CategoryGrid />
-      <WhyBrasa />
       <PromoCards />
       <PopularScroll />
       <NewItems />

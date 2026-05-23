@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { ShoppingCart, Flame, Search } from "lucide-react";
 import { menuItems, categories, type Category } from "@/data/menu";
@@ -90,7 +91,9 @@ function DishCard({ item }: { item: typeof menuItems[0] }) {
 }
 
 export default function MenuPage() {
-  const [activeCategory, setActiveCategory] = useState<Category | "all">("all");
+  const searchParams = useSearchParams();
+  const initialCategory = (searchParams.get("category") as Category) || "all";
+  const [activeCategory, setActiveCategory] = useState<Category | "all">(initialCategory);
   const [search, setSearch] = useState("");
 
   const filtered = menuItems.filter((item) => {

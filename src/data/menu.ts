@@ -9,6 +9,7 @@ export interface MenuItem {
   image: string;
   badge?: string;
   popular?: boolean;
+  isNew?: boolean;
   spicy?: boolean;
   weight?: string;
 }
@@ -72,6 +73,7 @@ export const menuItems: MenuItem[] = [
     category: "pizza",
     image: "https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?w=600&q=80",
     badge: "Преміум",
+    isNew: true,
     weight: "440г",
   },
 
@@ -135,6 +137,7 @@ export const menuItems: MenuItem[] = [
     category: "burgers",
     image: "https://images.unsplash.com/photo-1586816001966-79b736744398?w=600&q=80",
     badge: "Новинка",
+    isNew: true,
     weight: "420г",
   },
   {
@@ -145,6 +148,7 @@ export const menuItems: MenuItem[] = [
     category: "burgers",
     image: "https://images.unsplash.com/photo-1550547660-d9450f859349?w=600&q=80",
     badge: "Преміум",
+    isNew: true,
     weight: "400г",
   },
   {
@@ -199,11 +203,46 @@ export const menuItems: MenuItem[] = [
 ];
 
 export const categories = [
-  { id: "pizza",   label: "Піца",    icon: "🍕" },
-  { id: "rolls",   label: "Роли",    icon: "🍣" },
-  { id: "burgers", label: "Бургери", icon: "🍔" },
-  { id: "alcohol", label: "Алкоголь",icon: "🍸" },
+  { id: "pizza",   label: "Піца",     icon: "🍕", image: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=800&q=80",  description: "18 видів піци" },
+  { id: "rolls",   label: "Роли",     icon: "🍣", image: "https://images.unsplash.com/photo-1617196034183-421b4040ed20?w=800&q=80", description: "Свіжі щодня" },
+  { id: "burgers", label: "Бургери",  icon: "🍔", image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&q=80", description: "Smash & classic" },
+  { id: "alcohol", label: "Алкоголь", icon: "🍸", image: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=800&q=80", description: "Коктейлі та крафт" },
 ] as const;
+
+export const promos = [
+  {
+    id: 1,
+    icon: "🍕",
+    title: "2 піци = 3-тя в подарунок",
+    description: "Замовляй будь-які дві піци і отримай третю меншу у подарунок. Діє на доставку та самовивіз.",
+    badge: "Акція",
+    color: "#8b1a2e",
+  },
+  {
+    id: 2,
+    icon: "🎁",
+    title: "Піца або рол від 750 грн",
+    description: "За кожні 750 грн замовлення — піца або рол у подарунок на вибір. Ді є на доставку пн–чт.",
+    badge: "Подарунок",
+    color: "#c49a3c",
+  },
+  {
+    id: 3,
+    icon: "🍣",
+    title: "Щасливі години на суші",
+    description: "Щодня з 11:00 до 16:00 — знижка на всі суші-сети. Діє на доставку та самовивіз.",
+    badge: "Happy Hours",
+    color: "#5a7a4a",
+  },
+  {
+    id: 4,
+    icon: "🚗",
+    title: "Самовивіз зі знижкою 20%",
+    description: "Забирай замовлення самостійно і отримуй постійну знижку 20% на всі піци та бургери.",
+    badge: "Знижка",
+    color: "#4a6a8b",
+  },
+];
 
 export const promotions = [
   {

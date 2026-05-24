@@ -49,7 +49,7 @@ export default function PromoCards() {
                       src={promo.image}
                       alt={promo.title}
                       fill
-                      className="object-contain transition-transform duration-700 group-hover:scale-105"
+                      className="object-contain"
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       style={{ background: "#0d0806" }}
                     />

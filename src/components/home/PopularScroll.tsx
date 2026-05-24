@@ -23,7 +23,7 @@ export default function PopularScroll() {
 
   const scroll = (dir: "left" | "right") => {
     if (!scrollRef.current) return;
-    scrollRef.current.scrollBy({ left: dir === "right" ? 260 : -260, behavior: "smooth" });
+    scrollRef.current.scrollBy({ left: dir === "right" ? 740 : -740, behavior: "smooth" });
   };
 
   const handleAdd = (item: typeof popular[0]) => {

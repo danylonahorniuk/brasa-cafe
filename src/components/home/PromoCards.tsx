@@ -101,7 +101,6 @@ export default function PromoCards() {
         {/* Заголовок */}
         <div className="flex items-end justify-between mb-10">
           <div>
-            <p className="section-label mb-2">Акції</p>
             <h2 className="text-4xl md:text-5xl" style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 300, color: "#1c1410", lineHeight: 1.1 }}>
               Вигідні пропозиції
             </h2>

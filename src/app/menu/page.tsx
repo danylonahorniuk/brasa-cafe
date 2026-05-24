@@ -178,7 +178,7 @@ export default function MenuPage() {
       </div>
 
       {/* ── Навігація ── */}
-      <div ref={navRef} className="sticky z-30" style={{ top: "64px", background: "#faf7f2", borderBottom: "1px solid #e8ddd4" }}>
+      <div ref={navRef} className="sticky z-30" style={{ top: "64px", background: "#faf7f2", borderTop: "6px solid #faf7f2", borderBottom: "1px solid #e8ddd4" }}>
         <div className="max-w-7xl mx-auto px-6">
           <nav className="flex overflow-x-auto" style={{ scrollbarWidth: "none" }}>
             {menuCategories.map((cat) => {

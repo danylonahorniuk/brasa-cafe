@@ -57,7 +57,7 @@ export default function CartDrawer() {
           ) : (
             items.map((item) => (
               <div
-                key={item.id}
+                key={item.cartKey}
                 className="flex gap-3 p-3 rounded-sm"
                 style={{ background: "#fff", border: "1px solid #e8ddd4" }}
               >
@@ -66,12 +66,17 @@ export default function CartDrawer() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium truncate" style={{ color: "#1c1410" }}>{item.name}</p>
+                  {item.selectedSize && (
+                    <p className="text-[0.62rem] tracking-wider uppercase mt-0.5" style={{ color: "#a09080" }}>
+                      {item.selectedSize}
+                    </p>
+                  )}
                   <p className="text-sm font-medium mt-0.5" style={{ color: "#8b1a2e" }}>
                     {(item.price * item.quantity).toLocaleString()} ₴
                   </p>
                   <div className="flex items-center gap-2 mt-2">
                     <button
-                      onClick={() => decrement(item.id)}
+                      onClick={() => decrement(item.cartKey)}
                       className="w-7 h-7 rounded-sm flex items-center justify-center transition-colors"
                       style={{ border: "1px solid #d4c4b8", color: "#a09080" }}
                     >
@@ -79,14 +84,14 @@ export default function CartDrawer() {
                     </button>
                     <span className="text-sm w-5 text-center" style={{ color: "#1c1410" }}>{item.quantity}</span>
                     <button
-                      onClick={() => increment(item.id)}
+                      onClick={() => increment(item.cartKey)}
                       className="w-7 h-7 rounded-sm flex items-center justify-center transition-colors"
                       style={{ border: "1px solid #d4c4b8", color: "#a09080" }}
                     >
                       <Plus size={12} />
                     </button>
                     <button
-                      onClick={() => remove(item.id)}
+                      onClick={() => remove(item.cartKey)}
                       className="ml-auto p-1 transition-colors"
                       style={{ color: "#d4c4b8" }}
                       onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "#e05050"; }}

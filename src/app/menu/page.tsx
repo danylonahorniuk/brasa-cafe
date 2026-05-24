@@ -20,8 +20,13 @@ function DishCard({ item }: { item: typeof menuItems[0] }) {
   const [qty, setQty] = useState(1);
   const [size, setSize] = useState<"30" | "40">("30");
 
+  const hasSize = item.category === "pizza" && item.sizes;
+  const currentPrice = hasSize ? item.sizes![size] : item.price;
+  const cartKey = hasSize ? `${item.id}-${size}` : `${item.id}`;
+  const sizeLabel = hasSize ? `${size} см` : undefined;
+
   const handleAdd = () => {
-    for (let i = 0; i < qty; i++) add(item);
+    for (let i = 0; i < qty; i++) add(item, cartKey, sizeLabel, currentPrice);
     setAdded(true);
     setTimeout(() => { setAdded(false); setQty(1); }, 1400);
   };
@@ -87,7 +92,7 @@ function DishCard({ item }: { item: typeof menuItems[0] }) {
         </p>
 
         {/* Вибір розміру — тільки для піци */}
-        {item.category === "pizza" && (
+        {hasSize && (
           <div className="flex gap-2 mt-3">
             {(["30", "40"] as const).map((s) => (
               <button
@@ -109,7 +114,7 @@ function DishCard({ item }: { item: typeof menuItems[0] }) {
         {/* Ціна + кількість + кнопка */}
         <div className="flex items-center gap-3 mt-4 pt-4" style={{ borderTop: "1px solid #f0e8e0" }}>
           <span className="text-lg font-medium flex-shrink-0" style={{ color: "#c49a3c" }}>
-            {item.price} ₴
+            {currentPrice} ₴
           </span>
 
           {/* Лічильник */}

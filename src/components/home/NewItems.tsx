@@ -21,7 +21,7 @@ export default function NewItems() {
   const [addedId, setAddedId] = useState<number | null>(null);
 
   const handleAdd = (item: typeof newItems[0]) => {
-    add(item);
+    add(item, `${item.id}`);
     setAddedId(item.id);
     setTimeout(() => setAddedId(null), 1200);
   };

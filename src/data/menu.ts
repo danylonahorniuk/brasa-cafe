@@ -12,6 +12,7 @@ export interface MenuItem {
   isNew?: boolean;
   spicy?: boolean;
   weight?: string;
+  sizes?: { "30": number; "40": number };
 }
 
 export const menuItems: MenuItem[] = [
@@ -24,7 +25,8 @@ export const menuItems: MenuItem[] = [
     category: "pizza",
     image: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=600&q=80",
     popular: true,
-    weight: "420г",
+    weight: "420г / 780г",
+    sizes: { "30": 289, "40": 389 },
   },
   {
     id: 2,
@@ -35,7 +37,8 @@ export const menuItems: MenuItem[] = [
     image: "https://images.unsplash.com/photo-1555072956-7758afb20e8f?w=600&q=80",
     badge: "Хіт",
     popular: true,
-    weight: "480г",
+    weight: "480г / 900г",
+    sizes: { "30": 359, "40": 469 },
   },
   {
     id: 3,
@@ -45,7 +48,8 @@ export const menuItems: MenuItem[] = [
     category: "pizza",
     image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600&q=80",
     spicy: true,
-    weight: "450г",
+    weight: "450г / 840г",
+    sizes: { "30": 329, "40": 429 },
   },
   {
     id: 4,
@@ -54,7 +58,8 @@ export const menuItems: MenuItem[] = [
     price: 379,
     category: "pizza",
     image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600&q=80",
-    weight: "460г",
+    weight: "460г / 860г",
+    sizes: { "30": 379, "40": 489 },
   },
   {
     id: 5,
@@ -63,7 +68,8 @@ export const menuItems: MenuItem[] = [
     price: 345,
     category: "pizza",
     image: "https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?w=600&q=80",
-    weight: "470г",
+    weight: "470г / 880г",
+    sizes: { "30": 345, "40": 449 },
   },
   {
     id: 6,
@@ -74,7 +80,8 @@ export const menuItems: MenuItem[] = [
     image: "https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?w=600&q=80",
     badge: "Преміум",
     isNew: true,
-    weight: "440г",
+    weight: "440г / 820г",
+    sizes: { "30": 429, "40": 549 },
   },
 
   // ── ROLLS ──

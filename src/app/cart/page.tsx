@@ -73,9 +73,10 @@ export default function CartPage() {
                 <div className="flex justify-between items-start gap-2">
                   <div>
                     <p className="font-medium text-sm" style={{ color: "#1c1410" }}>{item.name}</p>
+                    {item.selectedSize && <p className="text-xs mt-0.5" style={{ color: "#a09080" }}>{item.selectedSize}</p>}
                     {item.weight && <p className="text-xs mt-0.5" style={{ color: "#c4b4a8" }}>{item.weight}</p>}
                   </div>
-                  <button onClick={() => remove(item.id)} className="p-1 transition-colors" style={{ color: "#d4c4b8" }}
+                  <button onClick={() => remove(item.cartKey)} className="p-1 transition-colors" style={{ color: "#d4c4b8" }}
                     onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "#e05050"; }}
                     onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "#d4c4b8"; }}>
                     <Trash2 size={14} />
@@ -83,11 +84,11 @@ export default function CartPage() {
                 </div>
                 <div className="flex items-center justify-between mt-3">
                   <div className="flex items-center gap-2">
-                    <button onClick={() => decrement(item.id)} className="w-7 h-7 rounded-sm flex items-center justify-center transition-colors" style={{ border: "1px solid #d4c4b8", color: "#a09080" }}>
+                    <button onClick={() => decrement(item.cartKey)} className="w-7 h-7 rounded-sm flex items-center justify-center transition-colors" style={{ border: "1px solid #d4c4b8", color: "#a09080" }}>
                       <Minus size={12} />
                     </button>
                     <span className="text-sm w-6 text-center" style={{ color: "#1c1410" }}>{item.quantity}</span>
-                    <button onClick={() => increment(item.id)} className="w-7 h-7 rounded-sm flex items-center justify-center transition-colors" style={{ border: "1px solid #d4c4b8", color: "#a09080" }}>
+                    <button onClick={() => increment(item.cartKey)} className="w-7 h-7 rounded-sm flex items-center justify-center transition-colors" style={{ border: "1px solid #d4c4b8", color: "#a09080" }}>
                       <Plus size={12} />
                     </button>
                   </div>

@@ -27,7 +27,7 @@ export default function PopularScroll() {
   };
 
   const handleAdd = (item: typeof popular[0]) => {
-    add(item);
+    add(item, `${item.id}`);
     setAddedId(item.id);
     setTimeout(() => setAddedId(null), 1200);
   };

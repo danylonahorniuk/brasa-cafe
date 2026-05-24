@@ -5,6 +5,8 @@ import { MenuItem } from "@/data/menu";
 
 export interface CartItem extends MenuItem {
   quantity: number;
+  cartKey: string;      // унікальний ключ: id + розмір (напр. "2-40")
+  selectedSize?: string; // "30 см" | "40 см" — для відображення
 }
 
 interface CartState {
@@ -13,10 +15,10 @@ interface CartState {
 }
 
 type CartAction =
-  | { type: "ADD"; item: MenuItem }
-  | { type: "REMOVE"; id: number }
-  | { type: "INCREMENT"; id: number }
-  | { type: "DECREMENT"; id: number }
+  | { type: "ADD"; item: MenuItem; cartKey: string; selectedSize?: string; finalPrice: number }
+  | { type: "REMOVE"; cartKey: string }
+  | { type: "INCREMENT"; cartKey: string }
+  | { type: "DECREMENT"; cartKey: string }
   | { type: "CLEAR" }
   | { type: "TOGGLE_CART" }
   | { type: "CLOSE_CART" };
@@ -24,31 +26,43 @@ type CartAction =
 function cartReducer(state: CartState, action: CartAction): CartState {
   switch (action.type) {
     case "ADD": {
-      const exists = state.items.find((i) => i.id === action.item.id);
+      const exists = state.items.find((i) => i.cartKey === action.cartKey);
       if (exists) {
         return {
           ...state,
           items: state.items.map((i) =>
-            i.id === action.item.id ? { ...i, quantity: i.quantity + 1 } : i
+            i.cartKey === action.cartKey ? { ...i, quantity: i.quantity + 1 } : i
           ),
         };
       }
-      return { ...state, items: [...state.items, { ...action.item, quantity: 1 }] };
+      return {
+        ...state,
+        items: [
+          ...state.items,
+          {
+            ...action.item,
+            price: action.finalPrice,
+            cartKey: action.cartKey,
+            selectedSize: action.selectedSize,
+            quantity: 1,
+          },
+        ],
+      };
     }
     case "REMOVE":
-      return { ...state, items: state.items.filter((i) => i.id !== action.id) };
+      return { ...state, items: state.items.filter((i) => i.cartKey !== action.cartKey) };
     case "INCREMENT":
       return {
         ...state,
         items: state.items.map((i) =>
-          i.id === action.id ? { ...i, quantity: i.quantity + 1 } : i
+          i.cartKey === action.cartKey ? { ...i, quantity: i.quantity + 1 } : i
         ),
       };
     case "DECREMENT":
       return {
         ...state,
         items: state.items
-          .map((i) => (i.id === action.id ? { ...i, quantity: i.quantity - 1 } : i))
+          .map((i) => (i.cartKey === action.cartKey ? { ...i, quantity: i.quantity - 1 } : i))
           .filter((i) => i.quantity > 0),
       };
     case "CLEAR":
@@ -67,10 +81,10 @@ interface CartContextValue {
   isOpen: boolean;
   total: number;
   count: number;
-  add: (item: MenuItem) => void;
-  remove: (id: number) => void;
-  increment: (id: number) => void;
-  decrement: (id: number) => void;
+  add: (item: MenuItem, cartKey: string, selectedSize?: string, finalPrice?: number) => void;
+  remove: (cartKey: string) => void;
+  increment: (cartKey: string) => void;
+  decrement: (cartKey: string) => void;
   clear: () => void;
   toggleCart: () => void;
   closeCart: () => void;
@@ -91,10 +105,11 @@ export default function CartProvider({ children }: { children: ReactNode }) {
         isOpen: state.isOpen,
         total,
         count,
-        add: (item) => dispatch({ type: "ADD", item }),
-        remove: (id) => dispatch({ type: "REMOVE", id }),
-        increment: (id) => dispatch({ type: "INCREMENT", id }),
-        decrement: (id) => dispatch({ type: "DECREMENT", id }),
+        add: (item, cartKey, selectedSize, finalPrice) =>
+          dispatch({ type: "ADD", item, cartKey, selectedSize, finalPrice: finalPrice ?? item.price }),
+        remove: (cartKey) => dispatch({ type: "REMOVE", cartKey }),
+        increment: (cartKey) => dispatch({ type: "INCREMENT", cartKey }),
+        decrement: (cartKey) => dispatch({ type: "DECREMENT", cartKey }),
         clear: () => dispatch({ type: "CLEAR" }),
         toggleCart: () => dispatch({ type: "TOGGLE_CART" }),
         closeCart: () => dispatch({ type: "CLOSE_CART" }),

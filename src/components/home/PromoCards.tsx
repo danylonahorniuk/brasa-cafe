@@ -25,7 +25,6 @@ function PromoModal({ promo, onClose }: { promo: Promo; onClose: () => void }) {
         style={{ background: "#faf7f2", boxShadow: "0 24px 80px rgba(0,0,0,0.5)" }}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Кнопка закриття */}
         <button
           onClick={onClose}
           className="absolute top-3 right-3 z-10 w-7 h-7 rounded-full flex items-center justify-center"
@@ -34,62 +33,35 @@ function PromoModal({ promo, onClose }: { promo: Promo; onClose: () => void }) {
           <X size={13} />
         </button>
 
-        {/* Шапка — зображення з відступами, не розтягнуте */}
         <div className="flex items-center justify-center">
           {promo.image ? (
-            <Image
-              src={promo.image}
-              alt={promo.title}
-              width={1456}
-              height={816}
-              className="w-full h-auto rounded-[2px]"
-              sizes="544px"
-            />
+            <Image src={promo.image} alt={promo.title} width={1456} height={816} className="w-full h-auto block" sizes="576px" />
           ) : (
-            <div className="w-full flex items-center justify-center gap-4 py-10 rounded-[2px]" style={{ background: color }}>
+            <div className="w-full flex items-center justify-center gap-4 py-10" style={{ background: color }}>
               <span style={{ fontSize: "3.5rem" }}>{promo.icon}</span>
               <span className="text-white text-xl uppercase tracking-widest font-bold">{promo.label}</span>
             </div>
           )}
         </div>
 
-        {/* Контент */}
         <div className="p-6">
-          <span
-            className="inline-block px-2.5 py-0.5 text-[0.58rem] tracking-widest uppercase font-medium rounded-[2px] mb-3"
-            style={{ background: color, color: "#fff" }}
-          >
+          <span className="inline-block px-2.5 py-0.5 text-[0.58rem] tracking-widest uppercase font-medium rounded-[2px] mb-3" style={{ background: color, color: "#fff" }}>
             {promo.label}
           </span>
-
-          <h2
-            className="text-2xl mb-2 leading-tight"
-            style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 300, color: "#1c1410" }}
-          >
+          <h2 className="text-2xl mb-2 leading-tight" style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 300, color: "#1c1410" }}>
             {promo.subtitle}
           </h2>
-
-          <p className="text-sm leading-relaxed mb-4" style={{ color: "#5a4a3e" }}>
-            {promo.description}
-          </p>
-
+          <p className="text-sm leading-relaxed mb-4" style={{ color: "#5a4a3e" }}>{promo.description}</p>
           <div className="divider-warm mb-4" />
-
           <p className="text-xs leading-relaxed mb-5" style={{ color: "#a09080" }}>
-            * Акція не комбінується з іншими знижками та акціями. Умови можуть змінюватись.
-            Деталі уточнюйте за номером{" "}
+            * Акція не комбінується з іншими знижками. Умови можуть змінюватись. Деталі:{" "}
             <span style={{ color: "#8b1a2e" }}>+38 (044) 123-45-67</span>.
           </p>
-
           <div className="flex gap-3">
             <Link href={promo.href} onClick={onClose} className="btn-primary flex items-center gap-2">
               Замовити зі знижкою <ArrowRight size={13} />
             </Link>
-            <button
-              onClick={onClose}
-              className="px-4 py-2.5 rounded-sm text-[0.68rem] tracking-widest uppercase"
-              style={{ border: "1px solid #d4c4b8", color: "#7a6a5e" }}
-            >
+            <button onClick={onClose} className="px-4 py-2.5 rounded-sm text-[0.68rem] tracking-widest uppercase" style={{ border: "1px solid #d4c4b8", color: "#7a6a5e" }}>
               Закрити
             </button>
           </div>
@@ -99,61 +71,65 @@ function PromoModal({ promo, onClose }: { promo: Promo; onClose: () => void }) {
   );
 }
 
-/* ─── Секція акцій ─── */
+/* ─── Секція акцій — список ─── */
 export default function PromoCards() {
   const [selected, setSelected] = useState<Promo | null>(null);
 
   return (
     <section style={{ background: "#faf7f2", borderTop: "1px solid #e8ddd4" }}>
       <div className="max-w-7xl mx-auto px-6 py-16">
-        <div className="mb-10">
-          <p className="section-label mb-2">Акції</p>
-          <h2
-            className="text-4xl md:text-5xl"
-            style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 300, color: "#1c1410", lineHeight: 1.1 }}
-          >
-            Вигідні пропозиції
-          </h2>
+        {/* Заголовок */}
+        <div className="flex items-end justify-between mb-10">
+          <div>
+            <p className="section-label mb-2">Акції</p>
+            <h2 className="text-4xl md:text-5xl" style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 300, color: "#1c1410", lineHeight: 1.1 }}>
+              Вигідні пропозиції
+            </h2>
+          </div>
+          <span className="text-sm hidden md:block" style={{ color: "#a09080" }}>{promos.length} акції</span>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {/* Список акцій */}
+        <div className="flex flex-col">
           {promos.map((promo, i) => {
             const color = cardColors[i % cardColors.length];
             return (
               <button
                 key={promo.id}
                 onClick={() => setSelected(promo)}
-                className="promo-card group flex flex-col rounded-sm overflow-hidden text-left w-full"
-                style={{ boxShadow: "0 2px 16px rgba(28,20,16,0.07)", transition: "transform 0.3s, box-shadow 0.3s" }}
+                className="promo-row group w-full text-left flex items-center gap-6 py-5 transition-all duration-200"
+                style={{ borderBottom: "1px solid #e8ddd4" }}
               >
-                {/* Верх */}
-                <div
-                  className="relative overflow-hidden"
-                  style={{ minHeight: promo.image ? "0" : "220px", aspectRatio: promo.image ? "16/9" : "auto", background: promo.image ? "#0d0806" : color }}
-                >
+                {/* Мініатюра */}
+                <div className="flex-shrink-0 rounded-sm overflow-hidden" style={{ width: "120px", height: "68px", background: "#0d0806" }}>
                   {promo.image ? (
-                    <Image
-                      src={promo.image}
-                      alt={promo.title}
-                      fill
-                      className="object-contain"
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    />
+                    <Image src={promo.image} alt={promo.title} width={240} height={135} className="w-full h-full object-cover" sizes="120px" />
                   ) : (
-                    <div className="absolute inset-0 flex flex-col items-center justify-end px-6 pt-8 pb-6">
-                      <div className="absolute top-6 left-1/2 -translate-x-1/2 w-28 h-28 rounded-full" style={{ background: "rgba(255,255,255,0.1)" }} />
-                      <span className="relative z-10 select-none" style={{ fontSize: "4.5rem", lineHeight: 1 }}>{promo.icon}</span>
-                      <span className="relative z-10 mt-2 px-3 py-0.5 text-[0.6rem] tracking-widest uppercase font-medium rounded-[2px]" style={{ background: "rgba(0,0,0,0.2)", color: "rgba(255,255,255,0.9)" }}>{promo.label}</span>
-                      <h3 className="relative z-10 mt-3 text-center text-white leading-tight uppercase" style={{ fontFamily: "var(--font-dm-sans), sans-serif", fontWeight: 700, fontSize: "0.95rem", letterSpacing: "0.04em" }}>{promo.title}</h3>
+                    <div className="w-full h-full flex items-center justify-center" style={{ background: color }}>
+                      <span style={{ fontSize: "1.8rem" }}>{promo.icon}</span>
                     </div>
                   )}
                 </div>
 
-                {/* Низ */}
-                <div className="flex flex-col flex-1 p-5" style={{ background: "#ffffff", borderTop: `3px solid ${color}` }}>
-                  <p className="font-semibold text-sm mb-2 leading-snug" style={{ color: "#1c1410" }}>{promo.subtitle}</p>
-                  <p className="text-xs leading-relaxed flex-1" style={{ color: "#a09080" }}>{promo.description}</p>
-                  <span className="mt-4 text-[0.65rem] tracking-wider uppercase font-medium" style={{ color }}>
+                {/* Контент */}
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="px-2 py-0.5 text-[0.55rem] tracking-widest uppercase font-medium rounded-[2px]" style={{ background: color, color: "#fff" }}>
+                      {promo.label}
+                    </span>
+                  </div>
+                  <h3 className="text-lg leading-tight mb-1 truncate" style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 400, color: "#1c1410" }}>
+                    {promo.subtitle}
+                  </h3>
+                  <p className="text-xs leading-relaxed line-clamp-1" style={{ color: "#a09080" }}>{promo.description}</p>
+                </div>
+
+                {/* Права частина — CTA */}
+                <div className="flex-shrink-0 flex items-center gap-4">
+                  <span
+                    className="text-[0.65rem] tracking-wider uppercase font-medium transition-all duration-200"
+                    style={{ color }}
+                  >
                     Детальніше →
                   </span>
                 </div>
@@ -163,13 +139,15 @@ export default function PromoCards() {
         </div>
       </div>
 
-      {/* Модаль */}
       {selected && <PromoModal promo={selected} onClose={() => setSelected(null)} />}
 
       <style>{`
-        .promo-card:hover {
-          transform: translateY(-4px);
-          box-shadow: 0 12px 36px rgba(28,20,16,0.13) !important;
+        .promo-row:hover {
+          background: rgba(139,26,46,0.03);
+          padding-left: 8px;
+        }
+        .promo-row:first-child {
+          border-top: 1px solid #e8ddd4;
         }
       `}</style>
     </section>

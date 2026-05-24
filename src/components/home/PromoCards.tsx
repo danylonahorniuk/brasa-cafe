@@ -21,68 +21,66 @@ function PromoModal({ promo, onClose }: { promo: Promo; onClose: () => void }) {
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-3xl rounded-sm overflow-hidden"
-        style={{ background: "#faf7f2", boxShadow: "0 24px 80px rgba(0,0,0,0.4)" }}
+        className="relative w-full max-w-xl rounded-sm overflow-hidden"
+        style={{ background: "#faf7f2", boxShadow: "0 24px 80px rgba(0,0,0,0.5)" }}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Кнопка закриття */}
         <button
           onClick={onClose}
-          className="absolute top-3 right-3 z-10 w-8 h-8 rounded-full flex items-center justify-center"
-          style={{ background: "rgba(0,0,0,0.5)", color: "#fff" }}
+          className="absolute top-3 right-3 z-10 w-7 h-7 rounded-full flex items-center justify-center"
+          style={{ background: "rgba(0,0,0,0.45)", color: "#fff" }}
         >
-          <X size={15} />
+          <X size={13} />
         </button>
 
-        {/* Зображення — натуральні пропорції, без кропу */}
-        {promo.image ? (
-          <Image
-            src={promo.image}
-            alt={promo.title}
-            width={1456}
-            height={816}
-            className="w-full h-auto block"
-            sizes="896px"
-          />
-        ) : (
-          <div className="flex flex-col items-center justify-center gap-3 py-14" style={{ background: color }}>
-            <span style={{ fontSize: "5rem" }}>{promo.icon}</span>
-            <span className="text-white text-2xl uppercase tracking-widest font-bold">{promo.label}</span>
-          </div>
-        )}
+        {/* Шапка — компактний банер 180px */}
+        <div className="relative w-full overflow-hidden" style={{ height: "180px", background: "#0d0806" }}>
+          {promo.image ? (
+            <Image src={promo.image} alt={promo.title} fill className="object-cover object-top" sizes="576px" />
+          ) : (
+            <div className="absolute inset-0 flex items-center justify-center gap-4" style={{ background: color }}>
+              <span style={{ fontSize: "3.5rem" }}>{promo.icon}</span>
+              <span className="text-white text-xl uppercase tracking-widest font-bold">{promo.label}</span>
+            </div>
+          )}
+        </div>
 
         {/* Контент */}
-        <div className="p-7">
+        <div className="p-6">
           <span
-            className="inline-block px-3 py-1 text-[0.6rem] tracking-widest uppercase font-medium rounded-[2px] mb-3"
+            className="inline-block px-2.5 py-0.5 text-[0.58rem] tracking-widest uppercase font-medium rounded-[2px] mb-3"
             style={{ background: color, color: "#fff" }}
           >
             {promo.label}
           </span>
 
           <h2
-            className="text-2xl md:text-3xl mb-2 leading-tight"
+            className="text-2xl mb-2 leading-tight"
             style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 300, color: "#1c1410" }}
           >
             {promo.subtitle}
           </h2>
 
-          <p className="text-sm leading-relaxed mb-4" style={{ color: "#7a6a5e" }}>
+          <p className="text-sm leading-relaxed mb-4" style={{ color: "#5a4a3e" }}>
             {promo.description}
           </p>
 
-          <p className="text-xs leading-relaxed mb-6" style={{ color: "#b0a090" }}>
-            * Не комбінується з іншими акціями. Деталі:{" "}
+          <div className="divider-warm mb-4" />
+
+          <p className="text-xs leading-relaxed mb-5" style={{ color: "#a09080" }}>
+            * Акція не комбінується з іншими знижками та акціями. Умови можуть змінюватись.
+            Деталі уточнюйте за номером{" "}
             <span style={{ color: "#8b1a2e" }}>+38 (044) 123-45-67</span>.
           </p>
 
-          <div className="flex flex-wrap gap-3">
+          <div className="flex gap-3">
             <Link href={promo.href} onClick={onClose} className="btn-primary flex items-center gap-2">
-              Замовити зі знижкою <ArrowRight size={14} />
+              Замовити зі знижкою <ArrowRight size={13} />
             </Link>
             <button
               onClick={onClose}
-              className="px-5 py-3 rounded-sm text-[0.72rem] tracking-widest uppercase"
+              className="px-4 py-2.5 rounded-sm text-[0.68rem] tracking-widest uppercase"
               style={{ border: "1px solid #d4c4b8", color: "#7a6a5e" }}
             >
               Закрити

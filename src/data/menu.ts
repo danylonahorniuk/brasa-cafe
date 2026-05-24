@@ -258,6 +258,7 @@ export const promos = [
     subtitle: "Знижка 21% у день народження!",
     description: "У день народження та протягом 7 днів після — знижка 21% на все меню. Діє на доставку та самовивіз.",
     href: "/menu",
+    image: "/promos/promo-birthday.png",
   },
   {
     id: 6,

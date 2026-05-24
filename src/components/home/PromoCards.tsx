@@ -117,11 +117,11 @@ export default function PromoCards() {
               <button
                 key={promo.id}
                 onClick={() => setSelected(promo)}
-                className="promo-row group w-full text-left flex items-center gap-6 py-5 transition-all duration-200"
+                className="promo-row group w-full text-left flex items-center gap-6 py-5"
                 style={{ borderBottom: "1px solid #e8ddd4" }}
               >
                 {/* Мініатюра */}
-                <div className="flex-shrink-0 rounded-sm overflow-hidden" style={{ width: "120px", height: "68px", background: "#0d0806" }}>
+                <div className="promo-thumb flex-shrink-0 rounded-sm overflow-hidden" style={{ width: "120px", height: "68px", background: "#0d0806" }}>
                   {promo.image ? (
                     <Image src={promo.image} alt={promo.title} width={240} height={135} className="w-full h-full object-cover" sizes="120px" />
                   ) : (
@@ -147,7 +147,7 @@ export default function PromoCards() {
                 {/* Права частина — CTA */}
                 <div className="flex-shrink-0 flex items-center gap-4">
                   <span
-                    className="text-[0.65rem] tracking-wider uppercase font-medium transition-all duration-200"
+                    className="promo-cta text-[0.65rem] tracking-wider uppercase font-medium"
                     style={{ color }}
                   >
                     Детальніше →
@@ -162,12 +162,30 @@ export default function PromoCards() {
       {selected && <PromoModal promo={selected} onClose={() => setSelected(null)} />}
 
       <style>{`
+        .promo-row {
+          transition: background 0.45s ease, padding-left 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
         .promo-row:hover {
           background: rgba(139,26,46,0.03);
-          padding-left: 8px;
+          padding-left: 10px;
         }
         .promo-row:first-child {
           border-top: 1px solid #e8ddd4;
+        }
+        .promo-row .promo-thumb {
+          transition: transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.45s ease;
+        }
+        .promo-row:hover .promo-thumb {
+          transform: scale(1.04);
+          box-shadow: 0 4px 16px rgba(28,20,16,0.15);
+        }
+        .promo-row .promo-cta {
+          transition: letter-spacing 0.45s ease, opacity 0.45s ease;
+          opacity: 0.6;
+        }
+        .promo-row:hover .promo-cta {
+          letter-spacing: 0.1em;
+          opacity: 1;
         }
         @keyframes backdropIn {
           from { background: rgba(28,20,16,0); }

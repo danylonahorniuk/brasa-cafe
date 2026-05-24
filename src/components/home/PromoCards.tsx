@@ -16,13 +16,13 @@ function PromoModal({ promo, onClose }: { promo: Promo; onClose: () => void }) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center p-6 md:p-10"
       style={{ background: "rgba(28,20,16,0.7)", backdropFilter: "blur(6px)" }}
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-2xl rounded-sm overflow-hidden"
-        style={{ background: "#faf7f2", boxShadow: "0 24px 80px rgba(0,0,0,0.4)" }}
+        className="relative w-full max-w-2xl rounded-sm overflow-y-auto"
+        style={{ background: "#faf7f2", boxShadow: "0 24px 80px rgba(0,0,0,0.4)", maxHeight: "90vh" }}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Кнопка закриття */}

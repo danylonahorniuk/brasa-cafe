@@ -248,6 +248,7 @@ export const promos = [
     subtitle: "Забирай сам зі знижкою 20%",
     description: "Постійна знижка 20% на всі піци та бургери при самовивозі. Деталі акції уточнюйте у оператора.",
     href: "/menu",
+    image: "/promos/promo-takeaway.png",
   },
   {
     id: 5,

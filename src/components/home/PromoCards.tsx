@@ -35,25 +35,26 @@ function PromoModal({ promo, onClose }: { promo: Promo; onClose: () => void }) {
         </button>
 
         {/* Зображення */}
-        <div className="relative w-full" style={{ aspectRatio: "16/9", background: "#0d0806" }}>
-          {promo.image ? (
+        {promo.image ? (
+          <div className="w-full">
             <Image
               src={promo.image}
               alt={promo.title}
-              fill
-              className="object-contain"
+              width={1456}
+              height={816}
+              className="w-full h-auto block"
               sizes="672px"
             />
-          ) : (
-            <div
-              className="absolute inset-0 flex flex-col items-center justify-center gap-3"
-              style={{ background: color }}
-            >
-              <span style={{ fontSize: "5rem" }}>{promo.icon}</span>
-              <span className="text-white text-2xl uppercase tracking-widest font-bold">{promo.label}</span>
-            </div>
-          )}
-        </div>
+          </div>
+        ) : (
+          <div
+            className="flex flex-col items-center justify-center gap-3 py-12"
+            style={{ background: color }}
+          >
+            <span style={{ fontSize: "5rem" }}>{promo.icon}</span>
+            <span className="text-white text-2xl uppercase tracking-widest font-bold">{promo.label}</span>
+          </div>
+        )}
 
         {/* Контент */}
         <div className="p-8">

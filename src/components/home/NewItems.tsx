@@ -3,11 +3,18 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ShoppingCart, Sparkles } from "lucide-react";
+import { ShoppingCart, Flame, Sparkles } from "lucide-react";
 import { menuItems } from "@/data/menu";
 import { useCart } from "@/context/CartContext";
 
 const newItems = menuItems.filter((m) => m.isNew);
+
+const categoryLabel: Record<string, string> = {
+  pizza: "Піца",
+  rolls: "Роли",
+  burgers: "Бургер",
+  alcohol: "Напій",
+};
 
 export default function NewItems() {
   const { add } = useCart();
@@ -22,9 +29,11 @@ export default function NewItems() {
   if (newItems.length === 0) return null;
 
   return (
-    <section style={{ background: "#fff", borderTop: "1px solid #e8ddd4" }}>
+    <section style={{ background: "#faf7f2", borderTop: "1px solid #e8ddd4" }}>
       <div className="max-w-7xl mx-auto px-6 py-16">
-        <div className="flex items-end justify-between mb-8">
+
+        {/* Заголовок */}
+        <div className="flex items-end justify-between mb-10">
           <div>
             <p className="section-label mb-2 flex items-center gap-2">
               <Sparkles size={12} />
@@ -37,87 +46,101 @@ export default function NewItems() {
               Щойно в меню
             </h2>
           </div>
-          <Link href="/menu" className="btn-outline hidden md:inline-flex">
+          <Link
+            href="/menu"
+            className="hidden md:flex items-center gap-2 text-[0.68rem] tracking-widest uppercase transition-all duration-300"
+            style={{ color: "#a09080" }}
+            onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "#8b1a2e")}
+            onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "#a09080")}
+          >
             Всі страви →
           </Link>
         </div>
 
+        {/* Картки */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          {newItems.map((item, i) => (
+          {newItems.map((item) => (
             <div
               key={item.id}
-              className="group relative rounded-sm overflow-hidden flex"
-              style={{
-                background: "#faf7f2",
-                border: "1px solid #e8ddd4",
-                boxShadow: "0 2px 12px rgba(28,20,16,0.05)",
-                transition: "box-shadow 0.3s, border-color 0.3s",
-              }}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLElement).style.boxShadow = "0 8px 32px rgba(28,20,16,0.1)";
-                (e.currentTarget as HTMLElement).style.borderColor = "rgba(139,26,46,0.2)";
-              }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLElement).style.boxShadow = "0 2px 12px rgba(28,20,16,0.05)";
-                (e.currentTarget as HTMLElement).style.borderColor = "#e8ddd4";
-              }}
+              className="new-card group flex flex-col rounded-sm overflow-hidden"
+              style={{ background: "#fff", border: "1px solid #e8ddd4" }}
             >
-              {/* Номер */}
-              <div
-                className="absolute top-4 left-4 z-10 w-7 h-7 rounded-full flex items-center justify-center text-[0.65rem] font-medium"
-                style={{ background: "#8b1a2e", color: "#fff" }}
-              >
-                {String(i + 1).padStart(2, "0")}
-              </div>
-
-              {/* Нова мітка */}
-              <div
-                className="absolute top-4 right-4 z-10 px-2 py-0.5 text-[0.6rem] tracking-widest uppercase font-medium rounded-[2px] flex items-center gap-1"
-                style={{ background: "#c49a3c", color: "#fff" }}
-              >
-                <Sparkles size={8} /> Нове
-              </div>
-
-              {/* Фото */}
-              <div className="relative w-36 flex-shrink-0 overflow-hidden">
+              {/* Фото — ширше і нижче ніж у популярних */}
+              <div className="relative overflow-hidden" style={{ height: "180px", background: "#f5f0eb" }}>
                 <Image
                   src={item.image}
                   alt={item.name}
                   fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-110"
-                  sizes="144px"
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  sizes="(max-width: 768px) 100vw, 33vw"
                 />
+
+                {/* Бейджі — верхній лівий */}
+                <div className="absolute top-2.5 left-2.5 flex gap-1.5 z-10">
+                  <span
+                    className="px-2 py-0.5 text-[0.55rem] tracking-widest uppercase font-medium rounded-[2px] flex items-center gap-1"
+                    style={{ background: "#c49a3c", color: "#fff" }}
+                  >
+                    <Sparkles size={7} /> Нове
+                  </span>
+                  {item.badge && (
+                    <span
+                      className="px-2 py-0.5 text-[0.55rem] tracking-widest uppercase font-medium rounded-[2px]"
+                      style={{ background: "#8b1a2e", color: "#fff" }}
+                    >
+                      {item.badge}
+                    </span>
+                  )}
+                  {item.spicy && (
+                    <span className="px-1.5 py-0.5 rounded-[2px] flex items-center bg-orange-500 text-white">
+                      <Flame size={8} />
+                    </span>
+                  )}
+                </div>
+
+                {/* Вага — нижній правий */}
+                {item.weight && (
+                  <span
+                    className="absolute bottom-2 right-2 z-10 px-2 py-0.5 text-[0.58rem] rounded-[2px]"
+                    style={{ background: "rgba(12,8,6,0.5)", color: "rgba(255,255,255,0.9)", backdropFilter: "blur(4px)" }}
+                  >
+                    {item.weight}
+                  </span>
+                )}
               </div>
 
               {/* Контент */}
-              <div className="flex flex-col justify-between p-4 flex-1">
-                <div>
-                  <p className="text-[0.65rem] tracking-widest uppercase mb-1" style={{ color: "#a09080" }}>
-                    {item.category === "pizza" ? "Піца" : item.category === "burgers" ? "Бургер" : item.category === "rolls" ? "Рол" : "Напій"}
-                  </p>
-                  <h3
-                    className="text-xl leading-tight mb-2"
-                    style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 400, color: "#1c1410" }}
-                  >
-                    {item.name}
-                  </h3>
-                  <p className="text-xs leading-relaxed line-clamp-2" style={{ color: "#a09080" }}>
-                    {item.description}
-                  </p>
-                </div>
-                <div className="flex items-center justify-between mt-4">
-                  <span className="text-lg font-medium" style={{ color: "#8b1a2e" }}>{item.price} ₴</span>
+              <div className="flex flex-col flex-1 p-4">
+                <p className="text-[0.58rem] tracking-widest uppercase mb-1" style={{ color: "#a09080" }}>
+                  {categoryLabel[item.category]}
+                </p>
+                <h3
+                  className="text-xl leading-snug mb-auto"
+                  style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 400, color: "#1c1410" }}
+                >
+                  {item.name}
+                </h3>
+
+                {/* Ціна + кнопка */}
+                <div className="flex items-center justify-between mt-4 pt-4" style={{ borderTop: "1px solid #f0e8e0" }}>
+                  <span className="text-lg font-medium" style={{ color: "#c49a3c" }}>
+                    {item.price} ₴
+                  </span>
                   <button
                     onClick={() => handleAdd(item)}
-                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-sm text-[0.65rem] tracking-wider uppercase transition-all duration-300"
+                    className="new-add-btn flex items-center gap-1.5 px-3 py-1.5 rounded-sm text-[0.6rem] tracking-wider uppercase transition-all duration-300"
                     style={{
-                      background: addedId === item.id ? "rgba(139,26,46,0.08)" : "#fff",
+                      background: addedId === item.id ? "#8b1a2e" : "#faf7f2",
                       border: `1px solid ${addedId === item.id ? "#8b1a2e" : "#d4c4b8"}`,
-                      color: addedId === item.id ? "#8b1a2e" : "#a09080",
+                      color: addedId === item.id ? "#fff" : "#7a6a5e",
                     }}
                   >
-                    <ShoppingCart size={12} />
-                    {addedId === item.id ? "✓" : "Додати"}
+                    {addedId === item.id ? (
+                      <span style={{ fontSize: "0.7rem" }}>✓</span>
+                    ) : (
+                      <ShoppingCart size={11} />
+                    )}
+                    {addedId === item.id ? "Додано" : "В кошик"}
                   </button>
                 </div>
               </div>
@@ -125,6 +148,22 @@ export default function NewItems() {
           ))}
         </div>
       </div>
+
+      <style>{`
+        .new-card {
+          transition: box-shadow 0.4s ease, border-color 0.4s ease, transform 0.4s ease;
+        }
+        .new-card:hover {
+          box-shadow: 0 8px 28px rgba(28,20,16,0.1);
+          border-color: rgba(139,26,46,0.18);
+          transform: translateY(-2px);
+        }
+        .new-add-btn:hover {
+          background: #8b1a2e !important;
+          border-color: #8b1a2e !important;
+          color: #fff !important;
+        }
+      `}</style>
     </section>
   );
 }

@@ -21,7 +21,7 @@ function PromoModal({ promo, onClose }: { promo: Promo; onClose: () => void }) {
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-2xl rounded-sm overflow-hidden"
+        className="relative w-full max-w-3xl rounded-sm overflow-hidden"
         style={{ background: "#faf7f2", boxShadow: "0 24px 80px rgba(0,0,0,0.4)" }}
         onClick={(e) => e.stopPropagation()}
       >
@@ -34,23 +34,22 @@ function PromoModal({ promo, onClose }: { promo: Promo; onClose: () => void }) {
           <X size={15} />
         </button>
 
-        {/* Зображення — фіксована висота, object-top щоб верх не обрізався */}
-        <div className="relative w-full overflow-hidden" style={{ height: "260px", background: "#0d0806" }}>
-          {promo.image ? (
-            <Image
-              src={promo.image}
-              alt={promo.title}
-              fill
-              className="object-cover object-top"
-              sizes="672px"
-            />
-          ) : (
-            <div className="absolute inset-0 flex flex-col items-center justify-center gap-3" style={{ background: color }}>
-              <span style={{ fontSize: "5rem" }}>{promo.icon}</span>
-              <span className="text-white text-2xl uppercase tracking-widest font-bold">{promo.label}</span>
-            </div>
-          )}
-        </div>
+        {/* Зображення — натуральні пропорції, без кропу */}
+        {promo.image ? (
+          <Image
+            src={promo.image}
+            alt={promo.title}
+            width={1456}
+            height={816}
+            className="w-full h-auto block"
+            sizes="896px"
+          />
+        ) : (
+          <div className="flex flex-col items-center justify-center gap-3 py-14" style={{ background: color }}>
+            <span style={{ fontSize: "5rem" }}>{promo.icon}</span>
+            <span className="text-white text-2xl uppercase tracking-widest font-bold">{promo.label}</span>
+          </div>
+        )}
 
         {/* Контент */}
         <div className="p-7">

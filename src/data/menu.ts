@@ -1,4 +1,4 @@
-export type Category = "pizza" | "rolls" | "burgers" | "alcohol";
+export type Category = "pizza" | "rolls" | "burgers" | "drinks" | "alcohol";
 
 export interface MenuItem {
   id: number;
@@ -171,6 +171,54 @@ export const menuItems: MenuItem[] = [
     weight: "360г",
   },
 
+  // ── DRINKS ──
+  {
+    id: 19,
+    name: "Coca-Cola",
+    description: "Класична газована cola, 330мл банка",
+    price: 59,
+    category: "drinks",
+    image: "https://images.unsplash.com/photo-1554866585-cd94860890b7?w=600&q=80",
+    weight: "330мл",
+  },
+  {
+    id: 20,
+    name: "Fanta",
+    description: "Апельсинова газована Fanta, освіжаюча і солодка",
+    price: 59,
+    category: "drinks",
+    image: "https://images.unsplash.com/photo-1624517452488-04871aa71a05?w=600&q=80",
+    weight: "330мл",
+  },
+  {
+    id: 21,
+    name: "Sprite",
+    description: "Лимонно-лаймова газована Sprite, легко і свіжо",
+    price: 59,
+    category: "drinks",
+    image: "https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?w=600&q=80",
+    weight: "330мл",
+  },
+  {
+    id: 22,
+    name: "Сік апельсиновий",
+    description: "Свіжовичавлений апельсиновий сік, без цукру",
+    price: 89,
+    category: "drinks",
+    image: "https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?w=600&q=80",
+    weight: "300мл",
+  },
+  {
+    id: 23,
+    name: "Лимонад домашній",
+    description: "Лимон, імбир, м'ята, мед, газована вода",
+    price: 99,
+    category: "drinks",
+    image: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=600&q=80",
+    weight: "400мл",
+    popular: true,
+  },
+
   // ── ALCOHOL ──
   {
     id: 15,
@@ -217,6 +265,15 @@ export const categories = [
   { id: "rolls",   label: "Роли",     icon: "🍣", image: "https://images.unsplash.com/photo-1617196034183-421b4040ed20?w=800&q=80", description: "Свіжі щодня" },
   { id: "burgers", label: "Бургери",  icon: "🍔", image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&q=80", description: "Smash & classic" },
   { id: "alcohol", label: "Алкоголь", icon: "🍸", image: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=800&q=80", description: "Коктейлі та крафт" },
+] as const;
+
+// Всі категорії для сторінки меню (включаючи напої)
+export const menuCategories = [
+  { id: "pizza",   label: "Піца",     icon: "🍕" },
+  { id: "rolls",   label: "Роли",     icon: "🍣" },
+  { id: "burgers", label: "Бургери",  icon: "🍔" },
+  { id: "drinks",  label: "Напої",    icon: "🥤" },
+  { id: "alcohol", label: "Алкоголь", icon: "🍸" },
 ] as const;
 
 export const promos = [

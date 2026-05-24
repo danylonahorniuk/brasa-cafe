@@ -34,10 +34,13 @@ function PromoModal({ promo, onClose }: { promo: Promo; onClose: () => void }) {
           <X size={13} />
         </button>
 
-        {/* Шапка — компактний банер 180px */}
-        <div className="relative w-full overflow-hidden" style={{ height: "180px", background: "#0d0806" }}>
+        {/* Шапка — точно як у картках: 16/9 + object-contain + темний фон */}
+        <div
+          className="relative w-full overflow-hidden"
+          style={{ aspectRatio: "16/9", background: "#0d0806" }}
+        >
           {promo.image ? (
-            <Image src={promo.image} alt={promo.title} fill className="object-cover object-top" sizes="576px" />
+            <Image src={promo.image} alt={promo.title} fill className="object-contain" sizes="576px" />
           ) : (
             <div className="absolute inset-0 flex items-center justify-center gap-4" style={{ background: color }}>
               <span style={{ fontSize: "3.5rem" }}>{promo.icon}</span>

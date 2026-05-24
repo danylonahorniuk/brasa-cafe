@@ -238,6 +238,7 @@ export const promos = [
     subtitle: "Щасливі години на суші-сети",
     description: "Щодня з 11:00 до 16:00 — знижка на всі суші-сети. Діє на доставку та самовивіз. Не діє у святкові дні.",
     href: "/menu?category=rolls",
+    image: "/promos/promo-happy-hours.png",
   },
   {
     id: 4,

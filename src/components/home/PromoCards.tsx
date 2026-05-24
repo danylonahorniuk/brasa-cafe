@@ -41,16 +41,17 @@ export default function PromoCards() {
                 {/* ── Верх ── */}
                 <div
                   className="relative overflow-hidden"
-                  style={{ minHeight: "220px", background: color }}
+                  style={{ minHeight: promo.image ? "0" : "220px", aspectRatio: promo.image ? "16/9" : "auto", background: promo.image ? "#0d0806" : color }}
                 >
                   {promo.image ? (
-                    /* Якщо є згенероване зображення — показуємо його */
+                    /* Якщо є згенероване зображення — показуємо його повністю */
                     <Image
                       src={promo.image}
                       alt={promo.title}
                       fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      className="object-contain transition-transform duration-700 group-hover:scale-105"
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      style={{ background: "#0d0806" }}
                     />
                   ) : (
                     /* Інакше — емодзі + заголовок на кольоровому фоні */

@@ -9,6 +9,13 @@ import { useCart } from "@/context/CartContext";
 
 const popular = menuItems.filter((m) => m.popular);
 
+const categoryLabel: Record<string, string> = {
+  pizza: "Піца",
+  rolls: "Роли",
+  burgers: "Бургер",
+  alcohol: "Напій",
+};
+
 export default function PopularScroll() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const { add } = useCart();
@@ -16,7 +23,7 @@ export default function PopularScroll() {
 
   const scroll = (dir: "left" | "right") => {
     if (!scrollRef.current) return;
-    scrollRef.current.scrollBy({ left: dir === "right" ? 320 : -320, behavior: "smooth" });
+    scrollRef.current.scrollBy({ left: dir === "right" ? 280 : -280, behavior: "smooth" });
   };
 
   const handleAdd = (item: typeof popular[0]) => {
@@ -38,35 +45,27 @@ export default function PopularScroll() {
               Гості обирають частіше
             </h2>
           </div>
-
-          {/* Стрілки */}
           <div className="hidden md:flex gap-2">
-            <button
-              onClick={() => scroll("left")}
-              className="w-10 h-10 rounded-sm flex items-center justify-center transition-all"
-              style={{ border: "1px solid #d4c4b8", color: "#a09080", background: "#fff" }}
-              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "#8b1a2e"; (e.currentTarget as HTMLElement).style.color = "#8b1a2e"; }}
-              onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "#d4c4b8"; (e.currentTarget as HTMLElement).style.color = "#a09080"; }}
-            >
-              <ChevronLeft size={18} />
-            </button>
-            <button
-              onClick={() => scroll("right")}
-              className="w-10 h-10 rounded-sm flex items-center justify-center transition-all"
-              style={{ border: "1px solid #d4c4b8", color: "#a09080", background: "#fff" }}
-              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "#8b1a2e"; (e.currentTarget as HTMLElement).style.color = "#8b1a2e"; }}
-              onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "#d4c4b8"; (e.currentTarget as HTMLElement).style.color = "#a09080"; }}
-            >
-              <ChevronRight size={18} />
-            </button>
+            {[{ dir: "left" as const, Icon: ChevronLeft }, { dir: "right" as const, Icon: ChevronRight }].map(({ dir, Icon }) => (
+              <button
+                key={dir}
+                onClick={() => scroll(dir)}
+                className="w-10 h-10 rounded-sm flex items-center justify-center transition-all duration-300"
+                style={{ border: "1px solid #d4c4b8", color: "#a09080", background: "#fff" }}
+                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "#8b1a2e"; (e.currentTarget as HTMLElement).style.color = "#8b1a2e"; }}
+                onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "#d4c4b8"; (e.currentTarget as HTMLElement).style.color = "#a09080"; }}
+              >
+                <Icon size={18} />
+              </button>
+            ))}
           </div>
         </div>
       </div>
 
-      {/* Горизонтальний скрол */}
+      {/* Скрол */}
       <div
         ref={scrollRef}
-        className="flex gap-4 overflow-x-auto pb-4 px-6 scroll-smooth"
+        className="flex gap-4 overflow-x-auto pb-4 scroll-smooth"
         style={{
           scrollbarWidth: "none",
           msOverflowStyle: "none",
@@ -77,93 +76,102 @@ export default function PopularScroll() {
         {popular.map((item) => (
           <div
             key={item.id}
-            className="group flex-shrink-0 rounded-sm overflow-hidden"
-            style={{
-              width: "280px",
-              background: "#fff",
-              border: "1px solid #e8ddd4",
-              boxShadow: "0 2px 12px rgba(28,20,16,0.05)",
-              transition: "box-shadow 0.3s, border-color 0.3s",
-            }}
-            onMouseEnter={(e) => {
-              (e.currentTarget as HTMLElement).style.boxShadow = "0 8px 32px rgba(28,20,16,0.1)";
-              (e.currentTarget as HTMLElement).style.borderColor = "rgba(139,26,46,0.2)";
-            }}
-            onMouseLeave={(e) => {
-              (e.currentTarget as HTMLElement).style.boxShadow = "0 2px 12px rgba(28,20,16,0.05)";
-              (e.currentTarget as HTMLElement).style.borderColor = "#e8ddd4";
-            }}
+            className="pop-card group flex-shrink-0 rounded-sm overflow-hidden relative"
+            style={{ width: "240px", height: "320px" }}
           >
-            {/* Фото */}
-            <div className="relative h-48 overflow-hidden">
-              <Image
-                src={item.image}
-                alt={item.name}
-                fill
-                className="object-cover transition-transform duration-600 group-hover:scale-110"
-                sizes="280px"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+            {/* Фото — на всю картку */}
+            <Image
+              src={item.image}
+              alt={item.name}
+              fill
+              className="object-cover transition-transform duration-700 group-hover:scale-105"
+              sizes="240px"
+            />
+
+            {/* Градієнт знизу */}
+            <div
+              className="absolute inset-0"
+              style={{ background: "linear-gradient(to top, rgba(12,8,6,0.9) 0%, rgba(12,8,6,0.25) 50%, transparent 75%)" }}
+            />
+
+            {/* Бейджі зверху ліворуч */}
+            <div className="absolute top-3 left-3 flex gap-1.5 z-10">
               {item.badge && (
-                <span
-                  className="absolute top-3 left-3 px-2 py-0.5 text-[0.6rem] tracking-widest uppercase font-medium rounded-[2px]"
-                  style={{ background: "#8b1a2e", color: "#fff" }}
-                >
+                <span className="px-2 py-0.5 text-[0.58rem] tracking-widest uppercase font-medium rounded-[2px]"
+                  style={{ background: "#8b1a2e", color: "#fff" }}>
                   {item.badge}
                 </span>
               )}
               {item.spicy && (
-                <span className="absolute top-3 right-3 px-2 py-0.5 text-[0.6rem] tracking-widest uppercase rounded-[2px] flex items-center gap-1 bg-orange-500 text-white">
+                <span className="px-2 py-0.5 text-[0.58rem] rounded-[2px] flex items-center gap-1 bg-orange-500 text-white">
                   <Flame size={8} />
                 </span>
               )}
             </div>
 
-            {/* Контент */}
-            <div className="p-4">
+            {/* Кнопка "Додати" — зверху праворуч, видна тільки при hover */}
+            <button
+              onClick={() => handleAdd(item)}
+              className="pop-add absolute top-3 right-3 z-10 w-8 h-8 rounded-full flex items-center justify-center"
+              style={{
+                background: addedId === item.id ? "#8b1a2e" : "rgba(255,255,255,0.15)",
+                border: `1px solid ${addedId === item.id ? "#8b1a2e" : "rgba(255,255,255,0.35)"}`,
+                backdropFilter: "blur(4px)",
+                color: "#fff",
+              }}
+            >
+              {addedId === item.id
+                ? <span style={{ fontSize: "0.75rem" }}>✓</span>
+                : <ShoppingCart size={13} />}
+            </button>
+
+            {/* Контент знизу */}
+            <div className="absolute bottom-0 left-0 right-0 p-4 z-10">
+              <p className="text-[0.58rem] tracking-widest uppercase mb-1" style={{ color: "rgba(255,255,255,0.45)" }}>
+                {categoryLabel[item.category]}
+              </p>
               <h3
-                className="text-xl mb-1"
-                style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 400, color: "#1c1410" }}
+                className="text-lg leading-snug mb-2"
+                style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 400, color: "#fff" }}
               >
                 {item.name}
               </h3>
-              <p className="text-xs leading-relaxed line-clamp-2 mb-4" style={{ color: "#a09080" }}>
-                {item.description}
-              </p>
               <div className="flex items-center justify-between">
-                <div>
-                  <span className="text-xl font-medium" style={{ color: "#8b1a2e" }}>{item.price} ₴</span>
-                  {item.weight && <span className="text-xs ml-1.5" style={{ color: "#c4b4a8" }}>{item.weight}</span>}
-                </div>
-                <button
-                  onClick={() => handleAdd(item)}
-                  className="flex items-center gap-1.5 px-3 py-2 rounded-sm text-[0.68rem] tracking-wider uppercase transition-all duration-300"
-                  style={{
-                    background: addedId === item.id ? "rgba(139,26,46,0.08)" : "transparent",
-                    border: `1px solid ${addedId === item.id ? "#8b1a2e" : "#d4c4b8"}`,
-                    color: addedId === item.id ? "#8b1a2e" : "#a09080",
-                  }}
-                >
-                  <ShoppingCart size={13} />
-                  {addedId === item.id ? "Додано" : "Додати"}
-                </button>
+                <span className="font-medium" style={{ color: "#c49a3c", fontSize: "1.05rem" }}>
+                  {item.price} ₴
+                </span>
+                {item.weight && (
+                  <span className="text-[0.62rem]" style={{ color: "rgba(255,255,255,0.35)" }}>{item.weight}</span>
+                )}
               </div>
             </div>
           </div>
         ))}
 
-        {/* Посилання "Всі" в кінці */}
+        {/* "Все меню" в кінці */}
         <Link
           href="/menu"
-          className="flex-shrink-0 w-48 rounded-sm flex flex-col items-center justify-center gap-3 transition-all"
+          className="flex-shrink-0 w-44 rounded-sm flex flex-col items-center justify-center gap-3 transition-all duration-300"
           style={{ border: "1.5px dashed #d4c4b8", color: "#a09080" }}
           onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "#8b1a2e"; (e.currentTarget as HTMLElement).style.color = "#8b1a2e"; }}
           onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "#d4c4b8"; (e.currentTarget as HTMLElement).style.color = "#a09080"; }}
         >
           <span className="text-3xl">→</span>
-          <span className="text-[0.72rem] tracking-widest uppercase">Все меню</span>
+          <span className="text-[0.7rem] tracking-widest uppercase">Все меню</span>
         </Link>
       </div>
+
+      <style>{`
+        .pop-card .pop-add {
+          opacity: 0;
+          transform: scale(0.8);
+          transition: opacity 0.35s ease, transform 0.35s ease, background 0.3s;
+        }
+        .pop-card:hover .pop-add {
+          opacity: 1;
+          transform: scale(1);
+        }
+      `}</style>
     </section>
   );
 }

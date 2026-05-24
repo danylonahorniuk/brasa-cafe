@@ -84,7 +84,7 @@ export const menuItems: MenuItem[] = [
     description: "Лосось, крем-сир, огірок, авокадо, кунжут",
     price: 299,
     category: "rolls",
-    image: "https://images.unsplash.com/photo-1617196034183-421b4040ed20?w=600&q=80",
+    image: "https://images.unsplash.com/photo-1617196034699-a6c781a40e2d?w=600&q=80",
     popular: true,
     weight: "260г / 8шт",
   },
@@ -106,6 +106,7 @@ export const menuItems: MenuItem[] = [
     category: "rolls",
     image: "https://images.unsplash.com/photo-1553621042-f6e147245754?w=600&q=80",
     spicy: true,
+    popular: true,
     weight: "250г / 8шт",
   },
   {
@@ -149,6 +150,7 @@ export const menuItems: MenuItem[] = [
     image: "https://images.unsplash.com/photo-1550547660-d9450f859349?w=600&q=80",
     badge: "Преміум",
     isNew: true,
+    popular: true,
     weight: "400г",
   },
   {
@@ -180,6 +182,7 @@ export const menuItems: MenuItem[] = [
     price: 219,
     category: "alcohol",
     image: "https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=600&q=80",
+    popular: true,
     weight: "100мл",
   },
   {

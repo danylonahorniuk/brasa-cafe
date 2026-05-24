@@ -1,88 +1,147 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
-import { ShoppingCart, Flame, Search } from "lucide-react";
+import { ShoppingCart, Flame, Search, Minus, Plus } from "lucide-react";
 import { menuItems, categories, type Category } from "@/data/menu";
 import { useCart } from "@/context/CartContext";
 
+const categoryLabel: Record<string, string> = {
+  pizza: "Піца",
+  rolls: "Роли",
+  burgers: "Бургер",
+  alcohol: "Напій",
+};
+
 function DishCard({ item }: { item: typeof menuItems[0] }) {
-  const cardRef = useRef<HTMLDivElement>(null);
   const { add } = useCart();
   const [added, setAdded] = useState(false);
+  const [qty, setQty] = useState(1);
+  const [size, setSize] = useState<"30" | "40">("30");
 
-  useEffect(() => {
-    const card = cardRef.current;
-    if (!card) return;
-    const onMove = (e: MouseEvent) => {
-      const r  = card.getBoundingClientRect();
-      const dx = (e.clientX - (r.left + r.width / 2)) / (r.width / 2);
-      const dy = (e.clientY - (r.top + r.height / 2)) / (r.height / 2);
-      card.style.transform = `perspective(700px) rotateY(${dx * 6}deg) rotateX(${-dy * 6}deg) translateZ(4px)`;
-    };
-    const onLeave = () => { card.style.transform = "perspective(700px) rotateY(0) rotateX(0) translateZ(0)"; };
-    card.addEventListener("mousemove", onMove);
-    card.addEventListener("mouseleave", onLeave);
-    return () => { card.removeEventListener("mousemove", onMove); card.removeEventListener("mouseleave", onLeave); };
-  }, []);
-
-  const handleAdd = () => { add(item); setAdded(true); setTimeout(() => setAdded(false), 1200); };
+  const handleAdd = () => {
+    for (let i = 0; i < qty; i++) add(item);
+    setAdded(true);
+    setTimeout(() => { setAdded(false); setQty(1); }, 1400);
+  };
 
   return (
     <div
-      ref={cardRef}
-      className="group relative rounded-sm overflow-hidden"
-      style={{
-        background: "#fff",
-        border: "1px solid #e8ddd4",
-        boxShadow: "0 2px 10px rgba(28,20,16,0.05)",
-        transformStyle: "preserve-3d",
-        willChange: "transform",
-        transition: "box-shadow 0.3s, border-color 0.3s",
-      }}
-      onMouseEnter={(e) => {
-        (e.currentTarget as HTMLDivElement).style.boxShadow = "0 10px 36px rgba(28,20,16,0.1)";
-        (e.currentTarget as HTMLDivElement).style.borderColor = "rgba(139,26,46,0.2)";
-      }}
-      onMouseLeave={(e) => {
-        (e.currentTarget as HTMLDivElement).style.boxShadow = "0 2px 10px rgba(28,20,16,0.05)";
-        (e.currentTarget as HTMLDivElement).style.borderColor = "#e8ddd4";
-      }}
+      className="dish-card group flex flex-col rounded-sm overflow-hidden"
+      style={{ background: "#fff", border: "1px solid #e8ddd4" }}
     >
-      <div className="relative h-44 overflow-hidden">
-        <Image src={item.image} alt={item.name} fill className="object-cover transition-transform duration-700 group-hover:scale-110" sizes="(max-width: 768px) 100vw, 25vw" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/15 to-transparent" />
-        <div className="absolute top-3 left-3 flex gap-1.5">
+      {/* Фото */}
+      <div className="relative overflow-hidden flex-shrink-0" style={{ height: "200px", background: "#f5f0eb" }}>
+        <Image
+          src={item.image}
+          alt={item.name}
+          fill
+          className="object-cover transition-transform duration-700 group-hover:scale-105"
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+        />
+
+        {/* Бейджі */}
+        <div className="absolute top-2.5 left-2.5 flex gap-1.5 z-10">
           {item.badge && (
-            <span className="px-2 py-0.5 text-[0.6rem] tracking-widest uppercase font-medium rounded-[2px] bg-[#8b1a2e] text-white">{item.badge}</span>
+            <span className="px-2 py-0.5 text-[0.55rem] tracking-widest uppercase font-medium rounded-[2px]"
+              style={{ background: "#8b1a2e", color: "#fff" }}>
+              {item.badge}
+            </span>
+          )}
+          {item.isNew && (
+            <span className="px-2 py-0.5 text-[0.55rem] tracking-widest uppercase font-medium rounded-[2px]"
+              style={{ background: "#c49a3c", color: "#fff" }}>
+              Нове
+            </span>
           )}
           {item.spicy && (
-            <span className="px-2 py-0.5 text-[0.6rem] tracking-widest uppercase rounded-[2px] flex items-center gap-1 bg-orange-500 text-white">
-              <Flame size={8} /> Гостре
+            <span className="px-1.5 py-0.5 rounded-[2px] flex items-center bg-orange-500 text-white">
+              <Flame size={8} />
             </span>
           )}
         </div>
+
+        {/* Вага */}
+        {item.weight && (
+          <span className="absolute bottom-2 right-2 z-10 px-2 py-0.5 text-[0.58rem] rounded-[2px]"
+            style={{ background: "rgba(12,8,6,0.5)", color: "rgba(255,255,255,0.9)", backdropFilter: "blur(4px)" }}>
+            {item.weight}
+          </span>
+        )}
       </div>
-      <div className="p-4">
-        <h3 className="text-base" style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 400, color: "#1c1410" }}>{item.name}</h3>
-        <p className="text-[0.72rem] mt-1 leading-relaxed line-clamp-2" style={{ color: "#a09080" }}>{item.description}</p>
-        <div className="flex items-center justify-between mt-3">
-          <div>
-            <span className="font-medium" style={{ color: "#8b1a2e" }}>{item.price} ₴</span>
-            {item.weight && <span className="text-xs ml-2" style={{ color: "#c4b4a8" }}>{item.weight}</span>}
+
+      {/* Контент */}
+      <div className="flex flex-col flex-1 p-4">
+        <p className="text-[0.58rem] tracking-widest uppercase mb-1" style={{ color: "#a09080" }}>
+          {categoryLabel[item.category]}
+        </p>
+        <h3
+          className="text-xl leading-snug mb-2"
+          style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 400, color: "#1c1410" }}
+        >
+          {item.name}
+        </h3>
+        <p className="text-[0.72rem] leading-relaxed line-clamp-3 mb-auto" style={{ color: "#7a6a5e" }}>
+          {item.description}
+        </p>
+
+        {/* Вибір розміру — тільки для піци */}
+        {item.category === "pizza" && (
+          <div className="flex gap-2 mt-3">
+            {(["30", "40"] as const).map((s) => (
+              <button
+                key={s}
+                onClick={() => setSize(s)}
+                className="flex-1 py-1.5 rounded-sm text-[0.65rem] tracking-wider uppercase transition-all duration-200"
+                style={{
+                  background: size === s ? "#1c1410" : "#faf7f2",
+                  color: size === s ? "#fff" : "#7a6a5e",
+                  border: `1px solid ${size === s ? "#1c1410" : "#d4c4b8"}`,
+                }}
+              >
+                {s} см
+              </button>
+            ))}
           </div>
+        )}
+
+        {/* Ціна + кількість + кнопка */}
+        <div className="flex items-center gap-3 mt-4 pt-4" style={{ borderTop: "1px solid #f0e8e0" }}>
+          <span className="text-lg font-medium flex-shrink-0" style={{ color: "#c49a3c" }}>
+            {item.price} ₴
+          </span>
+
+          {/* Лічильник */}
+          <div className="flex items-center gap-1 ml-auto">
+            <button
+              onClick={() => setQty((q) => Math.max(1, q - 1))}
+              className="w-7 h-7 rounded-sm flex items-center justify-center transition-all duration-200"
+              style={{ border: "1px solid #d4c4b8", color: "#7a6a5e", background: "#faf7f2" }}
+            >
+              <Minus size={10} />
+            </button>
+            <span className="w-7 text-center text-sm font-medium" style={{ color: "#1c1410" }}>{qty}</span>
+            <button
+              onClick={() => setQty((q) => q + 1)}
+              className="w-7 h-7 rounded-sm flex items-center justify-center transition-all duration-200"
+              style={{ border: "1px solid #d4c4b8", color: "#7a6a5e", background: "#faf7f2" }}
+            >
+              <Plus size={10} />
+            </button>
+          </div>
+
           <button
             onClick={handleAdd}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-sm text-[0.65rem] tracking-wider uppercase transition-all duration-300"
+            className="dish-add-btn flex items-center gap-1.5 px-3 py-1.5 rounded-sm text-[0.6rem] tracking-wider uppercase transition-all duration-300 flex-shrink-0"
             style={{
-              background: added ? "rgba(139,26,46,0.08)" : "transparent",
+              background: added ? "#8b1a2e" : "#faf7f2",
               border: `1px solid ${added ? "#8b1a2e" : "#d4c4b8"}`,
-              color: added ? "#8b1a2e" : "#a09080",
+              color: added ? "#fff" : "#7a6a5e",
             }}
           >
-            <ShoppingCart size={11} />
-            {added ? "✓" : "Додати"}
+            {added ? <span style={{ fontSize: "0.7rem" }}>✓</span> : <ShoppingCart size={11} />}
+            {added ? "Додано" : "В кошик"}
           </button>
         </div>
       </div>
@@ -105,7 +164,6 @@ export default function MenuPage() {
   return (
     <div className="pt-20" style={{ background: "#faf7f2" }}>
       <div className="max-w-7xl mx-auto px-6 pt-12 pb-8">
-        <p className="section-label mb-3">Меню</p>
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <h1
             className="text-5xl md:text-6xl"
@@ -121,11 +179,7 @@ export default function MenuPage() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="w-full pl-9 pr-4 py-2.5 text-sm rounded-sm outline-none transition-colors"
-              style={{
-                background: "#fff",
-                border: "1px solid #e8ddd4",
-                color: "#1c1410",
-              }}
+              style={{ background: "#fff", border: "1px solid #e8ddd4", color: "#1c1410" }}
             />
           </div>
         </div>
@@ -133,7 +187,7 @@ export default function MenuPage() {
 
       <div className="divider-warm mx-6" />
 
-      {/* Filters */}
+      {/* Фільтри */}
       <div className="max-w-7xl mx-auto px-6 py-6">
         <div className="flex flex-wrap gap-2">
           <button
@@ -164,6 +218,7 @@ export default function MenuPage() {
         </div>
       </div>
 
+      {/* Картки */}
       <div className="max-w-7xl mx-auto px-6 pb-24">
         {filtered.length === 0 ? (
           <div className="text-center py-24" style={{ color: "#c4b4a8" }}>
@@ -176,6 +231,22 @@ export default function MenuPage() {
           </div>
         )}
       </div>
+
+      <style>{`
+        .dish-card {
+          transition: box-shadow 0.4s ease, border-color 0.4s ease, transform 0.4s ease;
+        }
+        .dish-card:hover {
+          box-shadow: 0 8px 28px rgba(28,20,16,0.1);
+          border-color: rgba(139,26,46,0.18);
+          transform: translateY(-2px);
+        }
+        .dish-add-btn:hover {
+          background: #8b1a2e !important;
+          border-color: #8b1a2e !important;
+          color: #fff !important;
+        }
+      `}</style>
     </div>
   );
 }

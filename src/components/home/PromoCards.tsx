@@ -34,15 +34,19 @@ function PromoModal({ promo, onClose }: { promo: Promo; onClose: () => void }) {
           <X size={13} />
         </button>
 
-        {/* Шапка — точно як у картках: 16/9 + object-contain + темний фон */}
-        <div
-          className="relative w-full overflow-hidden"
-          style={{ aspectRatio: "16/9", background: "#0d0806" }}
-        >
+        {/* Шапка — зображення з відступами, не розтягнуте */}
+        <div className="flex items-center justify-center p-4" style={{ background: "#0d0806" }}>
           {promo.image ? (
-            <Image src={promo.image} alt={promo.title} fill className="object-contain" sizes="576px" />
+            <Image
+              src={promo.image}
+              alt={promo.title}
+              width={1456}
+              height={816}
+              className="w-full h-auto rounded-[2px]"
+              sizes="544px"
+            />
           ) : (
-            <div className="absolute inset-0 flex items-center justify-center gap-4" style={{ background: color }}>
+            <div className="w-full flex items-center justify-center gap-4 py-10 rounded-[2px]" style={{ background: color }}>
               <span style={{ fontSize: "3.5rem" }}>{promo.icon}</span>
               <span className="text-white text-xl uppercase tracking-widest font-bold">{promo.label}</span>
             </div>

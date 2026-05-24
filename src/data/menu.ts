@@ -213,11 +213,12 @@ export const promos = [
   {
     id: 1,
     icon: "🍕",
-    label: "3+1",
+    label: "2+1",
     title: "Комбо меню",
     subtitle: "Третя піца — в подарунок!",
     description: "Замовляй будь-які дві піци і отримай третю безкоштовно. Діє на доставку та самовивіз. Не комбінується з іншими акціями.",
     href: "/menu?category=pizza",
+    image: "/promos/promo-pizza-2plus1.png",
   },
   {
     id: 2,

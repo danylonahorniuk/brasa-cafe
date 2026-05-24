@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { promos } from "@/data/menu";
 
@@ -24,7 +25,6 @@ export default function PromoCards() {
           </h2>
         </div>
 
-        {/* 4 картки в ряд */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {promos.map((promo, i) => {
             const color = cardColors[i % cardColors.length];
@@ -38,48 +38,55 @@ export default function PromoCards() {
                   transition: "transform 0.3s, box-shadow 0.3s",
                 }}
               >
-                {/* ── Верх — кольоровий ── */}
+                {/* ── Верх ── */}
                 <div
-                  className="flex flex-col items-center justify-end px-6 pt-8 pb-6 relative overflow-hidden"
-                  style={{ background: color, minHeight: "220px" }}
+                  className="relative overflow-hidden"
+                  style={{ minHeight: "220px", background: color }}
                 >
-                  {/* Декоративне коло позаду іконки */}
-                  <div
-                    className="absolute top-6 left-1/2 -translate-x-1/2 w-28 h-28 rounded-full"
-                    style={{ background: "rgba(255,255,255,0.1)" }}
-                  />
-
-                  {/* Іконка */}
-                  <span
-                    className="relative z-10 select-none"
-                    style={{ fontSize: "4.5rem", lineHeight: 1, filter: "drop-shadow(0 4px 8px rgba(0,0,0,0.2))" }}
-                    role="img"
-                    aria-hidden="true"
-                  >
-                    {promo.icon}
-                  </span>
-
-                  {/* Label / deal value */}
-                  <span
-                    className="relative z-10 mt-2 px-3 py-0.5 text-[0.6rem] tracking-widest uppercase font-medium rounded-[2px]"
-                    style={{ background: "rgba(0,0,0,0.2)", color: "rgba(255,255,255,0.9)" }}
-                  >
-                    {promo.label}
-                  </span>
-
-                  {/* Заголовок на кольоровому фоні */}
-                  <h3
-                    className="relative z-10 mt-3 text-center text-white leading-tight uppercase"
-                    style={{
-                      fontFamily: "var(--font-dm-sans), sans-serif",
-                      fontWeight: 700,
-                      fontSize: "0.95rem",
-                      letterSpacing: "0.04em",
-                      textShadow: "0 1px 4px rgba(0,0,0,0.25)",
-                    }}
-                  >
-                    {promo.title}
-                  </h3>
+                  {promo.image ? (
+                    /* Якщо є згенероване зображення — показуємо його */
+                    <Image
+                      src={promo.image}
+                      alt={promo.title}
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    />
+                  ) : (
+                    /* Інакше — емодзі + заголовок на кольоровому фоні */
+                    <div className="absolute inset-0 flex flex-col items-center justify-end px-6 pt-8 pb-6">
+                      <div
+                        className="absolute top-6 left-1/2 -translate-x-1/2 w-28 h-28 rounded-full"
+                        style={{ background: "rgba(255,255,255,0.1)" }}
+                      />
+                      <span
+                        className="relative z-10 select-none"
+                        style={{ fontSize: "4.5rem", lineHeight: 1, filter: "drop-shadow(0 4px 8px rgba(0,0,0,0.2))" }}
+                        role="img"
+                        aria-hidden="true"
+                      >
+                        {promo.icon}
+                      </span>
+                      <span
+                        className="relative z-10 mt-2 px-3 py-0.5 text-[0.6rem] tracking-widest uppercase font-medium rounded-[2px]"
+                        style={{ background: "rgba(0,0,0,0.2)", color: "rgba(255,255,255,0.9)" }}
+                      >
+                        {promo.label}
+                      </span>
+                      <h3
+                        className="relative z-10 mt-3 text-center text-white leading-tight uppercase"
+                        style={{
+                          fontFamily: "var(--font-dm-sans), sans-serif",
+                          fontWeight: 700,
+                          fontSize: "0.95rem",
+                          letterSpacing: "0.04em",
+                          textShadow: "0 1px 4px rgba(0,0,0,0.25)",
+                        }}
+                      >
+                        {promo.title}
+                      </h3>
+                    </div>
+                  )}
                 </div>
 
                 {/* ── Низ — білий ── */}

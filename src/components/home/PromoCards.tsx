@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { X, ArrowRight } from "lucide-react";
@@ -13,20 +13,40 @@ const cardColors = ["#8b1a2e", "#c49a3c"];
 /* ─── Модальне вікно ─── */
 function PromoModal({ promo, onClose }: { promo: Promo; onClose: () => void }) {
   const color = cardColors[promos.indexOf(promo) % cardColors.length];
+  const [closing, setClosing] = useState(false);
+
+  const handleClose = () => {
+    setClosing(true);
+    setTimeout(onClose, 320);
+  };
+
+  // Закриття по Escape
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") handleClose(); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
 
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-6 md:p-10"
-      style={{ background: "rgba(28,20,16,0.7)", backdropFilter: "blur(6px)" }}
-      onClick={onClose}
+      style={{
+        backdropFilter: "blur(6px)",
+        animation: closing ? "backdropOut 0.32s ease forwards" : "backdropIn 0.32s ease forwards",
+      }}
+      onClick={handleClose}
     >
       <div
         className="relative w-full max-w-xl rounded-sm overflow-hidden"
-        style={{ background: "#faf7f2", boxShadow: "0 24px 80px rgba(0,0,0,0.5)" }}
+        style={{
+          background: "#faf7f2",
+          boxShadow: "0 24px 80px rgba(0,0,0,0.5)",
+          animation: closing ? "modalOut 0.32s cubic-bezier(0.4,0,1,1) forwards" : "modalIn 0.36s cubic-bezier(0,0,0.2,1) forwards",
+        }}
         onClick={(e) => e.stopPropagation()}
       >
         <button
-          onClick={onClose}
+          onClick={handleClose}
           className="absolute top-3 right-3 z-10 w-7 h-7 rounded-full flex items-center justify-center"
           style={{ background: "rgba(0,0,0,0.45)", color: "#fff" }}
         >
@@ -58,10 +78,10 @@ function PromoModal({ promo, onClose }: { promo: Promo; onClose: () => void }) {
             <span style={{ color: "#8b1a2e" }}>+38 (044) 123-45-67</span>.
           </p>
           <div className="flex gap-3">
-            <Link href={promo.href} onClick={onClose} className="btn-primary flex items-center gap-2">
+            <Link href={promo.href} onClick={handleClose} className="btn-primary flex items-center gap-2">
               Замовити зі знижкою <ArrowRight size={13} />
             </Link>
-            <button onClick={onClose} className="px-4 py-2.5 rounded-sm text-[0.68rem] tracking-widest uppercase" style={{ border: "1px solid #d4c4b8", color: "#7a6a5e" }}>
+            <button onClick={handleClose} className="px-4 py-2.5 rounded-sm text-[0.68rem] tracking-widest uppercase" style={{ border: "1px solid #d4c4b8", color: "#7a6a5e" }}>
               Закрити
             </button>
           </div>
@@ -148,6 +168,22 @@ export default function PromoCards() {
         }
         .promo-row:first-child {
           border-top: 1px solid #e8ddd4;
+        }
+        @keyframes backdropIn {
+          from { background: rgba(28,20,16,0); }
+          to   { background: rgba(28,20,16,0.7); }
+        }
+        @keyframes backdropOut {
+          from { background: rgba(28,20,16,0.7); }
+          to   { background: rgba(28,20,16,0); }
+        }
+        @keyframes modalIn {
+          from { opacity: 0; transform: scale(0.93) translateY(16px); }
+          to   { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        @keyframes modalOut {
+          from { opacity: 1; transform: scale(1) translateY(0); }
+          to   { opacity: 0; transform: scale(0.93) translateY(16px); }
         }
       `}</style>
     </section>

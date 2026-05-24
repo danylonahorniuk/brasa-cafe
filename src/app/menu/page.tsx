@@ -225,7 +225,7 @@ export default function MenuPage() {
               className="pt-14"
             >
               {/* Заголовок секції */}
-              <div className="flex items-center gap-4 mb-8">
+              <div className="flex items-center gap-10 mb-8">
                 <h2
                   style={{
                     fontFamily: "var(--font-cormorant), serif",

@@ -17,7 +17,7 @@ function PromoModal({ promo, onClose }: { promo: Promo; onClose: () => void }) {
 
   const handleClose = () => {
     setClosing(true);
-    setTimeout(onClose, 320);
+    setTimeout(onClose, 400);
   };
 
   // Закриття по Escape
@@ -32,7 +32,7 @@ function PromoModal({ promo, onClose }: { promo: Promo; onClose: () => void }) {
       className="fixed inset-0 z-50 flex items-center justify-center p-6 md:p-10"
       style={{
         backdropFilter: "blur(6px)",
-        animation: closing ? "backdropOut 0.32s ease forwards" : "backdropIn 0.32s ease forwards",
+        animation: closing ? "backdropOut 0.4s ease forwards" : "backdropIn 0.5s ease forwards",
       }}
       onClick={handleClose}
     >
@@ -41,7 +41,7 @@ function PromoModal({ promo, onClose }: { promo: Promo; onClose: () => void }) {
         style={{
           background: "#faf7f2",
           boxShadow: "0 24px 80px rgba(0,0,0,0.5)",
-          animation: closing ? "modalOut 0.32s cubic-bezier(0.4,0,1,1) forwards" : "modalIn 0.36s cubic-bezier(0,0,0.2,1) forwards",
+          animation: closing ? "modalOut 0.4s cubic-bezier(0.4,0,1,1) forwards" : "modalIn 0.55s cubic-bezier(0,0,0.2,1) forwards",
         }}
         onClick={(e) => e.stopPropagation()}
       >
@@ -178,12 +178,12 @@ export default function PromoCards() {
           to   { background: rgba(28,20,16,0); }
         }
         @keyframes modalIn {
-          from { opacity: 0; transform: scale(0.93) translateY(16px); }
+          from { opacity: 0; transform: scale(0.96) translateY(24px); }
           to   { opacity: 1; transform: scale(1) translateY(0); }
         }
         @keyframes modalOut {
           from { opacity: 1; transform: scale(1) translateY(0); }
-          to   { opacity: 0; transform: scale(0.93) translateY(16px); }
+          to   { opacity: 0; transform: scale(0.96) translateY(12px); }
         }
       `}</style>
     </section>

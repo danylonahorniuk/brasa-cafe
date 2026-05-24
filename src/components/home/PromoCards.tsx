@@ -21,76 +21,73 @@ function PromoModal({ promo, onClose }: { promo: Promo; onClose: () => void }) {
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-2xl rounded-sm overflow-y-auto"
+        className="relative w-full max-w-4xl rounded-sm overflow-hidden flex flex-col md:flex-row"
         style={{ background: "#faf7f2", boxShadow: "0 24px 80px rgba(0,0,0,0.4)", maxHeight: "90vh" }}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Кнопка закриття */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-10 w-8 h-8 rounded-full flex items-center justify-center transition-all"
-          style={{ background: "rgba(0,0,0,0.4)", color: "#fff" }}
+          className="absolute top-4 right-4 z-10 w-8 h-8 rounded-full flex items-center justify-center"
+          style={{ background: "rgba(0,0,0,0.5)", color: "#fff" }}
         >
           <X size={15} />
         </button>
 
-        {/* Зображення */}
-        {promo.image ? (
-          <div className="w-full">
+        {/* Ліворуч — зображення */}
+        <div className="md:w-1/2 flex-shrink-0 relative" style={{ background: "#0d0806", minHeight: "280px" }}>
+          {promo.image ? (
             <Image
               src={promo.image}
               alt={promo.title}
-              width={1456}
-              height={816}
-              className="w-full h-auto block"
-              sizes="672px"
+              fill
+              className="object-cover"
+              sizes="448px"
             />
-          </div>
-        ) : (
-          <div
-            className="flex flex-col items-center justify-center gap-3 py-12"
-            style={{ background: color }}
-          >
-            <span style={{ fontSize: "5rem" }}>{promo.icon}</span>
-            <span className="text-white text-2xl uppercase tracking-widest font-bold">{promo.label}</span>
-          </div>
-        )}
+          ) : (
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-3" style={{ background: color }}>
+              <span style={{ fontSize: "5rem" }}>{promo.icon}</span>
+              <span className="text-white text-2xl uppercase tracking-widest font-bold">{promo.label}</span>
+            </div>
+          )}
+        </div>
 
-        {/* Контент */}
-        <div className="p-8">
+        {/* Праворуч — контент */}
+        <div className="md:w-1/2 flex flex-col justify-between p-8 overflow-y-auto">
           {/* Бейдж */}
-          <span
-            className="inline-block px-3 py-1 text-[0.6rem] tracking-widest uppercase font-medium rounded-[2px] mb-4"
-            style={{ background: color, color: "#fff" }}
-          >
-            {promo.label}
-          </span>
+          <div>
+            <span
+              className="inline-block px-3 py-1 text-[0.6rem] tracking-widest uppercase font-medium rounded-[2px] mb-4"
+              style={{ background: color, color: "#fff" }}
+            >
+              {promo.label}
+            </span>
 
-          {/* Заголовок */}
-          <h2
-            className="text-3xl md:text-4xl mb-3 leading-tight"
-            style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 300, color: "#1c1410" }}
-          >
-            {promo.subtitle}
-          </h2>
+            {/* Заголовок */}
+            <h2
+              className="text-2xl md:text-3xl mb-3 leading-tight"
+              style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 300, color: "#1c1410" }}
+            >
+              {promo.subtitle}
+            </h2>
 
-          {/* Опис */}
-          <p className="text-sm leading-relaxed mb-6" style={{ color: "#7a6a5e" }}>
-            {promo.description}
-          </p>
+            {/* Опис */}
+            <p className="text-sm leading-relaxed mb-5" style={{ color: "#7a6a5e" }}>
+              {promo.description}
+            </p>
 
-          {/* Розділювач */}
-          <div className="divider-warm mb-6" />
+            <div className="divider-warm mb-5" />
 
-          {/* Умови */}
-          <p className="text-xs leading-relaxed mb-8" style={{ color: "#a09080" }}>
-            * Акція діє на доставку та самовивіз. Не комбінується з іншими акціями та знижками.
-            Умови акції можуть змінюватись. Деталі уточнюйте у оператора за номером{" "}
-            <span style={{ color: "#8b1a2e" }}>+38 (044) 123-45-67</span>.
-          </p>
+            {/* Умови */}
+            <p className="text-xs leading-relaxed" style={{ color: "#a09080" }}>
+              * Акція діє на доставку та самовивіз. Не комбінується з іншими акціями.
+              Деталі уточнюйте у оператора:{" "}
+              <span style={{ color: "#8b1a2e" }}>+38 (044) 123-45-67</span>.
+            </p>
+          </div>
 
           {/* Кнопки */}
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-wrap gap-3 mt-6">
             <Link
               href={promo.href}
               onClick={onClose}
@@ -100,7 +97,7 @@ function PromoModal({ promo, onClose }: { promo: Promo; onClose: () => void }) {
             </Link>
             <button
               onClick={onClose}
-              className="px-6 py-3 rounded-sm text-[0.78rem] tracking-widest uppercase transition-all"
+              className="px-5 py-3 rounded-sm text-[0.72rem] tracking-widest uppercase transition-all"
               style={{ border: "1px solid #d4c4b8", color: "#7a6a5e" }}
             >
               Закрити

@@ -23,7 +23,7 @@ export default function PopularScroll() {
 
   const scroll = (dir: "left" | "right") => {
     if (!scrollRef.current) return;
-    scrollRef.current.scrollBy({ left: dir === "right" ? 280 : -280, behavior: "smooth" });
+    scrollRef.current.scrollBy({ left: dir === "right" ? 260 : -260, behavior: "smooth" });
   };
 
   const handleAdd = (item: typeof popular[0]) => {
@@ -76,73 +76,91 @@ export default function PopularScroll() {
         {popular.map((item) => (
           <div
             key={item.id}
-            className="pop-card group flex-shrink-0 rounded-sm overflow-hidden relative"
-            style={{ width: "240px", height: "320px" }}
+            className="pop-card group flex-shrink-0 flex flex-col rounded-sm overflow-hidden"
+            style={{
+              width: "220px",
+              background: "#fff",
+              border: "1px solid #e8ddd4",
+            }}
           >
-            {/* Фото — на всю картку */}
-            <Image
-              src={item.image}
-              alt={item.name}
-              fill
-              className="object-cover transition-transform duration-700 group-hover:scale-105"
-              sizes="240px"
-            />
+            {/* Фото */}
+            <div className="relative overflow-hidden" style={{ height: "220px", background: "#f5f0eb" }}>
+              <Image
+                src={item.image}
+                alt={item.name}
+                fill
+                className="object-cover transition-transform duration-700 group-hover:scale-105"
+                sizes="220px"
+              />
 
-            {/* Градієнт знизу */}
-            <div
-              className="absolute inset-0"
-              style={{ background: "linear-gradient(to top, rgba(12,8,6,0.9) 0%, rgba(12,8,6,0.25) 50%, transparent 75%)" }}
-            />
+              {/* Бейджі — верхній лівий */}
+              <div className="absolute top-2.5 left-2.5 flex gap-1.5 z-10">
+                {item.badge && (
+                  <span
+                    className="px-2 py-0.5 text-[0.55rem] tracking-widest uppercase font-medium rounded-[2px]"
+                    style={{ background: "#8b1a2e", color: "#fff" }}
+                  >
+                    {item.badge}
+                  </span>
+                )}
+                {item.spicy && (
+                  <span className="px-1.5 py-0.5 rounded-[2px] flex items-center bg-orange-500 text-white">
+                    <Flame size={8} />
+                  </span>
+                )}
+              </div>
 
-            {/* Бейджі зверху ліворуч */}
-            <div className="absolute top-3 left-3 flex gap-1.5 z-10">
-              {item.badge && (
-                <span className="px-2 py-0.5 text-[0.58rem] tracking-widest uppercase font-medium rounded-[2px]"
-                  style={{ background: "#8b1a2e", color: "#fff" }}>
-                  {item.badge}
-                </span>
-              )}
-              {item.spicy && (
-                <span className="px-2 py-0.5 text-[0.58rem] rounded-[2px] flex items-center gap-1 bg-orange-500 text-white">
-                  <Flame size={8} />
+              {/* Вага — нижній правий */}
+              {item.weight && (
+                <span
+                  className="absolute bottom-2 right-2 z-10 px-2 py-0.5 text-[0.58rem] rounded-[2px]"
+                  style={{
+                    background: "rgba(12,8,6,0.5)",
+                    color: "rgba(255,255,255,0.9)",
+                    backdropFilter: "blur(4px)",
+                  }}
+                >
+                  {item.weight}
                 </span>
               )}
             </div>
 
-            {/* Кнопка "Додати" — зверху праворуч, видна тільки при hover */}
-            <button
-              onClick={() => handleAdd(item)}
-              className="pop-add absolute top-3 right-3 z-10 w-8 h-8 rounded-full flex items-center justify-center"
-              style={{
-                background: addedId === item.id ? "#8b1a2e" : "rgba(255,255,255,0.15)",
-                border: `1px solid ${addedId === item.id ? "#8b1a2e" : "rgba(255,255,255,0.35)"}`,
-                backdropFilter: "blur(4px)",
-                color: "#fff",
-              }}
-            >
-              {addedId === item.id
-                ? <span style={{ fontSize: "0.75rem" }}>✓</span>
-                : <ShoppingCart size={13} />}
-            </button>
-
-            {/* Контент знизу */}
-            <div className="absolute bottom-0 left-0 right-0 p-4 z-10">
-              <p className="text-[0.58rem] tracking-widest uppercase mb-1" style={{ color: "rgba(255,255,255,0.45)" }}>
+            {/* Контент */}
+            <div className="flex flex-col flex-1 p-4">
+              <p className="text-[0.58rem] tracking-widest uppercase mb-1" style={{ color: "#a09080" }}>
                 {categoryLabel[item.category]}
               </p>
               <h3
-                className="text-lg leading-snug mb-2"
-                style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 400, color: "#fff" }}
+                className="text-xl leading-snug mb-auto"
+                style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 400, color: "#1c1410" }}
               >
                 {item.name}
               </h3>
-              <div className="flex items-center justify-between">
-                <span className="font-medium" style={{ color: "#c49a3c", fontSize: "1.05rem" }}>
+
+              {/* Ціна + кнопка */}
+              <div
+                className="flex items-center justify-between mt-4 pt-4"
+                style={{ borderTop: "1px solid #f0e8e0" }}
+              >
+                <span className="text-lg font-medium" style={{ color: "#c49a3c" }}>
                   {item.price} ₴
                 </span>
-                {item.weight && (
-                  <span className="text-[0.62rem]" style={{ color: "rgba(255,255,255,0.35)" }}>{item.weight}</span>
-                )}
+                <button
+                  onClick={() => handleAdd(item)}
+                  className="pop-add-btn flex items-center gap-1.5 px-3 py-1.5 rounded-sm text-[0.6rem] tracking-wider uppercase transition-all duration-300"
+                  style={{
+                    background: addedId === item.id ? "#8b1a2e" : "#faf7f2",
+                    border: `1px solid ${addedId === item.id ? "#8b1a2e" : "#d4c4b8"}`,
+                    color: addedId === item.id ? "#fff" : "#7a6a5e",
+                  }}
+                >
+                  {addedId === item.id ? (
+                    <span style={{ fontSize: "0.7rem" }}>✓</span>
+                  ) : (
+                    <ShoppingCart size={11} />
+                  )}
+                  {addedId === item.id ? "Додано" : "В кошик"}
+                </button>
               </div>
             </div>
           </div>
@@ -151,7 +169,7 @@ export default function PopularScroll() {
         {/* "Все меню" в кінці */}
         <Link
           href="/menu"
-          className="flex-shrink-0 w-44 rounded-sm flex flex-col items-center justify-center gap-3 transition-all duration-300"
+          className="flex-shrink-0 w-40 rounded-sm flex flex-col items-center justify-center gap-3 transition-all duration-300"
           style={{ border: "1.5px dashed #d4c4b8", color: "#a09080" }}
           onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "#8b1a2e"; (e.currentTarget as HTMLElement).style.color = "#8b1a2e"; }}
           onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "#d4c4b8"; (e.currentTarget as HTMLElement).style.color = "#a09080"; }}
@@ -162,14 +180,18 @@ export default function PopularScroll() {
       </div>
 
       <style>{`
-        .pop-card .pop-add {
-          opacity: 0;
-          transform: scale(0.8);
-          transition: opacity 0.35s ease, transform 0.35s ease, background 0.3s;
+        .pop-card {
+          transition: box-shadow 0.4s ease, border-color 0.4s ease, transform 0.4s ease;
         }
-        .pop-card:hover .pop-add {
-          opacity: 1;
-          transform: scale(1);
+        .pop-card:hover {
+          box-shadow: 0 8px 28px rgba(28,20,16,0.1);
+          border-color: rgba(139,26,46,0.18);
+          transform: translateY(-2px);
+        }
+        .pop-add-btn:hover {
+          background: #8b1a2e !important;
+          border-color: #8b1a2e !important;
+          color: #fff !important;
         }
       `}</style>
     </section>

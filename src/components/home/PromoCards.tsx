@@ -35,13 +35,13 @@ function PromoModal({ promo, onClose }: { promo: Promo; onClose: () => void }) {
         </button>
 
         {/* Зображення */}
-        <div className="relative w-full" style={{ aspectRatio: "16/9", background: "#0d0806" }}>
+        <div className="relative w-full" style={{ aspectRatio: "16/9" }}>
           {promo.image ? (
             <Image
               src={promo.image}
               alt={promo.title}
               fill
-              className="object-contain"
+              className="object-cover"
               sizes="672px"
             />
           ) : (

@@ -35,7 +35,7 @@ function PromoModal({ promo, onClose }: { promo: Promo; onClose: () => void }) {
         </button>
 
         {/* Шапка — зображення з відступами, не розтягнуте */}
-        <div className="flex items-center justify-center p-4" style={{ background: "#0d0806" }}>
+        <div className="flex items-center justify-center">
           {promo.image ? (
             <Image
               src={promo.image}

@@ -191,7 +191,7 @@ export default function MenuPage() {
                   style={{ color: isActive ? "#1c1410" : "#a09080" }}
                 >
                   <span className="text-[0.72rem] tracking-[0.12em] uppercase font-medium whitespace-nowrap">
-                    {cat.icon} {cat.label}
+                    {cat.label}
                   </span>
                   <span
                     className="absolute bottom-0 left-0 right-0 h-[2px] transition-all duration-300"
@@ -225,9 +225,8 @@ export default function MenuPage() {
               className="pt-14"
             >
               {/* Заголовок секції */}
-              <div className="flex items-center gap-6 mb-8">
+              <div className="flex items-center gap-4 mb-8">
                 <h2
-                  className="flex-shrink-0"
                   style={{
                     fontFamily: "var(--font-cormorant), serif",
                     fontWeight: 300,
@@ -239,8 +238,7 @@ export default function MenuPage() {
                 >
                   {cat.label}
                 </h2>
-                <div className="flex-1 h-px" style={{ background: "linear-gradient(to right, #d4c4b8, transparent)" }} />
-                <span className="flex-shrink-0 text-[0.62rem] tracking-widest uppercase" style={{ color: "#c4b4a8" }}>
+                <span className="text-[0.62rem] tracking-widest uppercase" style={{ color: "#c4b4a8" }}>
                   {cat.items.length} {cat.items.length === 1 ? "страва" : cat.items.length < 5 ? "страви" : "страв"}
                 </span>
               </div>

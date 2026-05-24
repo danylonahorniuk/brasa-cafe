@@ -21,28 +21,28 @@ function PromoModal({ promo, onClose }: { promo: Promo; onClose: () => void }) {
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-4xl rounded-sm overflow-hidden flex flex-col md:flex-row"
-        style={{ background: "#faf7f2", boxShadow: "0 24px 80px rgba(0,0,0,0.4)", maxHeight: "90vh" }}
+        className="relative w-full max-w-2xl rounded-sm overflow-hidden"
+        style={{ background: "#faf7f2", boxShadow: "0 24px 80px rgba(0,0,0,0.4)" }}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Кнопка закриття */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-10 w-8 h-8 rounded-full flex items-center justify-center"
+          className="absolute top-3 right-3 z-10 w-8 h-8 rounded-full flex items-center justify-center"
           style={{ background: "rgba(0,0,0,0.5)", color: "#fff" }}
         >
           <X size={15} />
         </button>
 
-        {/* Ліворуч — зображення */}
-        <div className="md:w-1/2 flex-shrink-0 relative" style={{ background: "#0d0806", minHeight: "280px" }}>
+        {/* Зображення — фіксована висота, object-top щоб верх не обрізався */}
+        <div className="relative w-full overflow-hidden" style={{ height: "260px", background: "#0d0806" }}>
           {promo.image ? (
             <Image
               src={promo.image}
               alt={promo.title}
               fill
-              className="object-cover"
-              sizes="448px"
+              className="object-cover object-top"
+              sizes="672px"
             />
           ) : (
             <div className="absolute inset-0 flex flex-col items-center justify-center gap-3" style={{ background: color }}>
@@ -52,52 +52,38 @@ function PromoModal({ promo, onClose }: { promo: Promo; onClose: () => void }) {
           )}
         </div>
 
-        {/* Праворуч — контент */}
-        <div className="md:w-1/2 flex flex-col justify-between p-8 overflow-y-auto">
-          {/* Бейдж */}
-          <div>
-            <span
-              className="inline-block px-3 py-1 text-[0.6rem] tracking-widest uppercase font-medium rounded-[2px] mb-4"
-              style={{ background: color, color: "#fff" }}
-            >
-              {promo.label}
-            </span>
+        {/* Контент */}
+        <div className="p-7">
+          <span
+            className="inline-block px-3 py-1 text-[0.6rem] tracking-widest uppercase font-medium rounded-[2px] mb-3"
+            style={{ background: color, color: "#fff" }}
+          >
+            {promo.label}
+          </span>
 
-            {/* Заголовок */}
-            <h2
-              className="text-2xl md:text-3xl mb-3 leading-tight"
-              style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 300, color: "#1c1410" }}
-            >
-              {promo.subtitle}
-            </h2>
+          <h2
+            className="text-2xl md:text-3xl mb-2 leading-tight"
+            style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 300, color: "#1c1410" }}
+          >
+            {promo.subtitle}
+          </h2>
 
-            {/* Опис */}
-            <p className="text-sm leading-relaxed mb-5" style={{ color: "#7a6a5e" }}>
-              {promo.description}
-            </p>
+          <p className="text-sm leading-relaxed mb-4" style={{ color: "#7a6a5e" }}>
+            {promo.description}
+          </p>
 
-            <div className="divider-warm mb-5" />
+          <p className="text-xs leading-relaxed mb-6" style={{ color: "#b0a090" }}>
+            * Не комбінується з іншими акціями. Деталі:{" "}
+            <span style={{ color: "#8b1a2e" }}>+38 (044) 123-45-67</span>.
+          </p>
 
-            {/* Умови */}
-            <p className="text-xs leading-relaxed" style={{ color: "#a09080" }}>
-              * Акція діє на доставку та самовивіз. Не комбінується з іншими акціями.
-              Деталі уточнюйте у оператора:{" "}
-              <span style={{ color: "#8b1a2e" }}>+38 (044) 123-45-67</span>.
-            </p>
-          </div>
-
-          {/* Кнопки */}
-          <div className="flex flex-wrap gap-3 mt-6">
-            <Link
-              href={promo.href}
-              onClick={onClose}
-              className="btn-primary flex items-center gap-2"
-            >
+          <div className="flex flex-wrap gap-3">
+            <Link href={promo.href} onClick={onClose} className="btn-primary flex items-center gap-2">
               Замовити зі знижкою <ArrowRight size={14} />
             </Link>
             <button
               onClick={onClose}
-              className="px-5 py-3 rounded-sm text-[0.72rem] tracking-widest uppercase transition-all"
+              className="px-5 py-3 rounded-sm text-[0.72rem] tracking-widest uppercase"
               style={{ border: "1px solid #d4c4b8", color: "#7a6a5e" }}
             >
               Закрити

@@ -9,7 +9,6 @@ export default function CategoryGrid() {
     <section className="max-w-7xl mx-auto px-6 py-16">
       <div className="flex items-end justify-between mb-8">
         <div>
-          <p className="section-label mb-2">Меню</p>
           <h2
             className="text-4xl md:text-5xl"
             style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 300, color: "#1c1410", lineHeight: 1.1 }}

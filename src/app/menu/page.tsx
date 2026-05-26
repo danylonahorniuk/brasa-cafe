@@ -6,17 +6,25 @@ import { ShoppingCart, Flame, Search, Sparkles, Plus, Minus } from "lucide-react
 import { menuItems, menuCategories } from "@/data/menu";
 import { useCart } from "@/context/CartContext";
 
-/* ─── Рядок однієї страви ─── */
-function ItemRow({ item }: { item: typeof menuItems[0] }) {
+const categoryLabel: Record<string, string> = {
+  pizza: "Піца", rolls: "Роли", burgers: "Бургер", drinks: "Напій", alcohol: "Алкоголь",
+};
+
+/* ─── Один рядок страви: фото + текст, що чергуються ─── */
+function DishRow({ item, index }: { item: typeof menuItems[0]; index: number }) {
   const { add } = useCart();
   const [added, setAdded] = useState(false);
   const [qty, setQty] = useState(1);
   const [size, setSize] = useState<"30" | "40">("30");
 
+  const reversed = index % 2 === 1;
   const hasSize = item.category === "pizza" && item.sizes;
   const currentPrice = hasSize ? item.sizes![size] : item.price;
   const cartKey = hasSize ? `${item.id}-${size}` : `${item.id}`;
   const sizeLabel = hasSize ? `${size} см` : undefined;
+  const displayWeight = hasSize && item.weight?.includes(" / ")
+    ? item.weight.split(" / ")[size === "30" ? 0 : 1]
+    : item.weight;
 
   const handleAdd = () => {
     for (let i = 0; i < qty; i++) add(item, cartKey, sizeLabel, currentPrice);
@@ -26,189 +34,165 @@ function ItemRow({ item }: { item: typeof menuItems[0] }) {
 
   return (
     <div
-      className="item-row flex items-start gap-4 py-4"
-      style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}
+      className="dish-row flex flex-col md:flex-row items-center gap-8 md:gap-12 py-10"
+      style={{
+        borderBottom: "1px solid #ede4d8",
+        flexDirection: reversed ? "row-reverse" : "row",
+      }}
     >
-      {/* Назва + опис + розмір */}
-      <div className="flex-1 min-w-0">
-        <div className="flex flex-wrap items-center gap-2 mb-1">
+      {/* ── Кругова фотографія ── */}
+      <div className="flex-shrink-0">
+        <div
+          className="dish-circle relative overflow-hidden"
+          style={{
+            width: 200,
+            height: 200,
+            borderRadius: "50%",
+            border: "3px solid #e8ddd4",
+            boxShadow: "0 8px 32px rgba(28,20,16,0.12)",
+            background: "#f5ede2",
+          }}
+        >
+          <Image
+            src={item.image}
+            alt={item.name}
+            fill
+            className="object-cover transition-transform duration-700"
+            style={{ objectPosition: item.imagePosition ?? "center" }}
+            sizes="200px"
+          />
+        </div>
+      </div>
+
+      {/* ── Текстовий блок ── */}
+      <div className="flex-1 min-w-0 w-full">
+        {/* Бейджі */}
+        <div className="flex flex-wrap items-center gap-2 mb-2">
           <span
-            style={{
-              fontFamily: "var(--font-cormorant), serif",
-              fontSize: "1.25rem",
-              fontWeight: 400,
-              color: "#f0e8dc",
-              lineHeight: 1.2,
-            }}
+            className="text-[0.52rem] tracking-[0.22em] uppercase"
+            style={{ color: "#c4b4a0" }}
           >
-            {item.name}
+            {categoryLabel[item.category]}
           </span>
           {item.badge && (
             <span
-              className="px-1.5 py-0.5 text-[0.45rem] tracking-widest uppercase"
-              style={{ background: "#8b1a2e", color: "#fff", borderRadius: "2px" }}
+              className="px-2 py-0.5 text-[0.48rem] tracking-widest uppercase rounded-[2px]"
+              style={{ background: "#8b1a2e", color: "#fff" }}
             >
               {item.badge}
             </span>
           )}
           {item.isNew && (
             <span
-              className="px-1.5 py-0.5 text-[0.45rem] tracking-widest uppercase flex items-center gap-0.5"
-              style={{ background: "rgba(196,154,60,0.15)", color: "#c49a3c", border: "1px solid rgba(196,154,60,0.3)", borderRadius: "2px" }}
+              className="px-2 py-0.5 text-[0.48rem] tracking-widest uppercase rounded-[2px] flex items-center gap-1"
+              style={{ background: "rgba(196,154,60,0.12)", color: "#c49a3c", border: "1px solid rgba(196,154,60,0.3)" }}
             >
               <Sparkles size={6} /> Нове
             </span>
           )}
           {item.spicy && (
             <span
-              className="w-4 h-4 rounded-full flex items-center justify-center flex-shrink-0"
-              style={{ background: "linear-gradient(135deg,#ff8c42,#e63312)", boxShadow: "0 1px 6px rgba(230,80,18,0.45)" }}
+              className="w-4 h-4 rounded-full flex items-center justify-center"
+              style={{ background: "linear-gradient(135deg,#ff8c42,#e63312)", boxShadow: "0 1px 6px rgba(230,80,18,0.4)" }}
             >
               <Flame size={7} color="#fff" />
             </span>
           )}
         </div>
 
-        <p className="text-[0.67rem] leading-relaxed mb-1.5 line-clamp-2" style={{ color: "#5a4a3a" }}>
+        {/* Назва */}
+        <h3
+          className="mb-2 leading-tight"
+          style={{
+            fontFamily: "var(--font-cormorant), serif",
+            fontWeight: 400,
+            fontSize: "clamp(1.5rem, 3vw, 2rem)",
+            color: "#1c1410",
+          }}
+        >
+          {item.name}
+        </h3>
+
+        {/* Опис */}
+        <p
+          className="text-sm leading-relaxed mb-4"
+          style={{ color: "#8a7a6e", maxWidth: "420px" }}
+        >
           {item.description}
         </p>
 
-        {item.weight && !hasSize && (
-          <span className="text-[0.55rem] tracking-wider" style={{ color: "#3a2e24" }}>{item.weight}</span>
+        {/* Вага (без піци — для неї в розмірах) */}
+        {!hasSize && displayWeight && (
+          <p className="text-[0.62rem] tracking-wider mb-4" style={{ color: "#c4b4a0" }}>
+            {displayWeight}
+          </p>
         )}
 
+        {/* Вибір розміру для піци */}
         {hasSize && (
-          <div className="flex gap-1.5 mt-1">
+          <div className="flex gap-2 mb-4">
             {(["30", "40"] as const).map((s) => (
               <button
                 key={s}
                 onClick={() => setSize(s)}
-                className="px-2.5 py-0.5 text-[0.55rem] tracking-wider uppercase transition-all duration-200"
+                className="px-3 py-1.5 text-[0.6rem] tracking-wider uppercase transition-all duration-200 rounded-[2px]"
                 style={{
-                  borderRadius: "2px",
-                  background: size === s ? "#c49a3c" : "rgba(196,154,60,0.08)",
-                  color: size === s ? "#1a1208" : "#6a5a4a",
-                  border: `1px solid ${size === s ? "#c49a3c" : "rgba(196,154,60,0.2)"}`,
-                  fontWeight: size === s ? 600 : 400,
+                  background: size === s ? "#1c1410" : "#f5f0ea",
+                  color: size === s ? "#fff" : "#7a6a5e",
+                  border: `1px solid ${size === s ? "#1c1410" : "#d8ccc0"}`,
                 }}
               >
-                {s} см · {item.weight?.includes(" / ") ? (s === "30" ? item.weight.split(" / ")[0] : item.weight.split(" / ")[1]) : ""}
+                {s} см · {s === "30" ? item.weight?.split(" / ")[0] : item.weight?.split(" / ")[1]}
               </button>
             ))}
           </div>
         )}
-      </div>
 
-      {/* Ціна + кількість + кнопка */}
-      <div className="flex items-center gap-2 flex-shrink-0 mt-0.5">
-        <span
-          style={{
-            fontFamily: "var(--font-cormorant), serif",
-            fontSize: "1.2rem",
-            color: "#c49a3c",
-            lineHeight: 1,
-            minWidth: "58px",
-            textAlign: "right",
-          }}
-        >
-          {currentPrice} ₴
-        </span>
-
-        <div className="flex items-center gap-1">
-          <button
-            onClick={() => setQty(q => Math.max(1, q - 1))}
-            className="w-6 h-6 flex items-center justify-center transition-colors"
-            style={{ border: "1px solid rgba(255,255,255,0.1)", color: "#5a4a3a", borderRadius: "2px" }}
-          >
-            <Minus size={8} />
-          </button>
-          <span className="w-5 text-center text-xs" style={{ color: "#a09080" }}>{qty}</span>
-          <button
-            onClick={() => setQty(q => q + 1)}
-            className="w-6 h-6 flex items-center justify-center transition-colors"
-            style={{ border: "1px solid rgba(255,255,255,0.1)", color: "#5a4a3a", borderRadius: "2px" }}
-          >
-            <Plus size={8} />
-          </button>
-        </div>
-
-        <button
-          onClick={handleAdd}
-          className="menu-add-btn flex items-center gap-1.5 px-3 py-1.5 text-[0.55rem] tracking-wider uppercase transition-all duration-300"
-          style={{
-            borderRadius: "2px",
-            background: added ? "#8b1a2e" : "rgba(196,154,60,0.1)",
-            border: `1px solid ${added ? "#8b1a2e" : "rgba(196,154,60,0.25)"}`,
-            color: added ? "#fff" : "#c49a3c",
-          }}
-        >
-          {added ? <span style={{ fontSize: "0.65rem" }}>✓</span> : <ShoppingCart size={10} />}
-          {added ? "Додано" : "В кошик"}
-        </button>
-      </div>
-    </div>
-  );
-}
-
-/* ─── Секція категорії ─── */
-function CategorySection({
-  cat,
-  items,
-  reversed,
-}: {
-  cat: { id: string; label: string; icon: string };
-  items: typeof menuItems;
-  reversed: boolean;
-}) {
-  // Беремо найпопулярнішу страву для кругового фото
-  const hero = items.find((i) => i.popular) ?? items[0];
-
-  return (
-    <div className="flex flex-col md:flex-row items-start gap-10 md:gap-16"
-      style={{ flexDirection: reversed ? "row-reverse" : "row" }}>
-
-      {/* Кругове фото — анкор категорії */}
-      <div className="flex-shrink-0 flex flex-col items-center gap-4 w-full md:w-auto">
-        <div
-          className="circle-photo relative overflow-hidden"
-          style={{
-            width: 220,
-            height: 220,
-            borderRadius: "50%",
-            border: "2px solid rgba(196,154,60,0.35)",
-            boxShadow: "0 0 0 8px rgba(196,154,60,0.06), 0 20px 60px rgba(0,0,0,0.5)",
-            background: "#1a1208",
-          }}
-        >
-          <Image
-            src={hero.image}
-            alt={hero.name}
-            fill
-            className="object-cover"
-            style={{ objectPosition: hero.imagePosition ?? "center" }}
-            sizes="220px"
-          />
-        </div>
-
-        {/* Назва категорії під фото */}
-        <div
-          className="px-4 py-1.5"
-          style={{ background: "#c49a3c", borderRadius: "2px" }}
-        >
+        {/* Ціна + кількість + кнопка */}
+        <div className="flex items-center gap-4 flex-wrap">
           <span
-            className="text-[0.62rem] tracking-[0.25em] uppercase font-semibold"
-            style={{ color: "#1a1208" }}
+            style={{
+              fontFamily: "var(--font-cormorant), serif",
+              fontSize: "1.8rem",
+              fontWeight: 400,
+              color: "#c49a3c",
+              lineHeight: 1,
+            }}
           >
-            {cat.label}
+            {currentPrice} ₴
           </span>
-        </div>
-      </div>
 
-      {/* Список страв */}
-      <div className="flex-1 w-full">
-        {items.map((item) => (
-          <ItemRow key={item.id} item={item} />
-        ))}
+          <div className="flex items-center gap-1.5">
+            <button
+              onClick={() => setQty(q => Math.max(1, q - 1))}
+              className="w-7 h-7 flex items-center justify-center transition-colors rounded-[2px]"
+              style={{ border: "1px solid #d8ccc0", color: "#8a7a6e", background: "#f5f0ea" }}
+            >
+              <Minus size={10} />
+            </button>
+            <span className="w-6 text-center text-sm" style={{ color: "#1c1410" }}>{qty}</span>
+            <button
+              onClick={() => setQty(q => q + 1)}
+              className="w-7 h-7 flex items-center justify-center transition-colors rounded-[2px]"
+              style={{ border: "1px solid #d8ccc0", color: "#8a7a6e", background: "#f5f0ea" }}
+            >
+              <Plus size={10} />
+            </button>
+          </div>
+
+          <button
+            onClick={handleAdd}
+            className="dish-add-btn flex items-center gap-2 px-5 py-2 text-[0.6rem] tracking-widest uppercase transition-all duration-300 rounded-[2px]"
+            style={{
+              background: added ? "#8b1a2e" : "#1c1410",
+              color: "#fff",
+              border: `1px solid ${added ? "#8b1a2e" : "#1c1410"}`,
+            }}
+          >
+            {added ? <span style={{ fontSize: "0.65rem" }}>✓</span> : <ShoppingCart size={11} />}
+            {added ? "Додано" : "В кошик"}
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -252,29 +236,38 @@ export default function MenuPage() {
   };
 
   return (
-    <div className="pt-20" style={{ background: "#0f0c08", minHeight: "100vh" }}>
+    <div className="pt-20" style={{ background: "#faf7f2", minHeight: "100vh" }}>
 
       {/* ── Шапка ── */}
-      <div className="max-w-5xl mx-auto px-6 pt-14 pb-10 text-center">
-        <p className="text-[0.55rem] tracking-[0.35em] uppercase mb-3" style={{ color: "#3a2e24" }}>
-          Ресторан Brasa · Київ
-        </p>
-        <h1
-          style={{
-            fontFamily: "var(--font-cormorant), serif",
-            fontWeight: 300,
-            fontSize: "clamp(3rem, 8vw, 5.5rem)",
-            letterSpacing: "0.15em",
-            lineHeight: 1,
-            color: "#f0e8dc",
-          }}
-        >
-          МЕНЮ
-        </h1>
-        <div className="flex items-center justify-center gap-4 mt-5">
-          <div className="h-px w-16" style={{ background: "linear-gradient(to right, transparent, rgba(196,154,60,0.4))" }} />
-          <span style={{ color: "rgba(196,154,60,0.5)", fontSize: "0.45rem", letterSpacing: "0.4em" }}>◆ ◆ ◆</span>
-          <div className="h-px w-16" style={{ background: "linear-gradient(to left, transparent, rgba(196,154,60,0.4))" }} />
+      <div className="max-w-3xl mx-auto px-6 pt-12 pb-8">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <div>
+            <p className="text-[0.55rem] tracking-[0.3em] uppercase mb-2" style={{ color: "#b8a898" }}>
+              Ресторан Brasa · Київ
+            </p>
+            <h1
+              style={{
+                fontFamily: "var(--font-cormorant), serif",
+                fontWeight: 300,
+                fontSize: "clamp(2.8rem, 6vw, 4.5rem)",
+                lineHeight: 1,
+                color: "#1c1410",
+              }}
+            >
+              Наше меню
+            </h1>
+          </div>
+          <div className="relative w-full md:w-64 flex-shrink-0">
+            <Search size={13} className="absolute left-3 top-1/2 -translate-y-1/2" style={{ color: "#b8a898" }} />
+            <input
+              type="text"
+              placeholder="Пошук страви..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="w-full pl-9 pr-4 py-2.5 text-sm outline-none rounded-[2px]"
+              style={{ background: "#fff", border: "1px solid #e0d4c8", color: "#1c1410" }}
+            />
+          </div>
         </div>
       </div>
 
@@ -282,29 +275,24 @@ export default function MenuPage() {
       <div
         ref={navRef}
         className="sticky z-30"
-        style={{
-          top: "64px",
-          background: "#0f0c08",
-          borderTop: "1px solid rgba(255,255,255,0.05)",
-          borderBottom: "1px solid rgba(255,255,255,0.05)",
-        }}
+        style={{ top: "64px", background: "#faf7f2", borderTop: "1px solid #e8ddd4", borderBottom: "1px solid #e8ddd4" }}
       >
-        <div className="max-w-5xl mx-auto px-6 flex items-center gap-3">
-          <nav className="flex flex-1 overflow-x-auto" style={{ scrollbarWidth: "none" }}>
+        <div className="max-w-3xl mx-auto px-6">
+          <nav className="flex overflow-x-auto" style={{ scrollbarWidth: "none" }}>
             {menuCategories.map((cat) => {
               const isActive = activeId === cat.id;
               return (
                 <button
                   key={cat.id}
                   onClick={() => scrollToSection(cat.id)}
-                  className="flex-shrink-0 px-5 py-4 relative transition-all duration-300 text-[0.65rem] tracking-[0.15em] uppercase whitespace-nowrap"
-                  style={{ color: isActive ? "#c49a3c" : "#3a2e24" }}
+                  className="flex-shrink-0 px-5 py-4 relative transition-all duration-300 text-[0.68rem] tracking-[0.14em] uppercase whitespace-nowrap"
+                  style={{ color: isActive ? "#1c1410" : "#a09080" }}
                 >
                   {cat.label}
                   <span
-                    className="absolute bottom-0 left-0 right-0 h-[1px] transition-all duration-300"
+                    className="absolute bottom-0 left-0 right-0 h-[2px] transition-all duration-300"
                     style={{
-                      background: "#c49a3c",
+                      background: "#8b1a2e",
                       opacity: isActive ? 1 : 0,
                       transform: isActive ? "scaleX(1)" : "scaleX(0)",
                       transformOrigin: "center",
@@ -314,54 +302,58 @@ export default function MenuPage() {
               );
             })}
           </nav>
-
-          <div className="relative flex-shrink-0">
-            <Search size={13} className="absolute left-2.5 top-1/2 -translate-y-1/2" style={{ color: "#3a2e24" }} />
-            <input
-              type="text"
-              placeholder="Пошук..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="pl-8 pr-3 py-2 text-[0.65rem] outline-none w-32"
-              style={{
-                background: "rgba(255,255,255,0.03)",
-                border: "1px solid rgba(255,255,255,0.07)",
-                color: "#a09080",
-                borderRadius: "2px",
-              }}
-            />
-          </div>
         </div>
       </div>
 
       {/* ── Секції ── */}
-      <div className="max-w-5xl mx-auto px-6 pb-28">
+      <div className="max-w-3xl mx-auto px-6 pb-24">
         {grouped.length === 0 ? (
-          <div className="text-center py-24">
-            <p className="text-2xl mb-2" style={{ fontFamily: "var(--font-cormorant), serif", color: "#3a2e24" }}>
-              Нічого не знайдено
-            </p>
-            <p className="text-sm" style={{ color: "#2a2018" }}>Спробуйте змінити запит</p>
+          <div className="text-center py-24" style={{ color: "#c4b4a8" }}>
+            <p className="text-2xl mb-2" style={{ fontFamily: "var(--font-cormorant), serif" }}>Нічого не знайдено</p>
+            <p className="text-sm">Спробуйте змінити запит</p>
           </div>
         ) : (
-          grouped.map((cat, i) => (
+          grouped.map((cat, ci) => (
             <section
               key={cat.id}
               id={cat.id}
               ref={(el) => { sectionRefs.current[cat.id] = el; }}
-              className="pt-20"
+              className="pt-16"
             >
-              <CategorySection
-                cat={cat}
-                items={cat.items}
-                reversed={i % 2 === 1}
-              />
+              {/* Заголовок категорії */}
+              <div className="flex items-center gap-5 mb-2">
+                <h2
+                  style={{
+                    fontFamily: "var(--font-cormorant), serif",
+                    fontWeight: 300,
+                    fontStyle: "italic",
+                    fontSize: "clamp(2rem, 4vw, 3rem)",
+                    lineHeight: 1,
+                    color: "#1c1410",
+                    flexShrink: 0,
+                  }}
+                >
+                  {cat.label}
+                </h2>
+                <div className="flex-1 h-px" style={{ background: "#e0d4c8" }} />
+                <span className="text-[0.52rem] tracking-widest uppercase flex-shrink-0" style={{ color: "#c4b4a8" }}>
+                  {cat.items.length} {cat.items.length === 1 ? "страва" : cat.items.length < 5 ? "страви" : "страв"}
+                </span>
+              </div>
 
-              {i < grouped.length - 1 && (
-                <div className="mt-16 flex items-center gap-5">
-                  <div className="flex-1 h-px" style={{ background: "rgba(255,255,255,0.05)" }} />
-                  <span style={{ color: "rgba(196,154,60,0.25)", fontSize: "0.45rem", letterSpacing: "0.5em" }}>✦ ✦ ✦</span>
-                  <div className="flex-1 h-px" style={{ background: "rgba(255,255,255,0.05)" }} />
+              {/* Рядки страв — кожна своє фото, чергування */}
+              <div>
+                {cat.items.map((item, idx) => (
+                  <DishRow key={item.id} item={item} index={idx} />
+                ))}
+              </div>
+
+              {/* Роздільник між категоріями */}
+              {ci < grouped.length - 1 && (
+                <div className="mt-10 flex items-center gap-5">
+                  <div className="flex-1 h-px" style={{ background: "#e8ddd4" }} />
+                  <span style={{ color: "#d4c4b4", fontSize: "0.45rem", letterSpacing: "0.5em" }}>✦ ✦ ✦</span>
+                  <div className="flex-1 h-px" style={{ background: "#e8ddd4" }} />
                 </div>
               )}
             </section>
@@ -370,31 +362,26 @@ export default function MenuPage() {
       </div>
 
       <style>{`
-        .item-row {
-          transition: background 0.2s ease;
-          border-radius: 3px;
-          margin: 0 -8px;
-          padding-left: 8px;
-          padding-right: 8px;
+        .dish-circle {
+          transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s ease;
         }
-        .item-row:hover {
-          background: rgba(255,255,255,0.025);
+        .dish-row:hover .dish-circle {
+          border-color: rgba(139,26,46,0.35) !important;
+          box-shadow: 0 12px 40px rgba(28,20,16,0.18) !important;
+          transform: scale(1.03);
         }
-        .circle-photo {
-          transition: box-shadow 0.4s ease;
-        }
-        .circle-photo:hover {
-          box-shadow: 0 0 0 8px rgba(196,154,60,0.1), 0 20px 60px rgba(0,0,0,0.5) !important;
-        }
-        .menu-add-btn:hover {
+        .dish-add-btn:hover {
           background: #8b1a2e !important;
           border-color: #8b1a2e !important;
-          color: #fff !important;
         }
         @media (max-width: 767px) {
-          .flex-col.md\\:flex-row {
+          .dish-row {
             flex-direction: column !important;
             align-items: center;
+            text-align: center;
+          }
+          .dish-row p, .dish-row h3 {
+            max-width: 100% !important;
           }
         }
       `}</style>

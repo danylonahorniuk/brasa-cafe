@@ -124,14 +124,12 @@ export default function HeroSlider() {
               className="flex flex-wrap gap-4 mt-8 animate-fade-up delay-300"
               style={{ animationFillMode: "both" }}
             >
-              <Link href={slide.href} className="btn-primary">
-                {slide.cta}
+              <Link href={slide.href} className="hero-btn-primary">
+                <span>{slide.cta}</span>
+                <span className="hero-btn-arrow">→</span>
               </Link>
-              <Link
-                href="/booking"
-                className="px-7 py-3 rounded-sm text-[0.78rem] tracking-widest uppercase text-white border border-white/30 hover:border-white/60 hover:bg-white/10 transition-all"
-              >
-                Забронювати столик
+              <Link href="/booking" className="hero-btn-glass">
+                <span>Забронювати столик</span>
               </Link>
             </div>
           </div>
@@ -185,6 +183,73 @@ export default function HeroSlider() {
         @keyframes slide-progress {
           from { width: 0% }
           to   { width: 100% }
+        }
+
+        .hero-btn-primary {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.6rem;
+          padding: 0.9rem 2.2rem;
+          border-radius: 2px;
+          font-size: 0.75rem;
+          font-weight: 500;
+          letter-spacing: 0.16em;
+          text-transform: uppercase;
+          color: #fff;
+          background: linear-gradient(135deg, #a01f35 0%, #7a1525 100%);
+          border: 1px solid rgba(255,255,255,0.14);
+          box-shadow: 0 4px 24px rgba(139,26,46,0.45), inset 0 1px 0 rgba(255,255,255,0.12);
+          transition: all 0.3s ease;
+          position: relative;
+          overflow: hidden;
+        }
+        .hero-btn-primary::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(135deg, rgba(196,154,60,0.12) 0%, transparent 60%);
+          opacity: 0;
+          transition: opacity 0.3s ease;
+        }
+        .hero-btn-primary:hover {
+          box-shadow: 0 8px 32px rgba(139,26,46,0.55), inset 0 1px 0 rgba(255,255,255,0.18);
+          transform: translateY(-2px);
+          border-color: rgba(255,255,255,0.22);
+        }
+        .hero-btn-primary:hover::before {
+          opacity: 1;
+        }
+        .hero-btn-arrow {
+          display: inline-block;
+          transition: transform 0.3s ease;
+        }
+        .hero-btn-primary:hover .hero-btn-arrow {
+          transform: translateX(4px);
+        }
+
+        .hero-btn-glass {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.6rem;
+          padding: 0.9rem 2.2rem;
+          border-radius: 2px;
+          font-size: 0.75rem;
+          font-weight: 400;
+          letter-spacing: 0.16em;
+          text-transform: uppercase;
+          color: rgba(255,255,255,0.85);
+          background: rgba(255,255,255,0.07);
+          border: 1px solid rgba(255,255,255,0.22);
+          backdrop-filter: blur(14px);
+          -webkit-backdrop-filter: blur(14px);
+          transition: all 0.3s ease;
+        }
+        .hero-btn-glass:hover {
+          background: rgba(255,255,255,0.14);
+          border-color: rgba(255,255,255,0.42);
+          color: #fff;
+          transform: translateY(-2px);
+          box-shadow: 0 4px 20px rgba(0,0,0,0.2);
         }
       `}</style>
     </section>

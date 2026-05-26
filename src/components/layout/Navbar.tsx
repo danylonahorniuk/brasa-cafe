@@ -78,14 +78,17 @@ export default function Navbar() {
                     className="relative text-[0.75rem] tracking-[0.1em] uppercase transition-colors duration-300"
                     style={{
                       color: active
-                        ? "#c49a3c"
+                        ? (showWhite ? "#c49a3c" : "#ffffff")
                         : showWhite ? "rgba(255,255,255,0.65)" : "rgba(255,255,255,0.75)",
                     }}
                   >
                     {l.label}
                     <span
-                      className="absolute -bottom-0.5 left-0 h-px bg-[#8b1a2e] transition-all duration-300"
-                      style={{ width: active ? "100%" : "0%" }}
+                      className="absolute -bottom-0.5 left-0 h-px transition-all duration-300"
+                      style={{
+                        width: active ? "100%" : "0%",
+                        background: showWhite ? "#c49a3c" : "#ffffff",
+                      }}
                     />
                   </Link>
                 </li>

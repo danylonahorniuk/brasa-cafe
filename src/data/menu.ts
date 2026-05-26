@@ -159,7 +159,6 @@ export const menuItems: MenuItem[] = [
     image: "https://images.unsplash.com/photo-1552913902-366e726db79e?w=600&q=80",
     badge: "Преміум",
     isNew: true,
-    popular: true,
     weight: "400г",
   },
   {
@@ -170,6 +169,7 @@ export const menuItems: MenuItem[] = [
     category: "burgers",
     image: "https://images.unsplash.com/photo-1626082927389-6cd097cee6ad?w=600&q=80",
     spicy: true,
+    popular: true,
     weight: "360г",
   },
 

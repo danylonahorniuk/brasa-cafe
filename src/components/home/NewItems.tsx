@@ -68,8 +68,11 @@ function NewItemCard({ item }: { item: typeof newItems[0] }) {
             </span>
           )}
           {item.spicy && (
-            <span className="px-1.5 py-0.5 rounded-[2px] flex items-center bg-orange-500 text-white">
-              <Flame size={8} />
+            <span
+              className="w-5 h-5 rounded-full flex items-center justify-center"
+              style={{ background: "linear-gradient(135deg, #ff8c42 0%, #e63312 100%)", boxShadow: "0 2px 8px rgba(230,80,18,0.45)" }}
+            >
+              <Flame size={9} color="#fff" />
             </span>
           )}
         </div>

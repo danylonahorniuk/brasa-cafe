@@ -88,11 +88,17 @@ function NewItemCard({ item }: { item: typeof newItems[0] }) {
           {categoryLabel[item.category]}
         </p>
         <h3
-          className="text-xl leading-snug mb-auto"
+          className="text-xl leading-snug mb-1"
           style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 400, color: "#1c1410" }}
         >
           {item.name}
         </h3>
+        <p
+          className="text-[0.65rem] leading-relaxed mb-auto line-clamp-2"
+          style={{ color: "#a09080" }}
+        >
+          {item.description}
+        </p>
 
         {/* Вибір розміру для піци */}
         {hasSizes && (

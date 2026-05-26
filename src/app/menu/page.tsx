@@ -37,8 +37,8 @@ function DishCard({ item }: { item: typeof menuItems[0] }) {
 
   return (
     <div className="dish-card group flex flex-col rounded-sm overflow-hidden"
-      style={{ background: "#fff", border: "1px solid #e8ddd4" }}>
-      <div className="relative overflow-hidden flex-shrink-0" style={{ height: "200px", background: "#f5f0eb" }}>
+      style={{ background: "#fffdf7", border: "1px solid #ddd0bb" }}>
+      <div className="relative overflow-hidden flex-shrink-0" style={{ height: "200px", background: "#f5ede0" }}>
         <Image src={item.image} alt={item.name} fill
           className="object-cover transition-transform duration-700 group-hover:scale-105"
           style={{ objectPosition: item.imagePosition ?? "center" }}
@@ -68,7 +68,7 @@ function DishCard({ item }: { item: typeof menuItems[0] }) {
         )}
       </div>
       <div className="flex flex-col flex-1 p-4">
-        <p className="text-[0.58rem] tracking-widest uppercase mb-1" style={{ color: "#a09080" }}>
+        <p className="text-[0.58rem] tracking-widest uppercase mb-1" style={{ color: "#b09070" }}>
           {categoryLabel[item.category]}
         </p>
         <h3 className="text-xl leading-snug mb-2"
@@ -84,37 +84,37 @@ function DishCard({ item }: { item: typeof menuItems[0] }) {
               <button key={s} onClick={() => setSize(s)}
                 className="flex-1 py-1.5 rounded-sm text-[0.65rem] tracking-wider uppercase transition-all duration-200"
                 style={{
-                  background: size === s ? "#1c1410" : "#faf7f2",
+                  background: size === s ? "#1c1410" : "#f5ede0",
                   color: size === s ? "#fff" : "#7a6a5e",
-                  border: `1px solid ${size === s ? "#1c1410" : "#d4c4b8"}`,
+                  border: `1px solid ${size === s ? "#1c1410" : "#c8b49a"}`,
                 }}>
                 {s} см
               </button>
             ))}
           </div>
         )}
-        <div className="flex items-center gap-3 mt-4 pt-4" style={{ borderTop: "1px solid #f0e8e0" }}>
+        <div className="flex items-center gap-3 mt-4 pt-4" style={{ borderTop: "1px solid #e8d8c4" }}>
           <span className="text-lg font-medium flex-shrink-0" style={{ color: "#c49a3c" }}>
             {currentPrice} ₴
           </span>
           <div className="flex items-center gap-1 ml-auto">
             <button onClick={() => setQty((q) => Math.max(1, q - 1))}
               className="w-7 h-7 rounded-sm flex items-center justify-center transition-all duration-200"
-              style={{ border: "1px solid #d4c4b8", color: "#7a6a5e", background: "#faf7f2" }}>
+              style={{ border: "1px solid #c8b49a", color: "#7a6a5e", background: "#f5ede0" }}>
               <Minus size={10} />
             </button>
             <span className="w-7 text-center text-sm font-medium" style={{ color: "#1c1410" }}>{qty}</span>
             <button onClick={() => setQty((q) => q + 1)}
               className="w-7 h-7 rounded-sm flex items-center justify-center transition-all duration-200"
-              style={{ border: "1px solid #d4c4b8", color: "#7a6a5e", background: "#faf7f2" }}>
+              style={{ border: "1px solid #c8b49a", color: "#7a6a5e", background: "#f5ede0" }}>
               <Plus size={10} />
             </button>
           </div>
           <button onClick={handleAdd}
             className="dish-add-btn flex items-center gap-1.5 px-3 py-1.5 rounded-sm text-[0.6rem] tracking-wider uppercase transition-all duration-300 flex-shrink-0"
             style={{
-              background: added ? "#8b1a2e" : "#faf7f2",
-              border: `1px solid ${added ? "#8b1a2e" : "#d4c4b8"}`,
+              background: added ? "#8b1a2e" : "#f5ede0",
+              border: `1px solid ${added ? "#8b1a2e" : "#c8b49a"}`,
               color: added ? "#fff" : "#7a6a5e",
             }}>
             {added ? <span style={{ fontSize: "0.7rem" }}>✓</span> : <ShoppingCart size={11} />}
@@ -133,7 +133,6 @@ export default function MenuPage() {
   const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
   const navRef = useRef<HTMLDivElement>(null);
 
-  // Групуємо страви по категоріях
   const grouped = menuCategories.map((cat) => ({
     ...cat,
     items: menuItems.filter(
@@ -143,7 +142,6 @@ export default function MenuPage() {
     ),
   })).filter((cat) => cat.items.length > 0);
 
-  // ScrollSpy
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -166,27 +164,39 @@ export default function MenuPage() {
   };
 
   return (
-    <div className="pt-20" style={{ background: "#faf7f2" }}>
+    <div className="pt-20 menu-parchment">
 
       {/* Заголовок */}
       <div className="max-w-7xl mx-auto px-6 pt-12 pb-8">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-          <h1 className="text-5xl md:text-6xl"
-            style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 300, lineHeight: 1.05, color: "#1c1410" }}>
-            Наше меню
-          </h1>
+          <div>
+            <p className="text-[0.6rem] tracking-[0.25em] uppercase mb-2" style={{ color: "#b09070" }}>
+              Ресторан Brasa
+            </p>
+            <h1 className="text-5xl md:text-6xl"
+              style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 300, lineHeight: 1.05, color: "#1c1410" }}>
+              Наше меню
+            </h1>
+            <div className="flex items-center gap-3 mt-3">
+              <div className="h-px w-12" style={{ background: "#c49a3c" }} />
+              <span className="text-[0.58rem] tracking-[0.2em] uppercase" style={{ color: "#c49a3c" }}>
+                Піца · Роли · Бургери · Напої
+              </span>
+              <div className="h-px w-12" style={{ background: "#c49a3c" }} />
+            </div>
+          </div>
           <div className="relative w-full md:w-72">
-            <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2" style={{ color: "#c4b4a8" }} />
+            <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2" style={{ color: "#b09070" }} />
             <input type="text" placeholder="Пошук страви..." value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="w-full pl-9 pr-4 py-2.5 text-sm rounded-sm outline-none"
-              style={{ background: "#fff", border: "1px solid #e8ddd4", color: "#1c1410" }} />
+              style={{ background: "rgba(255,253,247,0.8)", border: "1px solid #c8b49a", color: "#1c1410" }} />
           </div>
         </div>
       </div>
 
       {/* ── Навігація ── */}
-      <div ref={navRef} className="sticky z-30" style={{ top: "64px", background: "#faf7f2", borderTop: "6px solid #faf7f2", borderBottom: "1px solid #e8ddd4" }}>
+      <div ref={navRef} className="sticky z-30 menu-nav-bar" style={{ top: "64px", borderTop: "1px solid #d4c0a4", borderBottom: "1px solid #d4c0a4" }}>
         <div className="max-w-7xl mx-auto px-6">
           <nav className="flex overflow-x-auto" style={{ scrollbarWidth: "none" }}>
             {menuCategories.map((cat) => {
@@ -196,7 +206,7 @@ export default function MenuPage() {
                   key={cat.id}
                   onClick={() => scrollToSection(cat.id)}
                   className="menu-nav-item flex-shrink-0 flex flex-col items-center gap-0 px-6 py-4 relative transition-all duration-300"
-                  style={{ color: isActive ? "#1c1410" : "#a09080" }}
+                  style={{ color: isActive ? "#1c1410" : "#9a8270" }}
                 >
                   <span className="text-[0.72rem] tracking-[0.12em] uppercase font-medium whitespace-nowrap">
                     {cat.label}
@@ -220,7 +230,7 @@ export default function MenuPage() {
       {/* ── Секції меню ── */}
       <div className="max-w-7xl mx-auto px-6 pb-24">
         {grouped.length === 0 ? (
-          <div className="text-center py-24" style={{ color: "#c4b4a8" }}>
+          <div className="text-center py-24" style={{ color: "#b09070" }}>
             <p className="text-2xl mb-2" style={{ fontFamily: "var(--font-cormorant), serif" }}>Нічого не знайдено</p>
             <p className="text-sm">Спробуйте змінити запит</p>
           </div>
@@ -230,11 +240,17 @@ export default function MenuPage() {
               key={cat.id}
               id={cat.id}
               ref={(el) => { sectionRefs.current[cat.id] = el; }}
-              className="pt-14"
+              className="pt-16"
             >
-              {/* Заголовок секції */}
-              <div className="flex items-center gap-10 mb-8">
+              {/* Заголовок секції — у стилі ресторанного меню */}
+              <div className="flex flex-col items-center mb-10">
+                <div className="flex items-center gap-5 w-full max-w-lg">
+                  <div className="flex-1 h-px" style={{ background: "linear-gradient(to right, transparent, #c49a3c)" }} />
+                  <span style={{ color: "#c49a3c", fontSize: "0.55rem", letterSpacing: "0.3em" }}>✦</span>
+                  <div className="flex-1 h-px" style={{ background: "linear-gradient(to left, transparent, #c49a3c)" }} />
+                </div>
                 <h2
+                  className="mt-3 mb-1"
                   style={{
                     fontFamily: "var(--font-cormorant), serif",
                     fontWeight: 300,
@@ -242,13 +258,18 @@ export default function MenuPage() {
                     fontSize: "clamp(2.5rem, 5vw, 4rem)",
                     lineHeight: 1,
                     color: "#1c1410",
+                    letterSpacing: "0.04em",
                   }}
                 >
                   {cat.label}
                 </h2>
-                <span className="text-[0.62rem] tracking-widest uppercase" style={{ color: "#c4b4a8" }}>
+                <span className="text-[0.58rem] tracking-[0.2em] uppercase mb-3" style={{ color: "#b09070" }}>
                   {cat.items.length} {cat.items.length === 1 ? "страва" : cat.items.length < 5 ? "страви" : "страв"}
                 </span>
+                <div className="flex items-center gap-5 w-full max-w-lg">
+                  <div className="flex-1 h-px" style={{ background: "linear-gradient(to right, transparent, #d4c0a4)" }} />
+                  <div className="flex-1 h-px" style={{ background: "linear-gradient(to left, transparent, #d4c0a4)" }} />
+                </div>
               </div>
 
               {/* Картки */}
@@ -258,10 +279,16 @@ export default function MenuPage() {
 
               {/* Роздільник між секціями */}
               {i < grouped.length - 1 && (
-                <div className="mt-14 flex items-center gap-4">
-                  <div className="flex-1 h-px" style={{ background: "#e8ddd4" }} />
-                  <span style={{ color: "#d4c4b8", fontSize: "0.5rem", letterSpacing: "0.3em" }}>✦ ✦ ✦</span>
-                  <div className="flex-1 h-px" style={{ background: "#e8ddd4" }} />
+                <div className="mt-16 flex flex-col items-center gap-2">
+                  <div className="flex items-center gap-4 w-full">
+                    <div className="flex-1 h-px" style={{ background: "linear-gradient(to right, transparent, #c8b49a)" }} />
+                    <div className="flex items-center gap-2" style={{ color: "#c49a3c" }}>
+                      <span style={{ fontSize: "0.4rem", letterSpacing: "0.1em" }}>◆</span>
+                      <span style={{ fontSize: "0.55rem", letterSpacing: "0.3em" }}>✦</span>
+                      <span style={{ fontSize: "0.4rem", letterSpacing: "0.1em" }}>◆</span>
+                    </div>
+                    <div className="flex-1 h-px" style={{ background: "linear-gradient(to left, transparent, #c8b49a)" }} />
+                  </div>
                 </div>
               )}
             </section>
@@ -270,12 +297,24 @@ export default function MenuPage() {
       </div>
 
       <style>{`
+        .menu-parchment {
+          background-color: #f2e8d4;
+          background-image:
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"),
+            radial-gradient(ellipse at 20% 20%, rgba(255,245,220,0.6) 0%, transparent 60%),
+            radial-gradient(ellipse at 80% 80%, rgba(230,210,175,0.4) 0%, transparent 50%);
+          min-height: 100vh;
+        }
+        .menu-nav-bar {
+          background-color: #f0e2c8;
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+        }
         .dish-card {
           transition: box-shadow 0.4s ease, border-color 0.4s ease, transform 0.4s ease;
         }
         .dish-card:hover {
-          box-shadow: 0 8px 28px rgba(28,20,16,0.1);
-          border-color: rgba(139,26,46,0.18);
+          box-shadow: 0 8px 28px rgba(100,70,30,0.14);
+          border-color: rgba(139,26,46,0.2);
           transform: translateY(-2px);
         }
         .dish-add-btn:hover {

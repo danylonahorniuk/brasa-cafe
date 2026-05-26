@@ -261,7 +261,7 @@ export const menuItems: MenuItem[] = [
 ];
 
 export const categories = [
-  { id: "pizza",   label: "Піца",     icon: "🍕", image: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=800&q=80",  description: "18 видів піци" },
+  { id: "pizza",   label: "Піца",     icon: "🍕", image: "/pizza.jpg",  description: "18 видів піци" },
   { id: "rolls",   label: "Роли",     icon: "🍣", image: "/roles.jpg", description: "Свіжі щодня" },
   { id: "burgers", label: "Бургери",  icon: "🍔", image: "/burger.jpg", description: "Smash & classic" },
   { id: "alcohol", label: "Алкоголь", icon: "🍸", image: "/alcohol-drink.jpg", description: "Коктейлі та крафт" },

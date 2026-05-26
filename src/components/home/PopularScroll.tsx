@@ -25,6 +25,9 @@ function PopCard({ item }: { item: typeof popular[0] }) {
   const hasSizes = item.category === "pizza" && !!item.sizes;
   const currentPrice = hasSizes ? item.sizes![size] : item.price;
   const cartKey = hasSizes ? `${item.id}-${size}` : `${item.id}`;
+  const displayWeight = hasSizes && item.weight?.includes(" / ")
+    ? item.weight.split(" / ")[size === "30" ? 0 : 1]
+    : item.weight;
 
   const handleAdd = () => {
     add(item, cartKey, hasSizes ? `${size} см` : undefined, currentPrice);
@@ -66,12 +69,12 @@ function PopCard({ item }: { item: typeof popular[0] }) {
         </div>
 
         {/* Вага */}
-        {item.weight && (
+        {displayWeight && (
           <span
             className="absolute bottom-2 right-2 z-10 px-2 py-0.5 text-[0.58rem] rounded-[2px]"
             style={{ background: "rgba(12,8,6,0.5)", color: "rgba(255,255,255,0.9)", backdropFilter: "blur(4px)" }}
           >
-            {item.weight}
+            {displayWeight}
           </span>
         )}
       </div>

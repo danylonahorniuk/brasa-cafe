@@ -46,20 +46,28 @@ export default function CategoryGrid() {
             className="absolute inset-0 transition-opacity duration-300"
             style={{ background: "linear-gradient(to top, rgba(28,20,16,0.75) 0%, rgba(28,20,16,0.1) 60%, transparent 100%)" }}
           />
-          <div className="absolute bottom-0 left-0 p-6">
-            <p className="text-white/60 text-xs tracking-widest uppercase mb-1">{pizza.description}</p>
-            <h3
-              className="text-white text-4xl md:text-5xl"
-              style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 300 }}
-            >
-              {pizza.label}
-            </h3>
-          </div>
+          {/* Додатковий градієнт при ховері */}
           <div
-            className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"
-            style={{ background: "rgba(139,26,46,0.15)" }}
-          >
-            <span className="btn-primary text-sm">Обрати →</span>
+            className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+            style={{ background: "linear-gradient(to top, rgba(12,8,6,0.55) 0%, transparent 60%)" }}
+          />
+          <div className="absolute bottom-0 left-0 right-0 p-6 flex items-end justify-between">
+            <div>
+              <p className="text-white/60 text-xs tracking-widest uppercase mb-1">{pizza.description}</p>
+              <h3
+                className="text-white text-4xl md:text-5xl"
+                style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 300 }}
+              >
+                {pizza.label}
+              </h3>
+            </div>
+            {/* Кнопка — з'являється при ховері */}
+            <span
+              className="flex-shrink-0 flex items-center gap-2 px-5 py-2.5 rounded-sm text-[0.68rem] tracking-widest uppercase opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-400"
+              style={{ background: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.4)", color: "#fff", backdropFilter: "blur(6px)" }}
+            >
+              Обрати →
+            </span>
           </div>
         </Link>
 

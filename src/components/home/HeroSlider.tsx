@@ -188,17 +188,17 @@ export default function HeroSlider() {
         .hero-btn-primary {
           display: inline-flex;
           align-items: center;
-          gap: 0.6rem;
-          padding: 0.9rem 2.2rem;
+          gap: 0.5rem;
+          padding: 0.72rem 1.8rem;
           border-radius: 2px;
-          font-size: 0.75rem;
+          font-size: 0.7rem;
           font-weight: 500;
           letter-spacing: 0.16em;
           text-transform: uppercase;
           color: #fff;
-          background: linear-gradient(135deg, #a01f35 0%, #7a1525 100%);
-          border: 1px solid rgba(255,255,255,0.14);
-          box-shadow: 0 4px 24px rgba(139,26,46,0.45), inset 0 1px 0 rgba(255,255,255,0.12);
+          background: linear-gradient(135deg, #6b1220 0%, #4e0d18 100%);
+          border: 1px solid rgba(255,255,255,0.12);
+          box-shadow: 0 4px 20px rgba(80,14,28,0.5), inset 0 1px 0 rgba(255,255,255,0.1);
           transition: all 0.3s ease;
           position: relative;
           overflow: hidden;
@@ -207,14 +207,14 @@ export default function HeroSlider() {
           content: '';
           position: absolute;
           inset: 0;
-          background: linear-gradient(135deg, rgba(196,154,60,0.12) 0%, transparent 60%);
+          background: linear-gradient(135deg, rgba(196,154,60,0.1) 0%, transparent 60%);
           opacity: 0;
           transition: opacity 0.3s ease;
         }
         .hero-btn-primary:hover {
-          box-shadow: 0 8px 32px rgba(139,26,46,0.55), inset 0 1px 0 rgba(255,255,255,0.18);
+          box-shadow: 0 6px 28px rgba(80,14,28,0.6), inset 0 1px 0 rgba(255,255,255,0.15);
           transform: translateY(-2px);
-          border-color: rgba(255,255,255,0.22);
+          border-color: rgba(255,255,255,0.2);
         }
         .hero-btn-primary:hover::before {
           opacity: 1;
@@ -230,14 +230,14 @@ export default function HeroSlider() {
         .hero-btn-glass {
           display: inline-flex;
           align-items: center;
-          gap: 0.6rem;
-          padding: 0.9rem 2.2rem;
+          gap: 0.5rem;
+          padding: 0.72rem 1.8rem;
           border-radius: 2px;
-          font-size: 0.75rem;
+          font-size: 0.7rem;
           font-weight: 400;
           letter-spacing: 0.16em;
           text-transform: uppercase;
-          color: rgba(255,255,255,0.85);
+          color: rgba(255,255,255,0.82);
           background: rgba(255,255,255,0.07);
           border: 1px solid rgba(255,255,255,0.22);
           backdrop-filter: blur(14px);
@@ -245,8 +245,8 @@ export default function HeroSlider() {
           transition: all 0.3s ease;
         }
         .hero-btn-glass:hover {
-          background: rgba(255,255,255,0.14);
-          border-color: rgba(255,255,255,0.42);
+          background: rgba(255,255,255,0.13);
+          border-color: rgba(255,255,255,0.4);
           color: #fff;
           transform: translateY(-2px);
           box-shadow: 0 4px 20px rgba(0,0,0,0.2);

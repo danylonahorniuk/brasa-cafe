@@ -262,7 +262,7 @@ export const menuItems: MenuItem[] = [
 
 export const categories = [
   { id: "pizza",   label: "Піца",     icon: "🍕", image: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=800&q=80",  description: "18 видів піци" },
-  { id: "rolls",   label: "Роли",     icon: "🍣", image: "https://images.unsplash.com/photo-1562802378-063ec186a863?w=800&q=80", description: "Свіжі щодня" },
+  { id: "rolls",   label: "Роли",     icon: "🍣", image: "/roles.jpg", description: "Свіжі щодня" },
   { id: "burgers", label: "Бургери",  icon: "🍔", image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&q=80", description: "Smash & classic" },
   { id: "alcohol", label: "Алкоголь", icon: "🍸", image: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=800&q=80", description: "Коктейлі та крафт" },
 ] as const;

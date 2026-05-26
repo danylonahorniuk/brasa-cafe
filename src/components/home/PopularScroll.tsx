@@ -35,17 +35,17 @@ function PopCard({ item }: { item: typeof popular[0] }) {
   return (
     <div
       className="pop-card group flex-shrink-0 flex flex-col rounded-sm overflow-hidden"
-      style={{ width: "220px", background: "#fff", border: "1px solid #e8ddd4" }}
+      style={{ width: "250px", background: "#fff", border: "1px solid #e8ddd4" }}
     >
-      {/* Фото */}
-      <div className="relative overflow-hidden" style={{ height: "220px", background: "#f5f0eb" }}>
+      {/* Фото — aspect-ratio 4/3 */}
+      <div className="relative overflow-hidden" style={{ aspectRatio: "4/3", background: "#f5f0eb" }}>
         <Image
           src={item.image}
           alt={item.name}
           fill
           className="object-cover transition-transform duration-700 group-hover:scale-105"
           style={{ objectPosition: item.imagePosition ?? "center" }}
-          sizes="220px"
+          sizes="250px"
         />
 
         {/* Бейджі */}
@@ -78,15 +78,21 @@ function PopCard({ item }: { item: typeof popular[0] }) {
 
       {/* Контент */}
       <div className="flex flex-col flex-1 p-4">
-        <p className="text-[0.58rem] tracking-widest uppercase mb-1" style={{ color: "#a09080" }}>
+        <p className="text-[0.55rem] tracking-widest uppercase mb-1" style={{ color: "#a09080" }}>
           {categoryLabel[item.category]}
         </p>
         <h3
-          className="text-xl leading-snug mb-auto"
+          className="text-lg leading-snug mb-1"
           style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 400, color: "#1c1410" }}
         >
           {item.name}
         </h3>
+        <p
+          className="text-[0.65rem] leading-relaxed mb-auto line-clamp-2"
+          style={{ color: "#a09080" }}
+        >
+          {item.description}
+        </p>
 
         {/* Вибір розміру для піци */}
         {hasSizes && (
@@ -110,7 +116,7 @@ function PopCard({ item }: { item: typeof popular[0] }) {
 
         {/* Ціна + кнопка */}
         <div
-          className="flex items-center justify-between mt-4 pt-4"
+          className="flex items-center justify-between mt-3 pt-3"
           style={{ borderTop: "1px solid #f0e8e0" }}
         >
           <span className="text-lg font-medium" style={{ color: "#c49a3c" }}>
@@ -139,7 +145,7 @@ export default function PopularScroll() {
 
   const scroll = (dir: "left" | "right") => {
     if (!scrollRef.current) return;
-    scrollRef.current.scrollBy({ left: dir === "right" ? 740 : -740, behavior: "smooth" });
+    scrollRef.current.scrollBy({ left: dir === "right" ? 800 : -800, behavior: "smooth" });
   };
 
   return (
@@ -187,7 +193,7 @@ export default function PopularScroll() {
         {/* "Все меню" в кінці */}
         <Link
           href="/menu"
-          className="flex-shrink-0 w-40 rounded-sm flex flex-col items-center justify-center gap-3 transition-all duration-300"
+          className="flex-shrink-0 w-44 rounded-sm flex flex-col items-center justify-center gap-3 transition-all duration-300"
           style={{ border: "1.5px dashed #d4c4b8", color: "#a09080" }}
           onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "#8b1a2e"; (e.currentTarget as HTMLElement).style.color = "#8b1a2e"; }}
           onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "#d4c4b8"; (e.currentTarget as HTMLElement).style.color = "#a09080"; }}

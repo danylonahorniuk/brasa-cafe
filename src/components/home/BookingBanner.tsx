@@ -57,18 +57,81 @@ export default function BookingBanner() {
           </div>
 
           <div className="flex flex-wrap gap-3">
-            <Link href="/booking" className="btn-primary">
-              Забронювати →
+            <Link href="/booking" className="booking-btn-primary">
+              <span>Забронювати</span>
+              <span className="booking-btn-arrow">→</span>
             </Link>
-            <a
-              href="tel:+380441234567"
-              className="px-6 py-3 rounded-sm text-[0.78rem] tracking-widest uppercase text-white border border-white/20 hover:border-white/50 hover:bg-white/5 transition-all flex items-center gap-2"
-            >
-              <Phone size={14} /> Зателефонувати
+            <a href="tel:+380441234567" className="booking-btn-gold">
+              <Phone size={13} /> Зателефонувати
             </a>
           </div>
         </div>
       </div>
+
+      <style>{`
+        .booking-btn-primary {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          padding: 0.72rem 1.8rem;
+          border-radius: 2px;
+          font-size: 0.7rem;
+          font-weight: 500;
+          letter-spacing: 0.16em;
+          text-transform: uppercase;
+          color: #fff;
+          background: linear-gradient(135deg, #6b1220 0%, #4e0d18 100%);
+          border: 1px solid rgba(255,255,255,0.12);
+          box-shadow: 0 4px 20px rgba(80,14,28,0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+          transition: all 0.3s ease;
+          position: relative;
+          overflow: hidden;
+        }
+        .booking-btn-primary::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(135deg, rgba(196,154,60,0.1) 0%, transparent 60%);
+          opacity: 0;
+          transition: opacity 0.3s ease;
+        }
+        .booking-btn-primary:hover {
+          box-shadow: 0 6px 28px rgba(80,14,28,0.6), inset 0 1px 0 rgba(255,255,255,0.15);
+          transform: translateY(-2px);
+          border-color: rgba(255,255,255,0.2);
+        }
+        .booking-btn-primary:hover::before { opacity: 1; }
+        .booking-btn-arrow {
+          display: inline-block;
+          transition: transform 0.3s ease;
+        }
+        .booking-btn-primary:hover .booking-btn-arrow {
+          transform: translateX(4px);
+        }
+
+        .booking-btn-gold {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          padding: 0.72rem 1.8rem;
+          border-radius: 2px;
+          font-size: 0.7rem;
+          font-weight: 400;
+          letter-spacing: 0.16em;
+          text-transform: uppercase;
+          color: rgba(196,154,60,0.8);
+          background: rgba(196,154,60,0.06);
+          border: 1px solid rgba(196,154,60,0.28);
+          transition: all 0.3s ease;
+        }
+        .booking-btn-gold:hover {
+          background: rgba(196,154,60,0.12);
+          border-color: rgba(196,154,60,0.55);
+          color: #c49a3c;
+          transform: translateY(-2px);
+          box-shadow: 0 4px 16px rgba(196,154,60,0.12);
+        }
+      `}</style>
     </section>
   );
 }

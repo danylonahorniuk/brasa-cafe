@@ -89,6 +89,7 @@ export default function PopularScroll() {
                 alt={item.name}
                 fill
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
+                style={{ objectPosition: item.imagePosition ?? "center" }}
                 sizes="220px"
               />
 

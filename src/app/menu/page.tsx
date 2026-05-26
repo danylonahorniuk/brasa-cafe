@@ -38,6 +38,7 @@ function DishCard({ item }: { item: typeof menuItems[0] }) {
       <div className="relative overflow-hidden flex-shrink-0" style={{ height: "200px", background: "#f5f0eb" }}>
         <Image src={item.image} alt={item.name} fill
           className="object-cover transition-transform duration-700 group-hover:scale-105"
+          style={{ objectPosition: item.imagePosition ?? "center" }}
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw" />
         <div className="absolute top-2.5 left-2.5 flex gap-1.5 z-10">
           {item.badge && (

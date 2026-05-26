@@ -13,6 +13,7 @@ export interface MenuItem {
   spicy?: boolean;
   weight?: string;
   sizes?: { "30": number; "40": number };
+  imagePosition?: string;
 }
 
 export const menuItems: MenuItem[] = [
@@ -144,6 +145,7 @@ export const menuItems: MenuItem[] = [
     price: 349,
     category: "burgers",
     image: "/smash-burger.jpg",
+    imagePosition: "center 30%",
     badge: "Новинка",
     isNew: true,
     weight: "420г",

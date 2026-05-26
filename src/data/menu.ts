@@ -147,7 +147,6 @@ export const menuItems: MenuItem[] = [
     category: "burgers",
     image: "/smash-burger2.jpg",
     imagePosition: "center 60%",
-    badge: "Новинка",
     isNew: true,
     weight: "420г",
   },

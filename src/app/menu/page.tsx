@@ -116,7 +116,7 @@ function DishRow({ item, index }: { item: typeof menuItems[0]; index: number }) 
         {/* Опис */}
         <p
           className="text-sm leading-relaxed mb-4"
-          style={{ color: "#8a7a6e", maxWidth: "420px" }}
+          style={{ color: "#8a7a6e" }}
         >
           {item.description}
         </p>
@@ -239,7 +239,7 @@ export default function MenuPage() {
     <div className="pt-20" style={{ background: "#faf7f2", minHeight: "100vh" }}>
 
       {/* ── Шапка ── */}
-      <div className="max-w-3xl mx-auto px-6 pt-12 pb-8">
+      <div className="max-w-5xl mx-auto px-6 pt-12 pb-8">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div>
             <p className="text-[0.55rem] tracking-[0.3em] uppercase mb-2" style={{ color: "#b8a898" }}>
@@ -277,7 +277,7 @@ export default function MenuPage() {
         className="sticky z-30"
         style={{ top: "64px", background: "#faf7f2", borderTop: "1px solid #e8ddd4", borderBottom: "1px solid #e8ddd4" }}
       >
-        <div className="max-w-3xl mx-auto px-6">
+        <div className="max-w-5xl mx-auto px-6">
           <nav className="flex overflow-x-auto" style={{ scrollbarWidth: "none" }}>
             {menuCategories.map((cat) => {
               const isActive = activeId === cat.id;
@@ -306,7 +306,7 @@ export default function MenuPage() {
       </div>
 
       {/* ── Секції ── */}
-      <div className="max-w-3xl mx-auto px-6 pb-24">
+      <div className="max-w-5xl mx-auto px-6 pb-24">
         {grouped.length === 0 ? (
           <div className="text-center py-24" style={{ color: "#c4b4a8" }}>
             <p className="text-2xl mb-2" style={{ fontFamily: "var(--font-cormorant), serif" }}>Нічого не знайдено</p>

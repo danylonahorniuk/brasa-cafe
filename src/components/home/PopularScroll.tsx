@@ -14,36 +14,144 @@ const categoryLabel: Record<string, string> = {
   rolls: "Роли",
   burgers: "Бургер",
   alcohol: "Напій",
+  drinks: "Напій",
 };
+
+function PopCard({ item }: { item: typeof popular[0] }) {
+  const { add } = useCart();
+  const [added, setAdded] = useState(false);
+  const [size, setSize] = useState<"30" | "40">("30");
+
+  const hasSizes = item.category === "pizza" && !!item.sizes;
+  const currentPrice = hasSizes ? item.sizes![size] : item.price;
+  const cartKey = hasSizes ? `${item.id}-${size}` : `${item.id}`;
+
+  const handleAdd = () => {
+    add(item, cartKey, hasSizes ? `${size} см` : undefined, currentPrice);
+    setAdded(true);
+    setTimeout(() => setAdded(false), 1200);
+  };
+
+  return (
+    <div
+      className="pop-card group flex-shrink-0 flex flex-col rounded-sm overflow-hidden"
+      style={{ width: "220px", background: "#fff", border: "1px solid #e8ddd4" }}
+    >
+      {/* Фото */}
+      <div className="relative overflow-hidden" style={{ height: "220px", background: "#f5f0eb" }}>
+        <Image
+          src={item.image}
+          alt={item.name}
+          fill
+          className="object-cover transition-transform duration-700 group-hover:scale-105"
+          style={{ objectPosition: item.imagePosition ?? "center" }}
+          sizes="220px"
+        />
+
+        {/* Бейджі */}
+        <div className="absolute top-2.5 left-2.5 flex gap-1.5 z-10">
+          {item.badge && (
+            <span
+              className="px-2 py-0.5 text-[0.55rem] tracking-widest uppercase font-medium rounded-[2px]"
+              style={{ background: "#8b1a2e", color: "#fff" }}
+            >
+              {item.badge}
+            </span>
+          )}
+          {item.spicy && (
+            <span className="px-1.5 py-0.5 rounded-[2px] flex items-center bg-orange-500 text-white">
+              <Flame size={8} />
+            </span>
+          )}
+        </div>
+
+        {/* Вага */}
+        {item.weight && (
+          <span
+            className="absolute bottom-2 right-2 z-10 px-2 py-0.5 text-[0.58rem] rounded-[2px]"
+            style={{ background: "rgba(12,8,6,0.5)", color: "rgba(255,255,255,0.9)", backdropFilter: "blur(4px)" }}
+          >
+            {item.weight}
+          </span>
+        )}
+      </div>
+
+      {/* Контент */}
+      <div className="flex flex-col flex-1 p-4">
+        <p className="text-[0.58rem] tracking-widest uppercase mb-1" style={{ color: "#a09080" }}>
+          {categoryLabel[item.category]}
+        </p>
+        <h3
+          className="text-xl leading-snug mb-auto"
+          style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 400, color: "#1c1410" }}
+        >
+          {item.name}
+        </h3>
+
+        {/* Вибір розміру для піци */}
+        {hasSizes && (
+          <div className="flex gap-1.5 mt-3">
+            {(["30", "40"] as const).map((s) => (
+              <button
+                key={s}
+                onClick={() => setSize(s)}
+                className="flex-1 py-1 rounded-sm text-[0.58rem] tracking-wider uppercase transition-all duration-200"
+                style={{
+                  background: size === s ? "#1c1410" : "#faf7f2",
+                  color: size === s ? "#fff" : "#7a6a5e",
+                  border: `1px solid ${size === s ? "#1c1410" : "#d4c4b8"}`,
+                }}
+              >
+                {s} см
+              </button>
+            ))}
+          </div>
+        )}
+
+        {/* Ціна + кнопка */}
+        <div
+          className="flex items-center justify-between mt-4 pt-4"
+          style={{ borderTop: "1px solid #f0e8e0" }}
+        >
+          <span className="text-lg font-medium" style={{ color: "#c49a3c" }}>
+            {currentPrice} ₴
+          </span>
+          <button
+            onClick={handleAdd}
+            className="pop-add-btn flex items-center gap-1.5 px-3 py-1.5 rounded-sm text-[0.6rem] tracking-wider uppercase transition-all duration-300"
+            style={{
+              background: added ? "#8b1a2e" : "#faf7f2",
+              border: `1px solid ${added ? "#8b1a2e" : "#d4c4b8"}`,
+              color: added ? "#fff" : "#7a6a5e",
+            }}
+          >
+            {added ? <span style={{ fontSize: "0.7rem" }}>✓</span> : <ShoppingCart size={11} />}
+            {added ? "Додано" : "В кошик"}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function PopularScroll() {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const { add } = useCart();
-  const [addedId, setAddedId] = useState<number | null>(null);
 
   const scroll = (dir: "left" | "right") => {
     if (!scrollRef.current) return;
     scrollRef.current.scrollBy({ left: dir === "right" ? 740 : -740, behavior: "smooth" });
   };
 
-  const handleAdd = (item: typeof popular[0]) => {
-    add(item, `${item.id}`);
-    setAddedId(item.id);
-    setTimeout(() => setAddedId(null), 1200);
-  };
-
   return (
     <section className="py-16" style={{ background: "#fff" }}>
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex items-end justify-between mb-8">
-          <div>
-            <h2
-              className="text-4xl md:text-5xl"
-              style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 300, color: "#1c1410", lineHeight: 1.1 }}
-            >
-              Гості обирають частіше
-            </h2>
-          </div>
+          <h2
+            className="text-4xl md:text-5xl"
+            style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 300, color: "#1c1410", lineHeight: 1.1 }}
+          >
+            Гості обирають частіше
+          </h2>
           <div className="hidden md:flex gap-2">
             {[{ dir: "left" as const, Icon: ChevronLeft }, { dir: "right" as const, Icon: ChevronRight }].map(({ dir, Icon }) => (
               <button
@@ -73,97 +181,7 @@ export default function PopularScroll() {
         }}
       >
         {popular.map((item) => (
-          <div
-            key={item.id}
-            className="pop-card group flex-shrink-0 flex flex-col rounded-sm overflow-hidden"
-            style={{
-              width: "220px",
-              background: "#fff",
-              border: "1px solid #e8ddd4",
-            }}
-          >
-            {/* Фото */}
-            <div className="relative overflow-hidden" style={{ height: "220px", background: "#f5f0eb" }}>
-              <Image
-                src={item.image}
-                alt={item.name}
-                fill
-                className="object-cover transition-transform duration-700 group-hover:scale-105"
-                style={{ objectPosition: item.imagePosition ?? "center" }}
-                sizes="220px"
-              />
-
-              {/* Бейджі — верхній лівий */}
-              <div className="absolute top-2.5 left-2.5 flex gap-1.5 z-10">
-                {item.badge && (
-                  <span
-                    className="px-2 py-0.5 text-[0.55rem] tracking-widest uppercase font-medium rounded-[2px]"
-                    style={{ background: "#8b1a2e", color: "#fff" }}
-                  >
-                    {item.badge}
-                  </span>
-                )}
-                {item.spicy && (
-                  <span className="px-1.5 py-0.5 rounded-[2px] flex items-center bg-orange-500 text-white">
-                    <Flame size={8} />
-                  </span>
-                )}
-              </div>
-
-              {/* Вага — нижній правий */}
-              {item.weight && (
-                <span
-                  className="absolute bottom-2 right-2 z-10 px-2 py-0.5 text-[0.58rem] rounded-[2px]"
-                  style={{
-                    background: "rgba(12,8,6,0.5)",
-                    color: "rgba(255,255,255,0.9)",
-                    backdropFilter: "blur(4px)",
-                  }}
-                >
-                  {item.weight}
-                </span>
-              )}
-            </div>
-
-            {/* Контент */}
-            <div className="flex flex-col flex-1 p-4">
-              <p className="text-[0.58rem] tracking-widest uppercase mb-1" style={{ color: "#a09080" }}>
-                {categoryLabel[item.category]}
-              </p>
-              <h3
-                className="text-xl leading-snug mb-auto"
-                style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 400, color: "#1c1410" }}
-              >
-                {item.name}
-              </h3>
-
-              {/* Ціна + кнопка */}
-              <div
-                className="flex items-center justify-between mt-4 pt-4"
-                style={{ borderTop: "1px solid #f0e8e0" }}
-              >
-                <span className="text-lg font-medium" style={{ color: "#c49a3c" }}>
-                  {item.price} ₴
-                </span>
-                <button
-                  onClick={() => handleAdd(item)}
-                  className="pop-add-btn flex items-center gap-1.5 px-3 py-1.5 rounded-sm text-[0.6rem] tracking-wider uppercase transition-all duration-300"
-                  style={{
-                    background: addedId === item.id ? "#8b1a2e" : "#faf7f2",
-                    border: `1px solid ${addedId === item.id ? "#8b1a2e" : "#d4c4b8"}`,
-                    color: addedId === item.id ? "#fff" : "#7a6a5e",
-                  }}
-                >
-                  {addedId === item.id ? (
-                    <span style={{ fontSize: "0.7rem" }}>✓</span>
-                  ) : (
-                    <ShoppingCart size={11} />
-                  )}
-                  {addedId === item.id ? "Додано" : "В кошик"}
-                </button>
-              </div>
-            </div>
-          </div>
+          <PopCard key={item.id} item={item} />
         ))}
 
         {/* "Все меню" в кінці */}

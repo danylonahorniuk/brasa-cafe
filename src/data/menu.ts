@@ -156,7 +156,7 @@ export const menuItems: MenuItem[] = [
     description: "Яловичий патті, трюфельний айолі, бри, рукола, карамелізовані груші",
     price: 399,
     category: "burgers",
-    image: "https://images.unsplash.com/photo-1550547660-d9450f859349?w=600&q=80",
+    image: "https://images.unsplash.com/photo-1605210014512-0b56f31359ce?w=600&q=80",
     badge: "Преміум",
     isNew: true,
     popular: true,

@@ -1,12 +1,30 @@
 import Link from "next/link";
 import { Phone, MapPin, Clock } from "lucide-react";
 
+function IconInstagram() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+      <circle cx="12" cy="12" r="4"/>
+      <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/>
+    </svg>
+  );
+}
+
+function IconFacebook() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+    </svg>
+  );
+}
+
 export default function Footer() {
   return (
-    <footer style={{ background: "#1c1410", color: "#f0ebe1" }} className="mt-24">
+    <footer style={{ background: "#1a1208", color: "#f0ebe1" }} className="mt-24">
       <style>{`
         .footer-link:hover { color: #c49a3c !important; }
-        .footer-social:hover { border-color: #8b1a2e !important; color: #c49a3c !important; }
+        .footer-social:hover { border-color: #c49a3c !important; color: #c49a3c !important; }
       `}</style>
       <div className="max-w-7xl mx-auto px-6 py-16">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
@@ -23,20 +41,26 @@ export default function Footer() {
             >
               BRASA
             </span>
-            <p className="text-sm mt-3 leading-relaxed" style={{ color: "#7a6a5e" }}>
+            <p className="text-sm mt-3 leading-relaxed" style={{ color: "#6a5a50" }}>
               Місце де смак зустрічає атмосферу. Піца, роли, бургери та авторські коктейлі.
             </p>
             <div className="flex gap-3 mt-5">
-              {["IG", "FB"].map((s) => (
-                <a
-                  key={s}
-                  href="#"
-                  className="footer-social w-9 h-9 rounded-sm flex items-center justify-center text-xs font-medium transition-all"
-                  style={{ border: "1px solid #2a2a2a", color: "#7a6a5e" }}
-                >
-                  {s}
-                </a>
-              ))}
+              <a
+                href="#"
+                className="footer-social w-9 h-9 rounded-sm flex items-center justify-center transition-all duration-300"
+                style={{ border: "1px solid #2e2218", color: "#6a5a50" }}
+                aria-label="Instagram"
+              >
+                <IconInstagram />
+              </a>
+              <a
+                href="#"
+                className="footer-social w-9 h-9 rounded-sm flex items-center justify-center transition-all duration-300"
+                style={{ border: "1px solid #2e2218", color: "#6a5a50" }}
+                aria-label="Facebook"
+              >
+                <IconFacebook />
+              </a>
             </div>
           </div>
 
@@ -46,11 +70,7 @@ export default function Footer() {
             <ul className="space-y-3">
               {[["Меню", "/menu"], ["Бронювання", "/booking"], ["Про нас", "/about"], ["Контакти", "/contact"]].map(([label, href]) => (
                 <li key={href}>
-                  <Link
-                    href={href}
-                    className="footer-link text-sm transition-colors"
-                    style={{ color: "#7a6a5e" }}
-                  >
+                  <Link href={href} className="footer-link text-sm transition-colors" style={{ color: "#6a5a50" }}>
                     {label}
                   </Link>
                 </li>
@@ -61,7 +81,7 @@ export default function Footer() {
           {/* Hours */}
           <div>
             <p className="section-label mb-5" style={{ color: "#c49a3c" }}>Графік роботи</p>
-            <ul className="space-y-2 text-sm" style={{ color: "#7a6a5e" }}>
+            <ul className="space-y-2 text-sm" style={{ color: "#6a5a50" }}>
               <li className="flex justify-between gap-4">
                 <span>Пн–Пт</span>
                 <span style={{ color: "#a09080" }}>11:00–23:00</span>
@@ -80,15 +100,15 @@ export default function Footer() {
           {/* Contacts */}
           <div>
             <p className="section-label mb-5" style={{ color: "#c49a3c" }}>Контакти</p>
-            <ul className="space-y-3 text-sm" style={{ color: "#7a6a5e" }}>
+            <ul className="space-y-3 text-sm" style={{ color: "#6a5a50" }}>
               <li className="flex items-start gap-2">
                 <MapPin size={14} style={{ color: "#8b1a2e" }} className="mt-0.5 flex-shrink-0" />
-                <span>вул. Хрещатик 22, Київ</span>
+                <span>вул. Сагайдачного 14, Київ</span>
               </li>
               <li className="flex items-center gap-2">
                 <Phone size={14} style={{ color: "#8b1a2e" }} className="flex-shrink-0" />
-                <a href="tel:+380441234567" className="footer-link transition-colors" style={{ color: "#7a6a5e" }}>
-                  +38 (044) 123-45-67
+                <a href="tel:+380671234567" className="footer-link transition-colors" style={{ color: "#6a5a50" }}>
+                  +38 (067) 123-45-67
                 </a>
               </li>
             </ul>
@@ -97,9 +117,8 @@ export default function Footer() {
 
         <div className="divider-accent mt-12 mb-6" />
 
-        <div className="flex flex-col md:flex-row justify-between items-center gap-2 text-[0.68rem] tracking-wider" style={{ color: "#3a3030" }}>
+        <div className="flex flex-col md:flex-row justify-between items-center gap-2 text-[0.68rem] tracking-wider" style={{ color: "#3a2e24" }}>
           <span>© {new Date().getFullYear()} BRASA. Всі права захищені.</span>
-          <span>Портфоліо-проєкт / Next.js + Tailwind CSS</span>
         </div>
       </div>
     </footer>

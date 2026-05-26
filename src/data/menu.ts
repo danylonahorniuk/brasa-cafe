@@ -77,7 +77,7 @@ export const menuItems: MenuItem[] = [
     description: "Трюфельна олія, гриби, пармезан, рукола, бальзамічний крем",
     price: 429,
     category: "pizza",
-    image: "https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?w=600&q=80",
+    image: "/pizza-truffle-mushroom.jpg",
     badge: "Преміум",
     isNew: true,
     weight: "440г / 820г",

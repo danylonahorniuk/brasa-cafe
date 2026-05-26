@@ -143,7 +143,7 @@ export const menuItems: MenuItem[] = [
     description: "Подвійний смеш патті, американський сир, маринований огірок, гірчиця, кетчуп",
     price: 349,
     category: "burgers",
-    image: "https://images.unsplash.com/photo-1586816001966-79b736744398?w=600&q=80",
+    image: "/smash-burger.jpg",
     badge: "Новинка",
     isNew: true,
     weight: "420г",

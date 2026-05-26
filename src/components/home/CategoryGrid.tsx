@@ -15,7 +15,13 @@ export default function CategoryGrid() {
         >
           Що будемо їсти?
         </h2>
-        <Link href="/menu" className="btn-outline hidden md:inline-flex">
+        <Link
+          href="/menu"
+          className="menu-btn hidden md:inline-flex items-center gap-2 px-6 py-3 rounded-sm text-[0.72rem] tracking-widest uppercase transition-all duration-350"
+          style={{ border: "1.5px solid #8b1a2e", color: "#8b1a2e", background: "transparent" }}
+          onMouseEnter={(e) => { const el = e.currentTarget as HTMLElement; el.style.background = "#8b1a2e"; el.style.color = "#fff"; }}
+          onMouseLeave={(e) => { const el = e.currentTarget as HTMLElement; el.style.background = "transparent"; el.style.color = "#8b1a2e"; }}
+        >
           Все меню →
         </Link>
       </div>
@@ -90,7 +96,13 @@ export default function CategoryGrid() {
         ))}
       </div>
 
-      <Link href="/menu" className="btn-outline mt-5 md:hidden w-full justify-center">
+      <Link
+        href="/menu"
+        className="mt-5 md:hidden w-full flex items-center justify-center gap-2 py-3 rounded-sm text-[0.72rem] tracking-widest uppercase transition-all duration-300"
+        style={{ border: "1.5px solid #8b1a2e", color: "#8b1a2e", background: "transparent" }}
+        onMouseEnter={(e) => { const el = e.currentTarget as HTMLElement; el.style.background = "#8b1a2e"; el.style.color = "#fff"; }}
+        onMouseLeave={(e) => { const el = e.currentTarget as HTMLElement; el.style.background = "transparent"; el.style.color = "#8b1a2e"; }}
+      >
         Все меню →
       </Link>
       </div>

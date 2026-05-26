@@ -157,7 +157,7 @@ export const menuItems: MenuItem[] = [
     price: 399,
     category: "burgers",
     image: "/black-truffle2.jpg",
-    imagePosition: "center 55%",
+    imagePosition: "center 45%",
     badge: "Преміум",
     isNew: true,
     popular: true,

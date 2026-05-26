@@ -33,7 +33,7 @@ export default function PopularScroll() {
   };
 
   return (
-    <section className="py-16" style={{ background: "#faf7f2" }}>
+    <section className="py-16" style={{ background: "#fff" }}>
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex items-end justify-between mb-8">
           <div>

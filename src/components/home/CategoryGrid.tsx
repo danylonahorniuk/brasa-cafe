@@ -6,7 +6,8 @@ export default function CategoryGrid() {
   const [pizza, ...rest] = categories;
 
   return (
-    <section className="max-w-7xl mx-auto px-6 py-16">
+    <section className="py-16" style={{ background: "#fff", borderTop: "1px solid #e8ddd4" }}>
+      <div className="max-w-7xl mx-auto px-6">
       <div className="flex items-end justify-between mb-8">
         <h2
           className="text-4xl md:text-5xl"
@@ -92,6 +93,7 @@ export default function CategoryGrid() {
       <Link href="/menu" className="btn-outline mt-5 md:hidden w-full justify-center">
         Все меню →
       </Link>
+      </div>
     </section>
   );
 }

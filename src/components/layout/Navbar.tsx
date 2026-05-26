@@ -38,10 +38,10 @@ export default function Navbar() {
       <header
         className="fixed top-0 left-0 right-0 z-50 transition-all duration-400"
         style={{
-          background: showWhite ? "rgba(250,247,242,0.97)" : "transparent",
+          background: showWhite ? "rgba(26,18,8,0.97)" : "transparent",
           backdropFilter: showWhite ? "blur(16px)" : "none",
-          borderBottom: showWhite ? "1px solid #e8ddd4" : "none",
-          boxShadow: showWhite ? "0 1px 20px rgba(28,20,16,0.06)" : "none",
+          borderBottom: showWhite ? "1px solid rgba(255,255,255,0.06)" : "none",
+          boxShadow: showWhite ? "0 2px 24px rgba(0,0,0,0.25)" : "none",
         }}
       >
         <nav className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
@@ -53,7 +53,7 @@ export default function Navbar() {
                 fontSize: "1.9rem",
                 fontWeight: 400,
                 letterSpacing: "0.18em",
-                color: showWhite ? "#8b1a2e" : "#ffffff",
+                color: showWhite ? "#e8ddd4" : "#ffffff",
                 transition: "color 0.4s",
               }}
             >
@@ -61,7 +61,7 @@ export default function Navbar() {
             </span>
             <span
               className="text-[0.5rem] tracking-[0.35em] uppercase mt-0.5"
-              style={{ color: showWhite ? "#a09080" : "rgba(255,255,255,0.55)", transition: "color 0.4s" }}
+              style={{ color: showWhite ? "rgba(255,255,255,0.35)" : "rgba(255,255,255,0.55)", transition: "color 0.4s" }}
             >
               Кафе & Доставка
             </span>
@@ -78,8 +78,8 @@ export default function Navbar() {
                     className="relative text-[0.75rem] tracking-[0.1em] uppercase transition-colors duration-300"
                     style={{
                       color: active
-                        ? "#8b1a2e"
-                        : showWhite ? "#7a6a5e" : "rgba(255,255,255,0.75)",
+                        ? "#c49a3c"
+                        : showWhite ? "rgba(255,255,255,0.65)" : "rgba(255,255,255,0.75)",
                     }}
                   >
                     {l.label}
@@ -98,7 +98,7 @@ export default function Navbar() {
             <button
               onClick={toggleCart}
               className="relative p-2 transition-colors"
-              style={{ color: showWhite ? "#7a6a5e" : "rgba(255,255,255,0.75)" }}
+              style={{ color: showWhite ? "rgba(255,255,255,0.65)" : "rgba(255,255,255,0.75)" }}
               aria-label="Кошик"
             >
               <ShoppingCart size={20} strokeWidth={1.5} />
@@ -111,7 +111,7 @@ export default function Navbar() {
 
             <button
               className="md:hidden p-1 transition-colors"
-              style={{ color: showWhite ? "#7a6a5e" : "rgba(255,255,255,0.75)" }}
+              style={{ color: showWhite ? "rgba(255,255,255,0.65)" : "rgba(255,255,255,0.75)" }}
               onClick={() => setMobileOpen((v) => !v)}
             >
               {mobileOpen ? <X size={22} /> : <Menu size={22} />}
@@ -124,8 +124,8 @@ export default function Navbar() {
           className="md:hidden overflow-hidden transition-all duration-300"
           style={{
             maxHeight: mobileOpen ? "320px" : "0",
-            background: "rgba(250,247,242,0.98)",
-            borderTop: mobileOpen ? "1px solid #e8ddd4" : "none",
+            background: "rgba(26,18,8,0.98)",
+            borderTop: mobileOpen ? "1px solid rgba(255,255,255,0.06)" : "none",
           }}
         >
           <ul className="flex flex-col px-6 py-5 gap-4">
@@ -135,7 +135,7 @@ export default function Navbar() {
                   href={l.href}
                   onClick={() => setMobileOpen(false)}
                   className="text-sm tracking-wider uppercase"
-                  style={{ color: pathname === l.href ? "#8b1a2e" : "#7a6a5e" }}
+                  style={{ color: pathname === l.href ? "#c49a3c" : "rgba(255,255,255,0.6)" }}
                 >
                   {l.label}
                 </Link>

@@ -29,7 +29,7 @@ export default function NewItems() {
   if (newItems.length === 0) return null;
 
   return (
-    <section style={{ background: "#f2ebe2", borderTop: "1px solid #e8ddd4" }}>
+    <section style={{ background: "#f5f1ec", borderTop: "1px solid #e8ddd4" }}>
       <div className="max-w-7xl mx-auto px-6 py-16">
 
         {/* Заголовок */}

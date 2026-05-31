@@ -219,7 +219,6 @@ export const menuItems: MenuItem[] = [
     category: "drinks",
     image: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=600&q=80",
     weight: "400мл",
-    popular: true,
   },
   {
     id: 32,
@@ -238,7 +237,6 @@ export const menuItems: MenuItem[] = [
     category: "drinks",
     image: "https://images.unsplash.com/photo-1505252585461-04db1eb84625?w=600&q=80",
     weight: "350мл",
-    isNew: true,
   },
 
   // ── PIZZA (додаткові) ──
@@ -302,7 +300,6 @@ export const menuItems: MenuItem[] = [
     price: 479,
     category: "rolls",
     image: "https://images.unsplash.com/photo-1583623025817-d180a2221d0a?w=600&q=80",
-    isNew: true,
     weight: "290г / 8шт",
   },
 
@@ -372,7 +369,6 @@ export const menuItems: MenuItem[] = [
     price: 179,
     category: "alcohol",
     image: "https://images.unsplash.com/photo-1653542772393-71ffa417b1c4?w=600&q=80",
-    popular: true,
     weight: "280мл",
   },
   {

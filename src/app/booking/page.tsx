@@ -158,42 +158,76 @@ export default function BookingPage() {
             <em className="not-italic" style={{ color: "#c49a3c" }}>свій столик</em>
           </h1>
 
-          {/* Перемикач локацій */}
-          <div className="flex items-center gap-4 mt-2">
-            <button
-              onClick={() => switchLocation((locIndex - 1 + locations.length) % locations.length)}
-              className="flex items-center gap-1.5 transition-all duration-200 group"
-              style={{ color: "#4a3a30" }}
-            >
-              <ChevronLeft size={14} />
-              <span className="text-[0.62rem] tracking-wider group-hover:underline" style={{ color: "#4a3a30" }}>
-                {prevLoc.name}
-              </span>
-            </button>
-
-            <div className="flex items-center gap-2 px-4 py-1.5 rounded-sm"
-              style={{ border: "1px solid rgba(196,154,60,0.3)", background: "rgba(196,154,60,0.06)" }}>
-              <span className="text-[0.6rem] tracking-[0.2em] uppercase" style={{ color: "#c49a3c" }}>
-                {location.name}
-              </span>
-              <span className="text-[0.55rem]" style={{ color: "#4a3a30" }}>·</span>
-              <span className="text-[0.55rem]" style={{ color: "#5a4a3a" }}>{location.address}</span>
-            </div>
-
-            <button
-              onClick={() => switchLocation((locIndex + 1) % locations.length)}
-              className="flex items-center gap-1.5 transition-all duration-200 group"
-              style={{ color: "#4a3a30" }}
-            >
-              <span className="text-[0.62rem] tracking-wider group-hover:underline" style={{ color: "#4a3a30" }}>
-                {nextLoc.name}
-              </span>
-              <ChevronRight size={14} />
-            </button>
-          </div>
         </div>
         <div className="absolute bottom-0 left-0 right-0 h-px"
           style={{ background: "linear-gradient(to right, transparent, rgba(196,154,60,0.4), transparent)" }} />
+      </div>
+
+      {/* ── Перемикач ресторанів ── */}
+      <div style={{ background: "#fff", borderBottom: "1px solid #e8ddd4" }}>
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex items-stretch">
+
+            {/* Стрілка ← */}
+            <button
+              onClick={() => switchLocation((locIndex - 1 + locations.length) % locations.length)}
+              className="loc-arrow flex items-center gap-3 py-5 pr-8 transition-all duration-200 group"
+              style={{ borderRight: "1px solid #e8ddd4" }}
+            >
+              <ChevronLeft size={18} style={{ color: "#c4b4a8" }} />
+              <div className="text-left">
+                <p className="text-[0.5rem] tracking-[0.2em] uppercase mb-0.5" style={{ color: "#c4b4a8" }}>Попередній</p>
+                <p className="text-sm font-medium transition-colors" style={{ color: "#7a6a5e" }}>
+                  Brasa {prevLoc.name}
+                </p>
+                <p className="text-[0.6rem]" style={{ color: "#c4b4a8" }}>{prevLoc.address}</p>
+              </div>
+            </button>
+
+            {/* Поточний ресторан — центр */}
+            <div className="flex-1 flex flex-col items-center justify-center py-5 px-6">
+              <p className="text-[0.5rem] tracking-[0.25em] uppercase mb-1" style={{ color: "#c49a3c" }}>
+                Ви бронюєте тут
+              </p>
+              <p className="text-xl" style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 400, color: "#1c1410" }}>
+                Brasa {location.name}
+              </p>
+              <p className="text-xs mt-0.5" style={{ color: "#a09080" }}>{location.address}</p>
+              {/* Крапки-індикатори */}
+              <div className="flex gap-1.5 mt-3">
+                {locations.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => switchLocation(i)}
+                    className="rounded-full transition-all duration-300"
+                    style={{
+                      width: i === locIndex ? "20px" : "6px",
+                      height: "6px",
+                      background: i === locIndex ? "#8b1a2e" : "#d4c4b8",
+                    }}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* Стрілка → */}
+            <button
+              onClick={() => switchLocation((locIndex + 1) % locations.length)}
+              className="loc-arrow flex items-center gap-3 py-5 pl-8 transition-all duration-200 group"
+              style={{ borderLeft: "1px solid #e8ddd4" }}
+            >
+              <div className="text-right">
+                <p className="text-[0.5rem] tracking-[0.2em] uppercase mb-0.5" style={{ color: "#c4b4a8" }}>Наступний</p>
+                <p className="text-sm font-medium transition-colors" style={{ color: "#7a6a5e" }}>
+                  Brasa {nextLoc.name}
+                </p>
+                <p className="text-[0.6rem]" style={{ color: "#c4b4a8" }}>{nextLoc.address}</p>
+              </div>
+              <ChevronRight size={18} style={{ color: "#c4b4a8" }} />
+            </button>
+
+          </div>
+        </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-6 py-12">
@@ -448,6 +482,10 @@ export default function BookingPage() {
         )}
       </div>
 
+      <style>{`
+        .loc-arrow:hover p.text-sm { color: #1c1410 !important; }
+        .loc-arrow:hover svg { color: #8b1a2e !important; }
+      `}</style>
     </div>
   );
 }

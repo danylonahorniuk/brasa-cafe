@@ -201,29 +201,33 @@ export default function MenuPage() {
       {/* ── Навігація ── */}
       <div ref={navRef} className="sticky z-30" style={{ top: "64px", background: "#faf7f2", borderTop: "6px solid #faf7f2", borderBottom: "1px solid #e8ddd4" }}>
         <div className="max-w-7xl mx-auto px-6">
-          <nav className="flex overflow-x-auto" style={{ scrollbarWidth: "none" }}>
-            {menuCategories.map((cat) => {
+          <nav className="flex items-center overflow-x-auto" style={{ scrollbarWidth: "none" }}>
+            {menuCategories.map((cat, idx) => {
               const isActive = activeId === cat.id;
               return (
-                <button
-                  key={cat.id}
-                  onClick={() => scrollToSection(cat.id)}
-                  className="menu-nav-item flex-shrink-0 flex flex-col items-center gap-0 px-6 py-4 relative transition-all duration-300"
-                  style={{ color: isActive ? "#1c1410" : "#a09080" }}
-                >
-                  <span className="text-[0.72rem] tracking-[0.12em] uppercase font-medium whitespace-nowrap">
-                    {cat.label}
-                  </span>
-                  <span
-                    className="absolute bottom-0 left-0 right-0 h-[2px] transition-all duration-300"
-                    style={{
-                      background: "#8b1a2e",
-                      opacity: isActive ? 1 : 0,
-                      transform: isActive ? "scaleX(1)" : "scaleX(0)",
-                      transformOrigin: "center",
-                    }}
-                  />
-                </button>
+                <div key={cat.id} className="flex items-center">
+                  <button
+                    onClick={() => scrollToSection(cat.id)}
+                    className="menu-nav-item flex-shrink-0 flex flex-col items-center gap-0 px-6 py-4 relative transition-all duration-300"
+                    style={{ color: isActive ? "#1c1410" : "#a09080" }}
+                  >
+                    <span className="text-[0.72rem] tracking-[0.12em] uppercase font-medium whitespace-nowrap">
+                      {cat.label}
+                    </span>
+                    <span
+                      className="absolute bottom-0 left-0 right-0 h-[2px] transition-all duration-300"
+                      style={{
+                        background: "#8b1a2e",
+                        opacity: isActive ? 1 : 0,
+                        transform: isActive ? "scaleX(1)" : "scaleX(0)",
+                        transformOrigin: "center",
+                      }}
+                    />
+                  </button>
+                  {idx < menuCategories.length - 1 && (
+                    <span className="flex-shrink-0" style={{ color: "#d4c4b4", fontSize: "0.35rem" }}>◆</span>
+                  )}
+                </div>
               );
             })}
           </nav>
@@ -243,8 +247,13 @@ export default function MenuPage() {
               key={cat.id}
               id={cat.id}
               ref={(el) => { sectionRefs.current[cat.id] = el; }}
-              className="pt-14"
+              className="pt-14 pl-5 relative"
+              style={{ borderLeft: "2px solid #e8ddd4" }}
             >
+              {/* Золота акцентна крапка зліва біля заголовку */}
+              <span className="absolute left-[-5px] top-[3.75rem] w-2 h-2 rounded-full flex-shrink-0"
+                style={{ background: "#c49a3c", boxShadow: "0 0 0 3px #faf7f2" }} />
+
               {/* Заголовок секції */}
               <div className="mb-8">
                 {/* Мала підписка над назвою */}
@@ -304,6 +313,30 @@ export default function MenuPage() {
             </section>
           ))
         )}
+      </div>
+
+      {/* ── Завершальний орнамент ── */}
+      <div className="max-w-7xl mx-auto px-6 pb-16 flex flex-col items-center gap-3">
+        <div className="flex items-center gap-4 w-full max-w-xs">
+          <div className="flex-1 h-px" style={{ background: "linear-gradient(to right, transparent, #d4c4b4)" }} />
+          <span style={{ color: "#c49a3c", fontSize: "0.45rem", letterSpacing: "0.2em" }}>◆ ✦ ◆</span>
+          <div className="flex-1 h-px" style={{ background: "linear-gradient(to left, transparent, #d4c4b4)" }} />
+        </div>
+        <span
+          style={{
+            fontFamily: "var(--font-cormorant), serif",
+            fontSize: "1.1rem",
+            fontWeight: 300,
+            fontStyle: "italic",
+            letterSpacing: "0.12em",
+            color: "#c8b8a8",
+          }}
+        >
+          Brasa
+        </span>
+        <p className="text-[0.5rem] tracking-[0.3em] uppercase" style={{ color: "#d8ccc0" }}>
+          Київ · вул. Сагайдачного 14
+        </p>
       </div>
 
       <style>{`

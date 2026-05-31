@@ -171,10 +171,23 @@ export default function MenuPage() {
       {/* Заголовок */}
       <div className="max-w-7xl mx-auto px-6 pt-12 pb-8">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-          <h1 className="text-5xl md:text-6xl"
-            style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 300, lineHeight: 1.05, color: "#1c1410" }}>
-            Наше меню
-          </h1>
+          <div>
+            <p className="text-[0.55rem] tracking-[0.3em] uppercase mb-2" style={{ color: "#b8a898" }}>
+              Ресторан Brasa · Київ
+            </p>
+            <h1 className="text-5xl md:text-6xl"
+              style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 300, lineHeight: 1.05, color: "#1c1410" }}>
+              Наше меню
+            </h1>
+            {/* Декоративний орнамент під заголовком */}
+            <div className="flex items-center gap-2.5 mt-3">
+              <div className="h-px w-10" style={{ background: "#c49a3c" }} />
+              <span style={{ color: "#c49a3c", fontSize: "0.45rem", letterSpacing: "0.15em" }}>◆</span>
+              <div className="h-px w-5" style={{ background: "#e8ddd4" }} />
+              <span style={{ color: "#d4c4b4", fontSize: "0.38rem" }}>◆</span>
+              <div className="h-px flex-1" style={{ background: "#f0e8e0" }} />
+            </div>
+          </div>
           <div className="relative w-full md:w-72">
             <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2" style={{ color: "#c4b4a8" }} />
             <input type="text" placeholder="Пошук страви..." value={search}
@@ -233,7 +246,16 @@ export default function MenuPage() {
               className="pt-14"
             >
               {/* Заголовок секції */}
-              <div className="flex items-center gap-10 mb-8">
+              <div className="mb-8">
+                {/* Мала підписка над назвою */}
+                <div className="flex items-center gap-2 mb-1.5">
+                  <span style={{ color: "#c49a3c", fontSize: "0.42rem" }}>◆</span>
+                  <span className="text-[0.52rem] tracking-[0.28em] uppercase" style={{ color: "#c4b4a8" }}>
+                    {cat.items.length} {cat.items.length === 1 ? "страва" : cat.items.length < 5 ? "страви" : "страв"}
+                  </span>
+                </div>
+
+                {/* Назва категорії */}
                 <h2
                   style={{
                     fontFamily: "var(--font-cormorant), serif",
@@ -246,9 +268,15 @@ export default function MenuPage() {
                 >
                   {cat.label}
                 </h2>
-                <span className="text-[0.62rem] tracking-widest uppercase" style={{ color: "#c4b4a8" }}>
-                  {cat.items.length} {cat.items.length === 1 ? "страва" : cat.items.length < 5 ? "страви" : "страв"}
-                </span>
+
+                {/* Декоративна лінія під назвою */}
+                <div className="flex items-center gap-2 mt-3">
+                  <div className="h-px w-12" style={{ background: "#c49a3c" }} />
+                  <span style={{ color: "#c49a3c", fontSize: "0.42rem" }}>◆</span>
+                  <div className="h-px w-6" style={{ background: "#d4c4b4" }} />
+                  <span style={{ color: "#d4c4b4", fontSize: "0.35rem" }}>◆</span>
+                  <div className="h-px flex-1 max-w-32" style={{ background: "#ede4d8" }} />
+                </div>
               </div>
 
               {/* Картки */}
@@ -258,10 +286,19 @@ export default function MenuPage() {
 
               {/* Роздільник між секціями */}
               {i < grouped.length - 1 && (
-                <div className="mt-14 flex items-center gap-4">
-                  <div className="flex-1 h-px" style={{ background: "#e8ddd4" }} />
-                  <span style={{ color: "#d4c4b8", fontSize: "0.5rem", letterSpacing: "0.3em" }}>✦ ✦ ✦</span>
-                  <div className="flex-1 h-px" style={{ background: "#e8ddd4" }} />
+                <div className="mt-14 mb-2 flex flex-col items-center gap-2">
+                  <div className="flex items-center gap-3 w-full">
+                    <div className="flex-1 h-px" style={{ background: "linear-gradient(to right, #faf7f2, #e8ddd4)" }} />
+                    <div className="flex items-center gap-1.5" style={{ color: "#c8b49a" }}>
+                      <span style={{ fontSize: "0.32rem" }}>◆</span>
+                      <span style={{ fontSize: "0.5rem" }}>✦</span>
+                      <span style={{ fontSize: "0.32rem" }}>◆</span>
+                    </div>
+                    <div className="flex-1 h-px" style={{ background: "linear-gradient(to left, #faf7f2, #e8ddd4)" }} />
+                  </div>
+                  <span className="text-[0.48rem] tracking-[0.35em] uppercase" style={{ color: "#d8ccc0" }}>
+                    Brasa
+                  </span>
                 </div>
               )}
             </section>

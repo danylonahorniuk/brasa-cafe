@@ -333,7 +333,6 @@ export default function BookingPage() {
       {/* ── Шапка ── */}
       <div className="relative overflow-hidden" style={{ background: "#1a1208", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
         <div className="max-w-7xl mx-auto px-6 py-14">
-          <p className="text-[0.55rem] tracking-[0.3em] uppercase mb-3" style={{ color: "#5a4a3a" }}>Ресторан Brasa</p>
           <h1 className="text-5xl md:text-6xl mb-4"
             style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 300, lineHeight: 1.05, color: "#f0e8dc" }}>
             Забронюйте<br />

@@ -389,14 +389,14 @@ export default function BookingPage() {
 
           {/* ── Ліва колонка ── */}
           <div>
-            <div className="space-y-3 mb-8">
+            <div className="mb-8 rounded-sm overflow-hidden" style={{ background: "#fff", border: "1px solid #e8ddd4" }}>
               {[
                 { icon: Clock,           title: location.hours,       sub: "Столик утримується 15 хвилин" },
                 { icon: Users,           title: "До 8 гостей онлайн", sub: "Більше — телефонуйте нам"      },
                 { icon: UtensilsCrossed, title: "Кухня до 22:30",     sub: "Останнє замовлення о 22:30"    },
-              ].map((item) => (
-                <div key={item.title} className="flex items-start gap-4 p-4 rounded-sm"
-                  style={{ background: "#fff", border: "1px solid #e8ddd4" }}>
+              ].map((item, i, arr) => (
+                <div key={item.title} className="flex items-start gap-4 p-4"
+                  style={{ borderBottom: i < arr.length - 1 ? "1px solid #f0e8e0" : "none" }}>
                   <div className="w-9 h-9 flex-shrink-0 rounded-sm flex items-center justify-center"
                     style={{ background: "rgba(139,26,46,0.07)", border: "1px solid rgba(139,26,46,0.15)" }}>
                     <item.icon size={15} color="#8b1a2e" />

@@ -165,7 +165,7 @@ export default function BookingPage() {
 
       {/* ── Перемикач ресторанів ── */}
       <div style={{ background: "#fff", borderBottom: "1px solid #e8ddd4" }}>
-        <div className="max-w-2xl mx-auto px-6">
+        <div className="max-w-3xl mx-auto px-6">
           <div className="flex items-stretch">
 
             {/* Стрілка ← */}

@@ -208,7 +208,7 @@ export const menuItems: MenuItem[] = [
     description: "Свіжовичавлений апельсиновий сік, без цукру",
     price: 89,
     category: "drinks",
-    image: "https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?w=600&q=80",
+    image: "/orange-juice.jpg",
     weight: "300мл",
   },
   {

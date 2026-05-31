@@ -417,9 +417,9 @@ export default function BookingPage() {
                 style={{ background: "#1a1208", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
                 <div>
                   <span className="text-[0.62rem] tracking-[0.2em] uppercase" style={{ color: "#c49a3c" }}>Схема залу</span>
-                  <span className="text-[0.55rem] ml-2" style={{ color: "#4a3a30" }}>Brasa {location.name}</span>
+                  <span className="text-[0.55rem] ml-2" style={{ color: "#a09080" }}>Brasa {location.name}</span>
                 </div>
-                <span className="text-[0.58rem]" style={{ color: canShowTables ? "#5a4a3a" : "#4a3a30" }}>
+                <span className="text-[0.58rem]" style={{ color: canShowTables ? "#c4b4a8" : "#7a6a5a" }}>
                   {canShowTables ? `${form.date} · ${form.time}` : "Оберіть дату та час"}
                 </span>
               </div>

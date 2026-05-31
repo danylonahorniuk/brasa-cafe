@@ -40,7 +40,7 @@ const locations = [
       { id: 7,  label: "№7",  seats: 4, zone: "VIP зал",    shape: "sq4",   svgX: 445, svgY: 95  },
       { id: 8,  label: "№8",  seats: 6, zone: "VIP зал",    shape: "rect6", svgX: 445, svgY: 230 },
       { id: 9,  label: "№9",  seats: 4, zone: "VIP зал",    shape: "sq4",   svgX: 445, svgY: 352 },
-      { id: 10, label: "№10", seats: 8, zone: "Банкет",     shape: "rect8", svgX: 618, svgY: 215 },
+      { id: 10, label: "№10", seats: 8, zone: "Банкет",     shape: "rect8", svgX: 473, svgY: 358 },
     ],
   },
   {

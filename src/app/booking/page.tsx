@@ -7,7 +7,7 @@ import { CheckCircle, Users, Calendar, Clock, MessageSquare, UtensilsCrossed, Ch
 const locations = [
   {
     id: 1,
-    name: "Poділ",
+    name: "Поділ",
     address: "вул. Сагайдачного 14",
     hours: "Пн–Пт 11:00–23:00 · Сб–Нд 10:00–00:00",
     tables: [
@@ -171,41 +171,29 @@ export default function BookingPage() {
             {/* Стрілка ← */}
             <button
               onClick={() => switchLocation((locIndex - 1 + locations.length) % locations.length)}
-              className="loc-arrow flex items-center gap-3 py-5 pr-8 transition-all duration-200 group"
+              className="loc-arrow flex items-center gap-2.5 py-3.5 pr-6 transition-all duration-200"
               style={{ borderRight: "1px solid #e8ddd4" }}
             >
-              <ChevronLeft size={18} style={{ color: "#c4b4a8" }} />
+              <ChevronLeft size={15} style={{ color: "#c4b4a8" }} />
               <div className="text-left">
-                <p className="text-[0.5rem] tracking-[0.2em] uppercase mb-0.5" style={{ color: "#c4b4a8" }}>Попередній</p>
-                <p className="text-sm font-medium transition-colors" style={{ color: "#7a6a5e" }}>
-                  Brasa {prevLoc.name}
-                </p>
-                <p className="text-[0.6rem]" style={{ color: "#c4b4a8" }}>{prevLoc.address}</p>
+                <p className="text-[0.48rem] tracking-[0.2em] uppercase mb-0.5" style={{ color: "#c4b4a8" }}>Попередній</p>
+                <p className="text-[0.8rem] font-medium" style={{ color: "#7a6a5e" }}>Brasa {prevLoc.name}</p>
+                <p className="text-[0.58rem]" style={{ color: "#c4b4a8" }}>{prevLoc.address}</p>
               </div>
             </button>
 
-            {/* Поточний ресторан — центр */}
-            <div className="flex-1 flex flex-col items-center justify-center py-5 px-6">
-              <p className="text-[0.5rem] tracking-[0.25em] uppercase mb-1" style={{ color: "#c49a3c" }}>
-                Ви бронюєте тут
-              </p>
-              <p className="text-xl" style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 400, color: "#1c1410" }}>
+            {/* Поточний — центр */}
+            <div className="flex-1 flex flex-col items-center justify-center py-3.5 px-4">
+              <p className="text-[0.48rem] tracking-[0.25em] uppercase mb-0.5" style={{ color: "#c49a3c" }}>Ви бронюєте тут</p>
+              <p className="text-base" style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 400, color: "#1c1410" }}>
                 Brasa {location.name}
               </p>
-              <p className="text-xs mt-0.5" style={{ color: "#a09080" }}>{location.address}</p>
-              {/* Крапки-індикатори */}
-              <div className="flex gap-1.5 mt-3">
+              <p className="text-[0.6rem]" style={{ color: "#a09080" }}>{location.address}</p>
+              <div className="flex gap-1.5 mt-2">
                 {locations.map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => switchLocation(i)}
+                  <button key={i} onClick={() => switchLocation(i)}
                     className="rounded-full transition-all duration-300"
-                    style={{
-                      width: i === locIndex ? "20px" : "6px",
-                      height: "6px",
-                      background: i === locIndex ? "#8b1a2e" : "#d4c4b8",
-                    }}
-                  />
+                    style={{ width: i === locIndex ? "16px" : "5px", height: "5px", background: i === locIndex ? "#8b1a2e" : "#d4c4b8" }} />
                 ))}
               </div>
             </div>
@@ -213,17 +201,15 @@ export default function BookingPage() {
             {/* Стрілка → */}
             <button
               onClick={() => switchLocation((locIndex + 1) % locations.length)}
-              className="loc-arrow flex items-center gap-3 py-5 pl-8 transition-all duration-200 group"
+              className="loc-arrow flex items-center gap-2.5 py-3.5 pl-6 transition-all duration-200"
               style={{ borderLeft: "1px solid #e8ddd4" }}
             >
               <div className="text-right">
-                <p className="text-[0.5rem] tracking-[0.2em] uppercase mb-0.5" style={{ color: "#c4b4a8" }}>Наступний</p>
-                <p className="text-sm font-medium transition-colors" style={{ color: "#7a6a5e" }}>
-                  Brasa {nextLoc.name}
-                </p>
-                <p className="text-[0.6rem]" style={{ color: "#c4b4a8" }}>{nextLoc.address}</p>
+                <p className="text-[0.48rem] tracking-[0.2em] uppercase mb-0.5" style={{ color: "#c4b4a8" }}>Наступний</p>
+                <p className="text-[0.8rem] font-medium" style={{ color: "#7a6a5e" }}>Brasa {nextLoc.name}</p>
+                <p className="text-[0.58rem]" style={{ color: "#c4b4a8" }}>{nextLoc.address}</p>
               </div>
-              <ChevronRight size={18} style={{ color: "#c4b4a8" }} />
+              <ChevronRight size={15} style={{ color: "#c4b4a8" }} />
             </button>
 
           </div>

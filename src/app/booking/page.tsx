@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { CheckCircle, Users, Calendar, Clock, MessageSquare, UtensilsCrossed, MapPin } from "lucide-react";
+import { CheckCircle, Users, Calendar, Clock, MessageSquare, UtensilsCrossed, ChevronLeft, ChevronRight } from "lucide-react";
 
 /* ─── Локації ─── */
 const locations = [
@@ -91,15 +91,22 @@ const inputStyle = { background: "#fff", border: "1px solid #d4c4b8", color: "#1
 const inputClass = "w-full px-3 py-2.5 text-sm rounded-sm outline-none transition-colors placeholder:text-[#c4b4a8]";
 
 export default function BookingPage() {
-  const [locationId, setLocationId] = useState<number | null>(null);
+  const [locIndex, setLocIndex] = useState(0);
   const [form, setForm] = useState({ name: "", phone: "", date: "", time: "", guests: 2, comment: "", tableId: 0 });
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const today = new Date().toISOString().split("T")[0];
 
-  const location = locations.find((l) => l.id === locationId);
-  const canShowTables = form.date && form.time && location;
-  const selectedTable = location?.tables.find((t) => t.id === form.tableId);
+  const location = locations[locIndex];
+  const prevLoc = locations[(locIndex - 1 + locations.length) % locations.length];
+  const nextLoc = locations[(locIndex + 1) % locations.length];
+  const canShowTables = form.date && form.time;
+  const selectedTable = location.tables.find((t) => t.id === form.tableId);
+
+  const switchLocation = (idx: number) => {
+    setLocIndex(idx);
+    setForm((f) => ({ ...f, date: "", time: "", tableId: 0 }));
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -150,9 +157,40 @@ export default function BookingPage() {
             Забронюйте<br />
             <em className="not-italic" style={{ color: "#c49a3c" }}>свій столик</em>
           </h1>
-          <p className="text-sm max-w-md" style={{ color: "#5a4a3a" }}>
-            Оберіть ресторан, дату, час і зручний столик.
-          </p>
+
+          {/* Перемикач локацій */}
+          <div className="flex items-center gap-4 mt-2">
+            <button
+              onClick={() => switchLocation((locIndex - 1 + locations.length) % locations.length)}
+              className="flex items-center gap-1.5 transition-all duration-200 group"
+              style={{ color: "#4a3a30" }}
+            >
+              <ChevronLeft size={14} />
+              <span className="text-[0.62rem] tracking-wider group-hover:underline" style={{ color: "#4a3a30" }}>
+                {prevLoc.name}
+              </span>
+            </button>
+
+            <div className="flex items-center gap-2 px-4 py-1.5 rounded-sm"
+              style={{ border: "1px solid rgba(196,154,60,0.3)", background: "rgba(196,154,60,0.06)" }}>
+              <span className="text-[0.6rem] tracking-[0.2em] uppercase" style={{ color: "#c49a3c" }}>
+                {location.name}
+              </span>
+              <span className="text-[0.55rem]" style={{ color: "#4a3a30" }}>·</span>
+              <span className="text-[0.55rem]" style={{ color: "#5a4a3a" }}>{location.address}</span>
+            </div>
+
+            <button
+              onClick={() => switchLocation((locIndex + 1) % locations.length)}
+              className="flex items-center gap-1.5 transition-all duration-200 group"
+              style={{ color: "#4a3a30" }}
+            >
+              <span className="text-[0.62rem] tracking-wider group-hover:underline" style={{ color: "#4a3a30" }}>
+                {nextLoc.name}
+              </span>
+              <ChevronRight size={14} />
+            </button>
+          </div>
         </div>
         <div className="absolute bottom-0 left-0 right-0 h-px"
           style={{ background: "linear-gradient(to right, transparent, rgba(196,154,60,0.4), transparent)" }} />
@@ -160,62 +198,8 @@ export default function BookingPage() {
 
       <div className="max-w-7xl mx-auto px-6 py-12">
 
-        {/* ── Вибір локації ── */}
-        <div className="mb-12">
-          <p className="text-[0.6rem] tracking-[0.25em] uppercase mb-4" style={{ color: "#b8a898" }}>
-            Оберіть ресторан
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {locations.map((loc) => {
-              const isSelected = locationId === loc.id;
-              return (
-                <button
-                  key={loc.id}
-                  type="button"
-                  onClick={() => {
-                    setLocationId(loc.id);
-                    setForm((f) => ({ ...f, date: "", time: "", tableId: 0 }));
-                  }}
-                  className="location-card text-left p-5 rounded-sm transition-all duration-300"
-                  style={{
-                    background: isSelected ? "#1a1208" : "#fff",
-                    border: `1px solid ${isSelected ? "rgba(196,154,60,0.5)" : "#e8ddd4"}`,
-                    boxShadow: isSelected ? "0 4px 20px rgba(0,0,0,0.15)" : "none",
-                  }}
-                >
-                  <div className="flex items-start justify-between mb-3">
-                    <div className="w-8 h-8 rounded-sm flex items-center justify-center flex-shrink-0"
-                      style={{
-                        background: isSelected ? "rgba(196,154,60,0.15)" : "rgba(139,26,46,0.07)",
-                        border: `1px solid ${isSelected ? "rgba(196,154,60,0.3)" : "rgba(139,26,46,0.15)"}`,
-                      }}>
-                      <MapPin size={14} color={isSelected ? "#c49a3c" : "#8b1a2e"} />
-                    </div>
-                    {isSelected && (
-                      <span className="text-[0.48rem] tracking-widest uppercase px-2 py-0.5 rounded-[2px]"
-                        style={{ background: "rgba(196,154,60,0.15)", color: "#c49a3c", border: "1px solid rgba(196,154,60,0.3)" }}>
-                        Обрано
-                      </span>
-                    )}
-                  </div>
-                  <p className="text-lg mb-0.5"
-                    style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 400, color: isSelected ? "#f0e8dc" : "#1c1410" }}>
-                    Brasa {loc.name}
-                  </p>
-                  <p className="text-xs mb-2" style={{ color: isSelected ? "#c49a3c" : "#8b1a2e" }}>
-                    {loc.address}
-                  </p>
-                  <p className="text-[0.62rem]" style={{ color: isSelected ? "#5a4a3a" : "#a09080" }}>
-                    {loc.hours}
-                  </p>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* ── Основний контент (показується після вибору локації) ── */}
-        {location && (
+        {/* ── Основний контент ── */}
+        {true && (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
 
             {/* ── Ліва колонка ── */}
@@ -464,12 +448,6 @@ export default function BookingPage() {
         )}
       </div>
 
-      <style>{`
-        .location-card:hover {
-          border-color: rgba(196,154,60,0.3) !important;
-          box-shadow: 0 4px 16px rgba(28,20,16,0.08) !important;
-        }
-      `}</style>
     </div>
   );
 }

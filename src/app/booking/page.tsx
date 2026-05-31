@@ -95,6 +95,8 @@ export default function BookingPage() {
   const [form, setForm] = useState({ name: "", phone: "", date: "", time: "", guests: 2, comment: "", tableId: 0 });
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [animDir, setAnimDir] = useState<"left" | "right">("left");
+  const [isExiting, setIsExiting] = useState(false);
   const today = new Date().toISOString().split("T")[0];
 
   const location = locations[locIndex];
@@ -104,8 +106,15 @@ export default function BookingPage() {
   const selectedTable = location.tables.find((t) => t.id === form.tableId);
 
   const switchLocation = (idx: number) => {
-    setLocIndex(idx);
-    setForm((f) => ({ ...f, date: "", time: "", tableId: 0 }));
+    if (idx === locIndex) return;
+    const dir = idx > locIndex || (locIndex === locations.length - 1 && idx === 0) ? "left" : "right";
+    setAnimDir(dir);
+    setIsExiting(true);
+    setTimeout(() => {
+      setLocIndex(idx);
+      setForm((f) => ({ ...f, date: "", time: "", tableId: 0 }));
+      setIsExiting(false);
+    }, 220);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -183,7 +192,7 @@ export default function BookingPage() {
             </button>
 
             {/* Поточний — центр */}
-            <div className="flex-1 flex flex-col items-center justify-center py-3.5 px-4">
+            <div className={`flex-1 flex flex-col items-center justify-center py-3.5 px-4 ${isExiting ? (animDir === "left" ? "loc-exit-left" : "loc-exit-right") : (animDir === "left" ? "loc-enter-right" : "loc-enter-left")}`}>
               <p className="text-[0.48rem] tracking-[0.25em] uppercase mb-0.5" style={{ color: "#c49a3c" }}>Ви бронюєте тут</p>
               <p className="text-base" style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 400, color: "#1c1410" }}>
                 Brasa {location.name}
@@ -220,7 +229,9 @@ export default function BookingPage() {
 
         {/* ── Основний контент ── */}
         {true && (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+          <div
+            className={`grid grid-cols-1 lg:grid-cols-2 gap-16 items-start ${isExiting ? (animDir === "left" ? "loc-exit-left" : "loc-exit-right") : (animDir === "left" ? "loc-enter-right" : "loc-enter-left")}`}
+          >
 
             {/* ── Ліва колонка ── */}
             <div>
@@ -471,6 +482,28 @@ export default function BookingPage() {
       <style>{`
         .loc-arrow:hover p.text-sm { color: #1c1410 !important; }
         .loc-arrow:hover svg { color: #8b1a2e !important; }
+
+        @keyframes slideInFromRight {
+          from { opacity: 0; transform: translateX(32px); }
+          to   { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes slideInFromLeft {
+          from { opacity: 0; transform: translateX(-32px); }
+          to   { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes slideOutToLeft {
+          from { opacity: 1; transform: translateX(0); }
+          to   { opacity: 0; transform: translateX(-32px); }
+        }
+        @keyframes slideOutToRight {
+          from { opacity: 1; transform: translateX(0); }
+          to   { opacity: 0; transform: translateX(32px); }
+        }
+
+        .loc-enter-right { animation: slideInFromRight 0.25s ease forwards; }
+        .loc-enter-left  { animation: slideInFromLeft  0.25s ease forwards; }
+        .loc-exit-left   { animation: slideOutToLeft   0.2s ease forwards; pointer-events: none; }
+        .loc-exit-right  { animation: slideOutToRight  0.2s ease forwards; pointer-events: none; }
       `}</style>
     </div>
   );

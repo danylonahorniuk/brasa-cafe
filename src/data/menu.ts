@@ -235,7 +235,7 @@ export const menuItems: MenuItem[] = [
     description: "Полуниця, чорниця, малина, банан, натуральний йогурт",
     price: 119,
     category: "drinks",
-    image: "https://images.unsplash.com/photo-1643470758221-45463a3d210a?w=600&q=80",
+    image: "/berry.jpg",
     weight: "350мл",
   },
 

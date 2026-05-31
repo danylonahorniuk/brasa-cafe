@@ -181,7 +181,7 @@ export const menuItems: MenuItem[] = [
     description: "Класична газована cola, 330мл банка",
     price: 59,
     category: "drinks",
-    image: "https://images.unsplash.com/photo-1554866585-cd94860890b7?w=600&q=80",
+    image: "https://images.unsplash.com/photo-1566657817181-c69e4a8eeb1e?w=600&q=80",
     weight: "330мл",
   },
   {
@@ -190,7 +190,7 @@ export const menuItems: MenuItem[] = [
     description: "Апельсинова газована Fanta, освіжаюча і солодка",
     price: 59,
     category: "drinks",
-    image: "https://images.unsplash.com/photo-1769261196497-2dea5653a076?w=600&q=80",
+    image: "https://images.unsplash.com/photo-1566846128021-b940b0eec910?w=600&q=80",
     weight: "330мл",
   },
   {
@@ -199,7 +199,7 @@ export const menuItems: MenuItem[] = [
     description: "Лимонно-лаймова газована Sprite, легко і свіжо",
     price: 59,
     category: "drinks",
-    image: "https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?w=600&q=80",
+    image: "https://images.unsplash.com/photo-1592860893757-84536a1c9b82?w=600&q=80",
     weight: "330мл",
   },
   {

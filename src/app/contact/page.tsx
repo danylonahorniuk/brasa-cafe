@@ -113,8 +113,11 @@ export default function ContactPage() {
 
           {/* Photo */}
           <div
+            className="max-w-7xl mx-auto px-6"
+          >
+          <div
             className="relative overflow-hidden"
-            style={{ height: "62vh", minHeight: 380 }}
+            style={{ height: 440 }}
           >
             <Image
               src={loc.photo}
@@ -123,6 +126,7 @@ export default function ContactPage() {
               className="object-cover"
               priority={i === 0}
             />
+          </div>
           </div>
         </div>
       ))}

@@ -121,40 +121,36 @@ export default function AboutPage() {
       <style>{`
         .about-btn-primary {
           display: inline-block;
-          padding: 0.9rem 2rem;
-          background: linear-gradient(135deg, #9b1e34 0%, #6d1423 100%);
+          padding: 0.875rem 2rem;
+          background: #6b1422;
           color: #faf7f2;
           font-size: 0.72rem;
           letter-spacing: 0.15em;
           text-transform: uppercase;
           text-decoration: none;
-          border: 1px solid transparent;
-          transition: all 0.3s ease;
-          box-shadow: 0 2px 16px rgba(139,26,46,0.25);
+          border: 1px solid #8a1c2e;
+          transition: background 0.25s ease, border-color 0.25s ease;
         }
         .about-btn-primary:hover {
-          background: linear-gradient(135deg, #a32038 0%, #7a1828 100%);
-          border-color: rgba(196,154,60,0.2);
-          box-shadow: 0 4px 18px rgba(139,26,46,0.32);
+          background: #7d1828;
+          border-color: #a02035;
           color: #faf7f2;
         }
         .about-btn-secondary {
           display: inline-block;
-          padding: 0.9rem 2rem;
+          padding: 0.875rem 2rem;
           background: transparent;
-          color: #c49a3c;
+          color: #faf7f2;
           font-size: 0.72rem;
           letter-spacing: 0.15em;
           text-transform: uppercase;
           text-decoration: none;
-          border: 1px solid #c49a3c;
-          transition: all 0.3s ease;
+          border: 1px solid rgba(250,247,242,0.3);
+          transition: border-color 0.25s ease, background 0.25s ease;
         }
         .about-btn-secondary:hover {
-          background: rgba(196,154,60,0.07);
-          color: #d4a843;
-          border-color: #c49a3c;
-          box-shadow: none;
+          background: rgba(250,247,242,0.05);
+          border-color: rgba(250,247,242,0.55);
         }
       `}</style>
       <div className="max-w-4xl mx-auto px-6 py-20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8">

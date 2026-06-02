@@ -118,6 +118,45 @@ export default function AboutPage() {
       </div>
 
       {/* CTA */}
+      <style>{`
+        .about-btn-primary {
+          display: inline-block;
+          padding: 0.9rem 2rem;
+          background: linear-gradient(135deg, #9b1e34 0%, #6d1423 100%);
+          color: #faf7f2;
+          font-size: 0.72rem;
+          letter-spacing: 0.15em;
+          text-transform: uppercase;
+          text-decoration: none;
+          border: 1px solid transparent;
+          transition: all 0.3s ease;
+          box-shadow: 0 2px 16px rgba(139,26,46,0.25);
+        }
+        .about-btn-primary:hover {
+          background: linear-gradient(135deg, #b02238 0%, #8b1a2e 100%);
+          border-color: rgba(196,154,60,0.35);
+          box-shadow: 0 4px 24px rgba(139,26,46,0.45);
+          color: #faf7f2;
+        }
+        .about-btn-secondary {
+          display: inline-block;
+          padding: 0.9rem 2rem;
+          background: transparent;
+          color: #c49a3c;
+          font-size: 0.72rem;
+          letter-spacing: 0.15em;
+          text-transform: uppercase;
+          text-decoration: none;
+          border: 1px solid #c49a3c;
+          transition: all 0.3s ease;
+        }
+        .about-btn-secondary:hover {
+          background: rgba(196,154,60,0.1);
+          color: #e0b84e;
+          border-color: #e0b84e;
+          box-shadow: 0 4px 20px rgba(196,154,60,0.15);
+        }
+      `}</style>
       <div className="max-w-4xl mx-auto px-6 py-20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8">
         <p style={{
           fontFamily: "var(--font-cormorant), serif",
@@ -131,31 +170,10 @@ export default function AboutPage() {
         </p>
 
         <div style={{ display: "flex", gap: "0.75rem", flexShrink: 0, flexWrap: "wrap" }}>
-          <Link href="/menu" style={{
-            display: "inline-block",
-            padding: "0.875rem 1.75rem",
-            background: "#8b1a2e",
-            color: "#faf7f2",
-            fontSize: "0.72rem",
-            letterSpacing: "0.15em",
-            textTransform: "uppercase",
-            textDecoration: "none",
-            transition: "background 0.2s",
-          }}>
+          <Link href="/menu" className="about-btn-primary">
             Переглянути меню
           </Link>
-          <Link href="/booking" style={{
-            display: "inline-block",
-            padding: "0.875rem 1.75rem",
-            background: "transparent",
-            color: "#faf7f2",
-            fontSize: "0.72rem",
-            letterSpacing: "0.15em",
-            textTransform: "uppercase",
-            textDecoration: "none",
-            border: "1px solid rgba(196,154,60,0.55)",
-            transition: "border-color 0.2s",
-          }}>
+          <Link href="/booking" className="about-btn-secondary">
             Забронювати стіл
           </Link>
         </div>

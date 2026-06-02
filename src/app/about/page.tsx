@@ -81,69 +81,45 @@ export default function AboutPage() {
 
       </div>
 
-      {/* Principles — wider, full bleed section */}
-      <div style={{ borderTop: "1px solid rgba(196,154,60,0.15)", borderBottom: "1px solid rgba(196,154,60,0.15)" }}>
-        <div className="max-w-6xl mx-auto px-6 py-20">
-          <p style={{
-            fontSize: "0.72rem",
-            letterSpacing: "0.22em",
-            textTransform: "uppercase",
-            color: "#c49a3c",
-            marginBottom: "4rem",
-          }}>
-            Як ми працюємо
-          </p>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-            {[
-              {
-                num: "01",
-                title: "Живий вогонь",
-                text: "Дров'яна піч розігрівається до 450°C. Тісто дозріває 48 годин перед тим як потрапити до печі. Ні духовок, ні конвекції — тільки вогонь і час.",
-              },
-              {
-                num: "02",
-                title: "Локальна сировина",
-                text: "Овочі та зелень — з Київщини. М'ясо та сир — з перевірених господарств у Карпатах. Меню залежить від сезону, а не від складу на полиці.",
-              },
-              {
-                num: "03",
-                title: "Гарантія доставки",
-                text: "Якщо кур'єр спізнився більше ніж на 60 хвилин — наступне замовлення за наш рахунок. Без зірочок і умовних позначок.",
-              },
-            ].map((p) => (
-              <div key={p.num}>
-                <p style={{
-                  fontFamily: "var(--font-cormorant), serif",
-                  fontSize: "3.5rem",
-                  fontWeight: 300,
-                  color: "rgba(196,154,60,0.2)",
-                  lineHeight: 1,
-                  marginBottom: "1.25rem",
-                }}>
-                  {p.num}
-                </p>
-                <h3 style={{
-                  fontFamily: "var(--font-cormorant), serif",
-                  fontSize: "1.75rem",
-                  fontWeight: 400,
-                  color: "#faf7f2",
-                  marginBottom: "1rem",
-                  lineHeight: 1.1,
-                }}>
-                  {p.title}
-                </h3>
-                <p style={{
-                  fontSize: "0.9rem",
-                  lineHeight: 1.8,
-                  color: "rgba(250,247,242,0.45)",
-                }}>
-                  {p.text}
-                </p>
-              </div>
-            ))}
+      {/* Principles */}
+      <div className="max-w-4xl mx-auto px-6" style={{ borderTop: "1px solid rgba(250,247,242,0.08)" }}>
+        {[
+          {
+            title: "Живий вогонь",
+            text: "Дров'яна піч розігрівається до 450°C. Тісто дозріває 48 годин перед тим як потрапити до печі. Ні духовок, ні конвекції — тільки вогонь і час.",
+          },
+          {
+            title: "Локальна сировина",
+            text: "Овочі та зелень — з Київщини. М'ясо та сир — з перевірених господарств у Карпатах. Меню залежить від сезону, а не від складу на полиці.",
+          },
+          {
+            title: "Гарантія доставки",
+            text: "Якщо кур'єр спізнився більше ніж на 60 хвилин — наступне замовлення за наш рахунок. Без зірочок і умовних позначок.",
+          },
+        ].map((p) => (
+          <div
+            key={p.title}
+            className="grid grid-cols-1 md:grid-cols-2 gap-6 py-10"
+            style={{ borderBottom: "1px solid rgba(250,247,242,0.08)" }}
+          >
+            <h3 style={{
+              fontFamily: "var(--font-cormorant), serif",
+              fontSize: "1.6rem",
+              fontWeight: 400,
+              color: "#faf7f2",
+              lineHeight: 1.15,
+            }}>
+              {p.title}
+            </h3>
+            <p style={{
+              fontSize: "0.92rem",
+              lineHeight: 1.8,
+              color: "rgba(250,247,242,0.45)",
+            }}>
+              {p.text}
+            </p>
           </div>
-        </div>
+        ))}
       </div>
 
       {/* CTA */}

@@ -16,7 +16,7 @@ export default function AboutPage() {
           marginBottom: "3rem",
           maxWidth: "38rem",
         }}>
-          Brasa — іспанське слово для жару і розпеченого вугілля.
+          <span style={{ color: "#c49a3c" }}>Brasa</span> — іспанське слово для жару і розпеченого вугілля.
         </h1>
 
         {/* Divider */}

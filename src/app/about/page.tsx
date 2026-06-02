@@ -6,17 +6,6 @@ export default function AboutPage() {
     <div className="pt-20" style={{ background: "#1c1410", color: "#faf7f2" }}>
       <div className="max-w-4xl mx-auto px-6 py-24">
 
-        {/* Label */}
-        <p style={{
-          fontSize: "0.72rem",
-          letterSpacing: "0.22em",
-          textTransform: "uppercase",
-          color: "#c49a3c",
-          marginBottom: "2.5rem",
-        }}>
-          Про заклад
-        </p>
-
         {/* Title */}
         <h1 style={{
           fontFamily: "var(--font-cormorant), serif",

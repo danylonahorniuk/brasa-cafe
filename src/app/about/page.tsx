@@ -81,45 +81,40 @@ export default function AboutPage() {
 
       </div>
 
-      {/* Principles */}
-      <div className="max-w-4xl mx-auto px-6" style={{ borderTop: "1px solid rgba(250,247,242,0.08)" }}>
-        {[
-          {
-            title: "Живий вогонь",
-            text: "Дров'яна піч розігрівається до 450°C. Тісто дозріває 48 годин перед тим як потрапити до печі. Ні духовок, ні конвекції — тільки вогонь і час.",
-          },
-          {
-            title: "Локальна сировина",
-            text: "Овочі та зелень — з Київщини. М'ясо та сир — з перевірених господарств у Карпатах. Меню залежить від сезону, а не від складу на полиці.",
-          },
-          {
-            title: "Гарантія доставки",
-            text: "Якщо кур'єр спізнився більше ніж на 60 хвилин — наступне замовлення за наш рахунок. Без зірочок і умовних позначок.",
-          },
-        ].map((p) => (
-          <div
-            key={p.title}
-            className="grid grid-cols-1 md:grid-cols-2 gap-6 py-10"
-            style={{ borderBottom: "1px solid rgba(250,247,242,0.08)" }}
-          >
-            <h3 style={{
-              fontFamily: "var(--font-cormorant), serif",
-              fontSize: "1.6rem",
-              fontWeight: 400,
-              color: "#faf7f2",
-              lineHeight: 1.15,
-            }}>
-              {p.title}
-            </h3>
-            <p style={{
-              fontSize: "0.92rem",
-              lineHeight: 1.8,
-              color: "rgba(250,247,242,0.45)",
-            }}>
-              {p.text}
-            </p>
-          </div>
-        ))}
+      {/* Principles as article continuation */}
+      <div className="max-w-4xl mx-auto px-6 pb-24">
+        <h2 style={{
+          fontFamily: "var(--font-cormorant), serif",
+          fontWeight: 300,
+          fontSize: "clamp(1.8rem, 4vw, 2.8rem)",
+          color: "#faf7f2",
+          lineHeight: 1.1,
+          marginBottom: "2rem",
+        }}>
+          Як ми готуємо
+        </h2>
+
+        <div style={{
+          fontSize: "1.05rem",
+          lineHeight: 1.85,
+          color: "rgba(250,247,242,0.6)",
+          display: "flex",
+          flexDirection: "column",
+          gap: "1.5rem",
+        }}>
+          <p>
+            <span style={{ color: "#faf7f2", fontWeight: 500 }}>Живий вогонь.</span>{" "}
+            Дров'яна піч розігрівається до 450°C. Тісто дозріває 48 годин перед тим як потрапити до печі. Ні духовок, ні конвекції — тільки вогонь і час.
+          </p>
+          <p>
+            <span style={{ color: "#faf7f2", fontWeight: 500 }}>Локальна сировина.</span>{" "}
+            Овочі та зелень — з Київщини. М'ясо та сир — з перевірених господарств у Карпатах. Меню залежить від сезону, а не від складу на полиці.
+          </p>
+          <p>
+            <span style={{ color: "#faf7f2", fontWeight: 500 }}>Гарантія доставки.</span>{" "}
+            Якщо кур'єр спізнився більше ніж на 60 хвилин — наступне замовлення за наш рахунок. Без зірочок і умовних позначок.
+          </p>
+        </div>
       </div>
 
       {/* CTA */}

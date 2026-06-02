@@ -21,12 +21,12 @@ function IconFacebook() {
 
 export default function Footer() {
   return (
-    <footer style={{ background: "#1a1208", color: "#f0ebe1" }} className="mt-24">
+    <footer style={{ background: "#1a1208", color: "#f0ebe1" }}>
       <style>{`
         .footer-link:hover { color: #c49a3c !important; }
         .footer-social:hover { border-color: #c49a3c !important; color: #c49a3c !important; }
       `}</style>
-      <div className="max-w-7xl mx-auto px-6 py-16">
+      <div className="max-w-7xl mx-auto px-6 pb-16 pt-24">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           {/* Brand */}
           <div className="md:col-span-1">

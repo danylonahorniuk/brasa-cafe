@@ -14,14 +14,14 @@ const locations = [
     address: "вул. Лаврська 8",
     hours: "Пн–Пт 11:00–23:00 · Сб–Нд 10:00–00:00",
     maps: "https://maps.google.com/?q=вул.+Лаврська+8,+Київ",
-    photo: "https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?w=1600&q=85",
+    photo: "https://images.unsplash.com/photo-1533777857889-4be7c70b33f7?w=1600&q=85",
   },
   {
     name: "Оболонь",
     address: "просп. Оболонський 1",
     hours: "Пн–Пт 12:00–23:00 · Сб–Нд 10:00–00:00",
     maps: "https://maps.google.com/?q=просп.+Оболонський+1,+Київ",
-    photo: "https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?w=1600&q=85",
+    photo: "https://images.unsplash.com/photo-1578474846132-4f90640573e6?w=1600&q=85",
   },
 ];
 

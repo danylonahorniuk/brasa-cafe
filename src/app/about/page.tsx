@@ -120,37 +120,56 @@ export default function AboutPage() {
       {/* CTA */}
       <style>{`
         .about-btn-primary {
-          display: inline-block;
-          padding: 0.875rem 2rem;
-          background: #6b1422;
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          padding: 0.75rem 1.8rem;
+          background: linear-gradient(135deg, #6b1220 0%, #4e0d18 100%);
           color: #faf7f2;
           font-size: 0.72rem;
-          letter-spacing: 0.15em;
+          letter-spacing: 0.16em;
           text-transform: uppercase;
           text-decoration: none;
-          border: 1px solid #8a1c2e;
-          transition: background 0.25s ease, border-color 0.25s ease;
+          border: 1px solid rgba(255,255,255,0.12);
+          box-shadow: 0 4px 20px rgba(80,14,28,0.4), inset 0 1px 0 rgba(255,255,255,0.1);
+          transition: all 0.3s ease;
+          position: relative;
+          overflow: hidden;
+        }
+        .about-btn-primary::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(135deg, rgba(196,154,60,0.1) 0%, transparent 60%);
+          opacity: 0;
+          transition: opacity 0.3s ease;
         }
         .about-btn-primary:hover {
-          background: #7d1828;
-          border-color: #a02035;
-          color: #faf7f2;
+          box-shadow: 0 6px 28px rgba(80,14,28,0.55), inset 0 1px 0 rgba(255,255,255,0.15);
+          transform: translateY(-2px);
+          border-color: rgba(255,255,255,0.2);
         }
+        .about-btn-primary:hover::before { opacity: 1; }
         .about-btn-secondary {
-          display: inline-block;
-          padding: 0.875rem 2rem;
-          background: transparent;
-          color: #faf7f2;
+          display: inline-flex;
+          align-items: center;
+          padding: 0.75rem 1.8rem;
+          background: rgba(255,255,255,0.07);
+          color: rgba(255,255,255,0.82);
           font-size: 0.72rem;
-          letter-spacing: 0.15em;
+          letter-spacing: 0.16em;
           text-transform: uppercase;
           text-decoration: none;
-          border: 1px solid rgba(250,247,242,0.3);
-          transition: border-color 0.25s ease, background 0.25s ease;
+          border: 1px solid rgba(255,255,255,0.22);
+          backdrop-filter: blur(14px);
+          transition: all 0.3s ease;
         }
         .about-btn-secondary:hover {
-          background: rgba(250,247,242,0.05);
-          border-color: rgba(250,247,242,0.55);
+          background: rgba(255,255,255,0.13);
+          border-color: rgba(255,255,255,0.4);
+          color: #fff;
+          transform: translateY(-2px);
+          box-shadow: 0 4px 20px rgba(0,0,0,0.2);
         }
       `}</style>
       <div className="max-w-4xl mx-auto px-6 py-20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8">

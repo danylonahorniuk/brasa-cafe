@@ -314,21 +314,35 @@ export default function BookingPage() {
             <p className="mb-1 text-sm" style={{ color: "#7a6a5e" }}>Столик {selectedTable.label} · {selectedTable.zone}</p>
           )}
           <p className="mb-8 text-sm" style={{ color: "#a09080" }}>Ми зателефонуємо для підтвердження</p>
-          <a href="/" className="booking-home-btn" style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "0.5rem",
-            padding: "0.75rem 1.8rem",
-            background: "linear-gradient(135deg, #6b1220 0%, #4e0d18 100%)",
-            color: "#faf7f2",
-            fontSize: "0.72rem",
-            letterSpacing: "0.16em",
-            textTransform: "uppercase",
-            textDecoration: "none",
-            border: "1px solid rgba(255,255,255,0.12)",
-            boxShadow: "0 4px 20px rgba(80,14,28,0.3)",
-            transition: "all 0.3s ease",
-          }}>← На головну</a>
+          <a href="/"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "0.5rem",
+              padding: "0.75rem 1.8rem",
+              background: "linear-gradient(135deg, #6b1220 0%, #4e0d18 100%)",
+              color: "#faf7f2",
+              fontSize: "0.72rem",
+              letterSpacing: "0.16em",
+              textTransform: "uppercase",
+              textDecoration: "none",
+              border: "1px solid rgba(255,255,255,0.12)",
+              boxShadow: "0 4px 20px rgba(80,14,28,0.3)",
+              transition: "all 0.3s ease",
+            }}
+            onMouseEnter={(e) => {
+              const el = e.currentTarget as HTMLElement;
+              el.style.boxShadow = "0 6px 28px rgba(80,14,28,0.5)";
+              el.style.transform = "translateY(-2px)";
+              el.style.borderColor = "rgba(255,255,255,0.2)";
+            }}
+            onMouseLeave={(e) => {
+              const el = e.currentTarget as HTMLElement;
+              el.style.boxShadow = "0 4px 20px rgba(80,14,28,0.3)";
+              el.style.transform = "translateY(0)";
+              el.style.borderColor = "rgba(255,255,255,0.12)";
+            }}
+          >← На головну</a>
         </div>
       </div>
     );

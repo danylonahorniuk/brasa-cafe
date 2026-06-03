@@ -96,6 +96,16 @@ function PromoModal({ promo, onClose }: { promo: Promo; onClose: () => void }) {
                 boxShadow: "0 4px 20px rgba(80,14,28,0.25)",
                 transition: "all 0.25s ease",
               }}
+              onMouseEnter={(e) => {
+                const el = e.currentTarget as HTMLElement;
+                el.style.boxShadow = "0 6px 28px rgba(80,14,28,0.45)";
+                el.style.transform = "translateY(-1px)";
+              }}
+              onMouseLeave={(e) => {
+                const el = e.currentTarget as HTMLElement;
+                el.style.boxShadow = "0 4px 20px rgba(80,14,28,0.25)";
+                el.style.transform = "translateY(0)";
+              }}
             >
               Замовити зі знижкою <ArrowRight size={13} />
             </Link>
@@ -112,7 +122,17 @@ function PromoModal({ promo, onClose }: { promo: Promo; onClose: () => void }) {
                 textTransform: "uppercase",
                 border: "1px solid #d4c4b8",
                 cursor: "pointer",
-                transition: "border-color 0.2s",
+                transition: "all 0.2s ease",
+              }}
+              onMouseEnter={(e) => {
+                const el = e.currentTarget as HTMLElement;
+                el.style.borderColor = "#a09080";
+                el.style.color = "#1c1410";
+              }}
+              onMouseLeave={(e) => {
+                const el = e.currentTarget as HTMLElement;
+                el.style.borderColor = "#d4c4b8";
+                el.style.color = "#7a6a5e";
               }}
             >
               Закрити

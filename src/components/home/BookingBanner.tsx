@@ -12,7 +12,7 @@ export default function BookingBanner() {
         {/* Фото */}
         <div className="relative min-h-[280px] md:min-h-0">
           <Image
-            src="https://images.unsplash.com/photo-1559329007-40df8a9345d8?w=900&q=80"
+            src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900&q=80"
             alt="Зал Brasa"
             fill
             className="object-cover"

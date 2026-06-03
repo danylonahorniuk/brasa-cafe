@@ -300,14 +300,11 @@ export default function BookingPage() {
 
   if (submitted) {
     return (
-      <div className="pt-20 min-h-screen flex items-center justify-center px-6" style={{ background: "#faf7f2" }}>
+      <div className="pt-20 min-h-screen flex items-center justify-center px-6" style={{ background: "#ffffff" }}>
         <div className="text-center max-w-md">
-          <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6"
-            style={{ background: "rgba(139,26,46,0.08)", border: "1px solid rgba(139,26,46,0.2)" }}>
-            <CheckCircle size={36} color="#8b1a2e" />
-          </div>
-          <h1 className="text-4xl mb-3" style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 300, color: "#1c1410" }}>
-            Бронювання підтверджено!
+          <CheckCircle size={40} color="#8b1a2e" strokeWidth={1.2} className="mx-auto mb-6" />
+          <h1 style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 300, fontSize: "clamp(2rem, 5vw, 3rem)", color: "#1c1410", marginBottom: "1rem" }}>
+            Бронювання підтверджено
           </h1>
           <p className="mb-1 text-sm" style={{ color: "#7a6a5e" }}>
             {form.date} о {form.time} · {form.guests} {form.guests === 1 ? "гість" : "гостей"}
@@ -317,7 +314,20 @@ export default function BookingPage() {
             <p className="mb-1 text-sm" style={{ color: "#7a6a5e" }}>Столик {selectedTable.label} · {selectedTable.zone}</p>
           )}
           <p className="mb-8 text-sm" style={{ color: "#a09080" }}>Ми зателефонуємо для підтвердження</p>
-          <a href="/" className="btn-primary">← На головну</a>
+          <a href="/" style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "0.5rem",
+            padding: "0.75rem 1.8rem",
+            background: "linear-gradient(135deg, #6b1220 0%, #4e0d18 100%)",
+            color: "#faf7f2",
+            fontSize: "0.72rem",
+            letterSpacing: "0.16em",
+            textTransform: "uppercase",
+            textDecoration: "none",
+            border: "1px solid rgba(255,255,255,0.12)",
+            boxShadow: "0 4px 20px rgba(80,14,28,0.3)",
+          }}>← На головну</a>
         </div>
       </div>
     );
@@ -560,7 +570,22 @@ export default function BookingPage() {
 
             <button type="submit"
               disabled={loading || !form.time || !form.date || !form.tableId}
-              className="btn-primary w-full justify-center disabled:opacity-50 disabled:cursor-not-allowed">
+              style={{
+                width: "100%",
+                padding: "0.875rem",
+                background: !form.time || !form.date || !form.tableId || loading
+                  ? "#a09080"
+                  : "linear-gradient(135deg, #6b1220 0%, #4e0d18 100%)",
+                color: "#faf7f2",
+                fontSize: "0.72rem",
+                letterSpacing: "0.15em",
+                textTransform: "uppercase",
+                border: "1px solid rgba(255,255,255,0.12)",
+                boxShadow: "0 4px 20px rgba(80,14,28,0.25)",
+                cursor: !form.time || !form.date || !form.tableId || loading ? "not-allowed" : "pointer",
+                transition: "all 0.2s ease",
+                opacity: !form.time || !form.date || !form.tableId ? 0.5 : 1,
+              }}>
               {loading ? "Бронюємо..." : "Підтвердити бронювання"}
             </button>
 

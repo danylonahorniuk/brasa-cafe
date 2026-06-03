@@ -95,7 +95,7 @@ function DishCard({ item }: { item: typeof menuItems[0] }) {
         )}
         <div className="flex items-center gap-3 mt-4 pt-4" style={{ borderTop: "1px solid #f0e8e0" }}>
           <span className="text-lg font-medium flex-shrink-0" style={{ color: "#c49a3c" }}>
-            {currentPrice} ₴
+            {currentPrice * qty} ₴
           </span>
           <div className="flex items-center gap-1 ml-auto">
             <button onClick={() => setQty((q) => Math.max(1, q - 1))}

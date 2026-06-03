@@ -188,9 +188,7 @@ export default function PopularScroll() {
         style={{
           scrollbarWidth: "none",
           msOverflowStyle: "none",
-          scrollBehavior: "smooth",
           overscrollBehaviorX: "contain",
-          WebkitOverflowScrolling: "touch",
           paddingLeft: "calc((100vw - 1280px) / 2 + 24px)",
           paddingRight: "24px",
         }}

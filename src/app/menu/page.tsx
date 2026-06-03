@@ -334,9 +334,6 @@ export default function MenuPage() {
         >
           Brasa
         </span>
-        <p className="text-[0.5rem] tracking-[0.3em] uppercase" style={{ color: "#d8ccc0" }}>
-          Київ · вул. Сагайдачного 14
-        </p>
       </div>
 
       <style>{`

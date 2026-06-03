@@ -78,10 +78,43 @@ function PromoModal({ promo, onClose }: { promo: Promo; onClose: () => void }) {
             <span style={{ color: "#8b1a2e" }}>+38 (044) 123-45-67</span>.
           </p>
           <div className="flex gap-3">
-            <Link href={promo.href} onClick={handleClose} className="btn-primary flex items-center gap-2">
+            <Link
+              href={promo.href}
+              onClick={handleClose}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.5rem",
+                padding: "0.75rem 1.75rem",
+                background: "linear-gradient(135deg, #6b1220 0%, #4e0d18 100%)",
+                color: "#faf7f2",
+                fontSize: "0.7rem",
+                letterSpacing: "0.16em",
+                textTransform: "uppercase",
+                textDecoration: "none",
+                border: "1px solid rgba(139,26,46,0.4)",
+                boxShadow: "0 4px 20px rgba(80,14,28,0.25)",
+                transition: "all 0.25s ease",
+              }}
+            >
               Замовити зі знижкою <ArrowRight size={13} />
             </Link>
-            <button onClick={handleClose} className="px-4 py-2.5 rounded-sm text-[0.68rem] tracking-widest uppercase" style={{ border: "1px solid #d4c4b8", color: "#7a6a5e" }}>
+            <button
+              onClick={handleClose}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                padding: "0.75rem 1.75rem",
+                background: "transparent",
+                color: "#7a6a5e",
+                fontSize: "0.7rem",
+                letterSpacing: "0.16em",
+                textTransform: "uppercase",
+                border: "1px solid #d4c4b8",
+                cursor: "pointer",
+                transition: "border-color 0.2s",
+              }}
+            >
               Закрити
             </button>
           </div>

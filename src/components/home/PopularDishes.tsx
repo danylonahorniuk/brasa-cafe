@@ -31,7 +31,7 @@ function DishCard({ item }: { item: typeof popular[0] }) {
   }, []);
 
   const handleAdd = () => {
-    add(item);
+    add(item, String(item.id), undefined, item.price);
     setAdded(true);
     setTimeout(() => setAdded(false), 1200);
   };

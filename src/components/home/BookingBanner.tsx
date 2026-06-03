@@ -26,7 +26,6 @@ export default function BookingBanner() {
 
         {/* Текст */}
         <div className="flex flex-col justify-center px-10 py-12">
-          <p className="section-label mb-4" style={{ color: "#c49a3c" }}>Бронювання</p>
           <h2
             className="text-4xl md:text-5xl text-white mb-4"
             style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 300, lineHeight: 1.1 }}

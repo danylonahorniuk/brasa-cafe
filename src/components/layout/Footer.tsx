@@ -103,7 +103,9 @@ export default function Footer() {
             <ul className="space-y-3 text-sm" style={{ color: "#6a5a50" }}>
               <li className="flex items-start gap-2">
                 <MapPin size={14} style={{ color: "#8b1a2e" }} className="mt-0.5 flex-shrink-0" />
-                <span>вул. Сагайдачного 14, Київ</span>
+                <Link href="/contact" className="footer-link transition-colors" style={{ color: "#6a5a50" }}>
+                  3 локації в Києві →
+                </Link>
               </li>
               <li className="flex items-center gap-2">
                 <Phone size={14} style={{ color: "#8b1a2e" }} className="flex-shrink-0" />

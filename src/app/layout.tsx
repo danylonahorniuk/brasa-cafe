@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     siteName: "Brasa",
     images: [
       {
-        url: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=1200&q=80",
+        url: "https://images.unsplash.com/photo-1536622308015-0740925b8221?w=1200&q=80",
         width: 1200,
         height: 630,
         alt: "Brasa — Піца на дровах",
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Brasa — Кафе з доставкою",
     description: "Піца на дровах, роли, бургери та авторські коктейлі. Доставка по Києву.",
-    images: ["https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=1200&q=80"],
+    images: ["https://images.unsplash.com/photo-1536622308015-0740925b8221?w=1200&q=80"],
   },
 };
 

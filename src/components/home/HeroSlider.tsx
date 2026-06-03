@@ -75,23 +75,6 @@ export default function HeroSlider() {
       <div className="absolute inset-0 z-20 flex items-center">
         <div className="max-w-7xl mx-auto px-6 md:px-12 w-full">
           <div className="max-w-xl">
-            {/* Badge */}
-            <div
-              key={`badge-${active}`}
-              className="inline-flex items-center gap-2 mb-5 animate-fade-up"
-              style={{
-                background: "rgba(139,26,46,0.85)",
-                borderRadius: "2px",
-                padding: "0.3rem 0.9rem",
-                backdropFilter: "blur(8px)",
-              }}
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-white/70 animate-pulse" />
-              <span className="text-[0.65rem] tracking-[0.22em] uppercase font-medium text-white">
-                {slide.badge}
-              </span>
-            </div>
-
             {/* Title */}
             <h1
               key={`title-${active}`}

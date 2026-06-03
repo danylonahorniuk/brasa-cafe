@@ -151,7 +151,7 @@ export default function PopularScroll() {
 
   const scroll = (dir: "left" | "right") => {
     if (!scrollRef.current) return;
-    scrollRef.current.scrollBy({ left: dir === "right" ? 800 : -800, behavior: "smooth" });
+    scrollRef.current.scrollBy({ left: dir === "right" ? 270 : -270, behavior: "smooth" });
   };
 
   return (
@@ -184,10 +184,13 @@ export default function PopularScroll() {
       {/* Скрол */}
       <div
         ref={scrollRef}
-        className="flex gap-4 overflow-x-auto pb-4 scroll-smooth"
+        className="flex gap-4 overflow-x-auto pb-4"
         style={{
           scrollbarWidth: "none",
           msOverflowStyle: "none",
+          scrollBehavior: "smooth",
+          overscrollBehaviorX: "contain",
+          WebkitOverflowScrolling: "touch",
           paddingLeft: "calc((100vw - 1280px) / 2 + 24px)",
           paddingRight: "24px",
         }}

@@ -6,13 +6,26 @@ export default function NotFound() {
       className="min-h-screen flex flex-col items-center justify-center px-6 pt-20"
       style={{ background: "#1c1410", color: "#faf7f2" }}
     >
+      <style>{`
+        .nf-btn-primary:hover {
+          box-shadow: 0 6px 28px rgba(80,14,28,0.55) !important;
+          transform: translateY(-2px);
+          border-color: rgba(255,255,255,0.2) !important;
+        }
+        .nf-btn-secondary:hover {
+          background: rgba(255,255,255,0.13) !important;
+          border-color: rgba(255,255,255,0.4) !important;
+          color: #fff !important;
+          transform: translateY(-2px);
+        }
+      `}</style>
       <p style={{
         fontFamily: "var(--font-cormorant), serif",
         fontSize: "clamp(6rem, 20vw, 14rem)",
         fontWeight: 300,
         color: "rgba(196,154,60,0.15)",
         lineHeight: 1,
-        marginBottom: "0",
+        marginBottom: "1.5rem",
         userSelect: "none",
       }}>
         404
@@ -24,7 +37,6 @@ export default function NotFound() {
         fontSize: "clamp(1.8rem, 4vw, 3rem)",
         color: "#faf7f2",
         lineHeight: 1.1,
-        marginTop: "-1rem",
         marginBottom: "1.25rem",
         textAlign: "center",
       }}>
@@ -45,6 +57,7 @@ export default function NotFound() {
       <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", justifyContent: "center" }}>
         <Link
           href="/"
+          className="nf-btn-primary"
           style={{
             display: "inline-flex",
             alignItems: "center",
@@ -65,6 +78,7 @@ export default function NotFound() {
         </Link>
         <Link
           href="/menu"
+          className="nf-btn-secondary"
           style={{
             display: "inline-flex",
             alignItems: "center",

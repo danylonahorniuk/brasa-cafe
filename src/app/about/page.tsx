@@ -71,7 +71,7 @@ export default function AboutPage() {
         {/* Photo */}
         <div className="relative overflow-hidden" style={{ height: 500, marginBottom: "5rem" }}>
           <Image
-            src="https://images.unsplash.com/photo-1600891964092-4316c288032e?w=1200&q=80"
+            src="https://images.unsplash.com/photo-1571997478779-2adcbbe9a36d?w=1200&q=80"
             alt="Кухня Brasa"
             fill
             className="object-cover"

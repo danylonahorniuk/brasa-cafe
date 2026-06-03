@@ -22,7 +22,7 @@ const dmSans = DM_Sans({
 
 export const metadata: Metadata = {
   title: {
-    default: "Brasa — Кафе з доставкою",
+    default: "Brasa",
     template: "%s | Brasa",
   },
   description: "Піца на дровах, роли, бургери та авторські коктейлі. Доставка по Києву. Три локації: Поділ, Печерськ, Оболонь.",

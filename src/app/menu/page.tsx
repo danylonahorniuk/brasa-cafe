@@ -143,6 +143,13 @@ export default function MenuPage() {
     ),
   })).filter((cat) => cat.items.length > 0);
 
+  // Scroll to category from URL param (?category=pizza etc.)
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const cat = params.get("category");
+    if (cat) setTimeout(() => scrollToSection(cat), 400);
+  }, []);
+
   // ScrollSpy
   useEffect(() => {
     const observer = new IntersectionObserver(

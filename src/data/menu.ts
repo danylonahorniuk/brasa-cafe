@@ -478,7 +478,7 @@ export const promotions = [
     badge: "Акція",
     cta: "Замовити зараз",
     image: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=1600&q=80",
-    href: "/menu",
+    href: "/menu?category=pizza",
   },
   {
     id: 2,
@@ -496,7 +496,7 @@ export const promotions = [
     badge: "Нічна акція",
     cta: "Дивитись комбо",
     image: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=1600&q=80",
-    href: "/menu",
+    href: "/menu?category=rolls",
   },
   {
     id: 4,

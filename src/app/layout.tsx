@@ -27,7 +27,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="uk" className={`${cormorant.variable} ${dmSans.variable}`}>
+    <html lang="uk" className={`${cormorant.variable} ${dmSans.variable}`} data-scroll-behavior="smooth">
       <body className="min-h-screen flex flex-col">
         <CartProvider>
           <Navbar />

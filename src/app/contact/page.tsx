@@ -27,7 +27,7 @@ const locations = [
 
 export default function ContactPage() {
   return (
-    <div className="pt-20" style={{ background: "#faf7f2" }}>
+    <div className="pt-20" style={{ background: "#ffffff" }}>
 
       {/* Header */}
       <div className="max-w-7xl mx-auto px-6 pt-16 pb-16">

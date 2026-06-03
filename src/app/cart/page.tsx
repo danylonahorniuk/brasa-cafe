@@ -28,7 +28,7 @@ export default function CartPage() {
   // Success
   if (submitted) {
     return (
-      <div className="pt-20 min-h-screen flex items-center justify-center px-6" style={{ background: "#faf7f2" }}>
+      <div className="pt-20 min-h-screen flex items-center justify-center px-6" style={{ background: "#ffffff" }}>
         <div className="text-center max-w-md">
           <CheckCircle size={40} color="#8b1a2e" strokeWidth={1.2} className="mx-auto mb-6" />
           <h1 style={{
@@ -62,7 +62,7 @@ export default function CartPage() {
   // Empty
   if (items.length === 0) {
     return (
-      <div className="pt-20 min-h-screen flex items-center justify-center px-6" style={{ background: "#faf7f2" }}>
+      <div className="pt-20 min-h-screen flex items-center justify-center px-6" style={{ background: "#ffffff" }}>
         <div className="text-center max-w-sm">
           <ShoppingBag size={44} className="mx-auto mb-6" style={{ color: "#d4c4b8" }} strokeWidth={1.2} />
           <h1 style={{
@@ -94,7 +94,7 @@ export default function CartPage() {
   }
 
   return (
-    <div className="pt-20" style={{ background: "#faf7f2", minHeight: "100vh" }}>
+    <div className="pt-20" style={{ background: "#ffffff", minHeight: "100vh" }}>
       <style>{`
         .cart-input {
           width: 100%;
@@ -231,7 +231,7 @@ export default function CartPage() {
 
           {/* ── Form + Summary ── */}
           <div className="lg:col-span-2">
-            <form onSubmit={handleSubmit} className="sticky top-28">
+            <form onSubmit={handleSubmit} className="sticky top-28" style={{ background: "#faf7f2", padding: "2rem", border: "1px solid #e8ddd4" }}>
 
               {/* Delivery toggle */}
               <div

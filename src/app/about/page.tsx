@@ -1,5 +1,11 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Про нас",
+  description: "Brasa — це жар і вугілля. Дров'яна піч при 450°C, локальна сировина і три локації в Києві.",
+};
 
 export default function AboutPage() {
   return (

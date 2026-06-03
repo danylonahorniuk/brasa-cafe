@@ -21,8 +21,34 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Brasa — Кафе з доставкою",
-  description: "Піца, роли, бургери та алкоголь з доставкою. Бронювання столиків онлайн.",
+  title: {
+    default: "Brasa — Кафе з доставкою",
+    template: "%s | Brasa",
+  },
+  description: "Піца на дровах, роли, бургери та авторські коктейлі. Доставка по Києву. Три локації: Поділ, Печерськ, Оболонь.",
+  metadataBase: new URL("https://brasa-cafe-w12n.vercel.app"),
+  openGraph: {
+    title: "Brasa — Кафе з доставкою",
+    description: "Піца на дровах, роли, бургери та авторські коктейлі. Доставка по Києву.",
+    url: "https://brasa-cafe-w12n.vercel.app",
+    siteName: "Brasa",
+    images: [
+      {
+        url: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=1200&q=80",
+        width: 1200,
+        height: 630,
+        alt: "Brasa — Піца на дровах",
+      },
+    ],
+    locale: "uk_UA",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Brasa — Кафе з доставкою",
+    description: "Піца на дровах, роли, бургери та авторські коктейлі. Доставка по Києву.",
+    images: ["https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=1200&q=80"],
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

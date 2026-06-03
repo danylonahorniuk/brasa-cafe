@@ -314,7 +314,7 @@ export default function BookingPage() {
             <p className="mb-1 text-sm" style={{ color: "#7a6a5e" }}>Столик {selectedTable.label} · {selectedTable.zone}</p>
           )}
           <p className="mb-8 text-sm" style={{ color: "#a09080" }}>Ми зателефонуємо для підтвердження</p>
-          <a href="/" style={{
+          <a href="/" className="booking-home-btn" style={{
             display: "inline-flex",
             alignItems: "center",
             gap: "0.5rem",
@@ -327,6 +327,7 @@ export default function BookingPage() {
             textDecoration: "none",
             border: "1px solid rgba(255,255,255,0.12)",
             boxShadow: "0 4px 20px rgba(80,14,28,0.3)",
+            transition: "all 0.3s ease",
           }}>← На головну</a>
         </div>
       </div>
@@ -570,6 +571,7 @@ export default function BookingPage() {
 
             <button type="submit"
               disabled={loading || !form.time || !form.date || !form.tableId}
+              className="booking-submit"
               style={{
                 width: "100%",
                 padding: "0.875rem",
@@ -609,6 +611,15 @@ export default function BookingPage() {
         .loc-enter-left  { animation: slideInFromLeft  0.25s ease forwards; }
         .loc-exit-left   { animation: slideOutToLeft   0.2s  ease forwards; pointer-events:none; }
         .loc-exit-right  { animation: slideOutToRight  0.2s  ease forwards; pointer-events:none; }
+        .booking-submit:not(:disabled):hover {
+          box-shadow: 0 6px 28px rgba(80,14,28,0.45) !important;
+          transform: translateY(-1px);
+        }
+        .booking-home-btn:hover {
+          box-shadow: 0 6px 28px rgba(80,14,28,0.45) !important;
+          transform: translateY(-2px);
+          border-color: rgba(255,255,255,0.2) !important;
+        }
       `}</style>
     </div>
   );

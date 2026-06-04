@@ -222,18 +222,17 @@ function DishModal({ item, onClose }: { item: MenuItem; onClose: () => void }) {
           {hasSize && (
             <div className="mb-5">
               <p className="text-[0.58rem] tracking-widest uppercase mb-2.5" style={{ color: "#a09080" }}>Оберіть розмір</p>
-              {/* Сегментований контрол */}
-              <div className="flex p-1 rounded-sm" style={{ background: "#ede8e1" }}>
+              <div className="flex gap-2">
                 {(["30","40"] as const).map(s => (
                   <button key={s} onClick={() => setSize(s)}
-                    className="flex-1 py-2.5 rounded-sm text-sm transition-all duration-200"
+                    className="flex-1 py-3 rounded-sm text-sm transition-all duration-200"
                     style={{
-                      background: size === s ? "#fff" : "transparent",
-                      color:      size === s ? "#1c1410" : "#a09080",
-                      boxShadow:  size === s ? "0 1px 4px rgba(0,0,0,0.1)" : "none",
+                      background: size === s ? "#1c1410" : "#fff",
+                      color:      size === s ? "#fff"    : "#7a6a5e",
+                      border:     `1px solid ${size === s ? "#1c1410" : "#d4c4b8"}`,
                     }}>
                     {s} см
-                    <span className="block text-[0.65rem] mt-0.5" style={{ color: size === s ? "#c49a3c" : "#b8a898" }}>
+                    <span className="block text-[0.65rem] mt-0.5" style={{ opacity: 0.7 }}>
                       {item.sizes![s]} ₴
                     </span>
                   </button>
@@ -262,7 +261,7 @@ function DishModal({ item, onClose }: { item: MenuItem; onClose: () => void }) {
             {/* Кнопка */}
             <button onClick={handleAdd}
               className="flex-1 h-12 flex items-center justify-center gap-2 rounded-sm text-[0.68rem] tracking-wider uppercase transition-all duration-300"
-              style={{ background: added ? "#5a9a70" : "#1c1410", color: "#fff" }}>
+              style={{ background: added ? "#5a9a70" : "#8b1a2e", color: "#fff" }}>
               {added ? <Check size={15} /> : <ShoppingCart size={14} />}
               <span>{added ? "Додано!" : `В кошик · ${currentPrice * qty} ₴`}</span>
             </button>

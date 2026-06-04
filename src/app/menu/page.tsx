@@ -402,7 +402,7 @@ export default function MenuPage() {
       <div className="max-w-7xl mx-auto px-5 sm:px-6 pt-8 sm:pt-12 pb-5 sm:pb-8">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div>
-            <p className="text-[0.55rem] tracking-[0.3em] uppercase mb-2" style={{ color: "#b8a898" }}>Ресторан Brasa · Київ</p>
+
             <h1 className="text-5xl md:text-6xl"
               style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 300, lineHeight: 1.05, color: "#1c1410" }}>
               Наше меню

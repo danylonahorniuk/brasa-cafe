@@ -185,14 +185,12 @@ export default function PopularScroll() {
       {/* Скрол */}
       <div
         ref={scrollRef}
-        className="flex gap-3 sm:gap-4 overflow-x-auto pb-4"
+        className="pop-scroll flex gap-3 sm:gap-4 overflow-x-auto pb-4"
         style={{
           scrollbarWidth: "none",
           msOverflowStyle: "none",
           overscrollBehaviorX: "contain",
           scrollSnapType: "x mandatory",
-          paddingLeft: "max(20px, calc((100vw - 1280px) / 2 + 24px))",
-          paddingRight: "20px",
         }}
       >
         {popular.map((item) => (
@@ -238,6 +236,18 @@ export default function PopularScroll() {
           .pop-menu-link:hover {
             border-color: #8b1a2e !important;
             color: #8b1a2e !important;
+          }
+        }
+
+        /* Відступ скрол-контейнера */
+        .pop-scroll {
+          padding-left: 20px;
+          padding-right: 20px;
+        }
+        @media (min-width: 1280px) {
+          .pop-scroll {
+            padding-left: calc((100vw - 1280px) / 2 + 24px);
+            padding-right: 24px;
           }
         }
 

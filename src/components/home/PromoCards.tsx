@@ -46,11 +46,6 @@ function PromoModal({ promo, onClose }: { promo: Promo; onClose: () => void }) {
         }}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Індикатор свайпу (тільки мобіль) */}
-        <div className="flex justify-center pt-3 pb-1 sm:hidden">
-          <div className="w-10 h-1 rounded-full" style={{ background: "rgba(0,0,0,0.15)" }} />
-        </div>
-
         <button
           onClick={handleClose}
           className="absolute top-3 right-3 z-10 w-8 h-8 rounded-full flex items-center justify-center"

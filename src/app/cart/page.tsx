@@ -70,6 +70,35 @@ export default function CartPage() {
   if (submitted) {
     return (
       <div className="pt-16 sm:pt-20 min-h-screen flex items-center justify-center px-5" style={{ background: "#ffffff" }}>
+        <style>{`
+          .cart-success-btn-primary {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.75rem 1.8rem;
+            background: linear-gradient(135deg, #6b1220 0%, #4e0d18 100%);
+            color: #faf7f2; font-size: 0.7rem; letter-spacing: 0.15em;
+            text-transform: uppercase; text-decoration: none;
+            border: 1px solid rgba(255,255,255,0.12);
+            box-shadow: 0 4px 20px rgba(80,14,28,0.3);
+            transition: all 0.3s ease;
+          }
+          .cart-success-btn-primary:hover {
+            box-shadow: 0 6px 28px rgba(80,14,28,0.5);
+            transform: translateY(-2px);
+            border-color: rgba(255,255,255,0.22);
+          }
+          .cart-success-btn-secondary {
+            display: inline-flex; align-items: center;
+            padding: 0.75rem 1.8rem;
+            color: #7a6a5e; font-size: 0.7rem; letter-spacing: 0.15em;
+            text-transform: uppercase; text-decoration: none;
+            border: 1px solid #d4c4b8;
+            transition: all 0.3s ease;
+          }
+          .cart-success-btn-secondary:hover {
+            border-color: #8b1a2e; color: #8b1a2e;
+            transform: translateY(-2px);
+          }
+        `}</style>
         <div className="text-center max-w-md">
           <CheckCircle size={40} color="#8b1a2e" strokeWidth={1.2} className="mx-auto mb-6" />
           <h1 style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 300, fontSize: "clamp(2rem, 5vw, 3rem)", color: "#1c1410", marginBottom: "1rem" }}>

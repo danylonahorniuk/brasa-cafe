@@ -18,14 +18,15 @@ const categoryLabel: Record<string, string> = {
 function DishRow({ item, onOpen }: { item: MenuItem; onOpen: (item: MenuItem) => void }) {
   const { add } = useCart();
   const [added, setAdded] = useState(false);
+  const [size,  setSize]  = useState<"30" | "40">("30");
 
-  const hasSize      = item.category === "pizza" && !!item.sizes;
-  const defaultPrice = hasSize ? item.sizes!["30"] : item.price;
+  const hasSize    = item.category === "pizza" && !!item.sizes;
+  const price      = hasSize ? item.sizes![size] : item.price;
 
   const handleQuickAdd = (e: React.MouseEvent) => {
     e.stopPropagation();
-    const key = hasSize ? `${item.id}-30` : `${item.id}`;
-    add(item, key, hasSize ? "30 см" : undefined, defaultPrice);
+    const key = hasSize ? `${item.id}-${size}` : `${item.id}`;
+    add(item, key, hasSize ? `${size} см` : undefined, price);
     setAdded(true);
     setTimeout(() => setAdded(false), 1200);
   };
@@ -33,7 +34,7 @@ function DishRow({ item, onOpen }: { item: MenuItem; onOpen: (item: MenuItem) =>
   return (
     <div
       onClick={() => onOpen(item)}
-      className="flex items-center gap-3 py-3.5 px-1 cursor-pointer dish-row transition-colors"
+      className="flex items-start gap-3 py-3.5 px-1 cursor-pointer dish-row transition-colors"
       style={{ borderBottom: "1px solid #ede6de" }}
     >
       {/* Фото */}
@@ -48,6 +49,7 @@ function DishRow({ item, onOpen }: { item: MenuItem; onOpen: (item: MenuItem) =>
 
       {/* Інфо */}
       <div className="flex-1 min-w-0">
+        {/* Назва + бейджі */}
         <div className="flex items-start gap-1.5 mb-0.5">
           <p className="text-sm font-medium leading-snug flex-1" style={{ color: "#1c1410" }}>
             {item.name}
@@ -64,20 +66,37 @@ function DishRow({ item, onOpen }: { item: MenuItem; onOpen: (item: MenuItem) =>
           )}
         </div>
 
-        {/* Вага / розміри */}
-        {item.weight && (
-          <p className="text-[0.62rem] leading-relaxed" style={{ color: "#a09080" }}>
-            {hasSize ? item.weight : item.weight}
-          </p>
-        )}
+        {/* Підказка "склад і деталі" */}
+        <p className="text-[0.58rem] mb-1.5" style={{ color: "#b8a898" }}>
+          Склад і деталі →
+        </p>
+
+        {/* Вибір розміру для піци */}
         {hasSize && (
-          <p className="text-[0.6rem]" style={{ color: "#a09080" }}>30 см · 40 см</p>
+          <div className="flex gap-1.5 mb-2" onClick={e => e.stopPropagation()}>
+            {(["30","40"] as const).map((s) => (
+              <button key={s} onClick={() => setSize(s)}
+                className="px-2.5 py-1 rounded-sm text-[0.6rem] tracking-wider transition-all duration-150"
+                style={{
+                  background: size === s ? "#1c1410" : "#f5f0eb",
+                  color:      size === s ? "#fff"    : "#7a6a5e",
+                  border:     `1px solid ${size === s ? "#1c1410" : "#d4c4b8"}`,
+                }}>
+                {s} см
+              </button>
+            ))}
+          </div>
+        )}
+
+        {/* Вага (не піца) */}
+        {!hasSize && item.weight && (
+          <p className="text-[0.62rem] mb-1.5" style={{ color: "#a09080" }}>{item.weight}</p>
         )}
 
         {/* Ціна + кнопка */}
-        <div className="flex items-center justify-between mt-2">
+        <div className="flex items-center justify-between">
           <span className="text-base font-medium" style={{ color: "#c49a3c" }}>
-            {defaultPrice} ₴
+            {price} ₴
           </span>
           <button
             onClick={handleQuickAdd}

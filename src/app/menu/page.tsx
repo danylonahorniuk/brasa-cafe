@@ -227,12 +227,12 @@ function DishModal({ item, onClose }: { item: MenuItem; onClose: () => void }) {
                   <button key={s} onClick={() => setSize(s)}
                     className="flex-1 py-3 rounded-sm text-sm transition-all duration-200"
                     style={{
-                      background: size === s ? "rgba(139,26,46,0.07)" : "#fff",
-                      color:      size === s ? "#8b1a2e" : "#7a6a5e",
-                      border:     `1.5px solid ${size === s ? "#8b1a2e" : "#d4c4b8"}`,
+                      background: size === s ? "#1c1410" : "#fff",
+                      color:      size === s ? "#fff"    : "#7a6a5e",
+                      border:     `1px solid ${size === s ? "#1c1410" : "#d4c4b8"}`,
                     }}>
                     {s} см
-                    <span className="block text-[0.65rem] mt-0.5" style={{ opacity: size === s ? 1 : 0.6 }}>
+                    <span className="block text-[0.65rem] mt-0.5" style={{ opacity: 0.7 }}>
                       {item.sizes![s]} ₴
                     </span>
                   </button>

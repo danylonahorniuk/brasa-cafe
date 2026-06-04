@@ -26,10 +26,10 @@ export default function Footer() {
         .footer-link:hover { color: #c49a3c !important; }
         .footer-social:hover { border-color: #c49a3c !important; color: #c49a3c !important; }
       `}</style>
-      <div className="max-w-7xl mx-auto px-6 pb-16 pt-24">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
+      <div className="max-w-7xl mx-auto px-5 sm:px-6 pb-10 sm:pb-16 pt-14 sm:pt-24">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
           {/* Brand */}
-          <div className="md:col-span-1">
+          <div className="col-span-2 md:col-span-1">
             <span
               style={{
                 fontFamily: "var(--font-cormorant), serif",
@@ -65,7 +65,7 @@ export default function Footer() {
           </div>
 
           {/* Nav */}
-          <div>
+          <div className="col-span-1">
             <p className="section-label mb-5" style={{ color: "#c49a3c" }}>Навігація</p>
             <ul className="space-y-3">
               {[["Меню", "/menu"], ["Бронювання", "/booking"], ["Про нас", "/about"], ["Контакти", "/contact"]].map(([label, href]) => (
@@ -79,7 +79,7 @@ export default function Footer() {
           </div>
 
           {/* Hours */}
-          <div>
+          <div className="col-span-1">
             <p className="section-label mb-5" style={{ color: "#c49a3c" }}>Графік роботи</p>
             <ul className="space-y-2 text-sm" style={{ color: "#6a5a50" }}>
               <li className="flex justify-between gap-4">
@@ -98,7 +98,7 @@ export default function Footer() {
           </div>
 
           {/* Contacts */}
-          <div>
+          <div className="col-span-2 md:col-span-1">
             <p className="section-label mb-5" style={{ color: "#c49a3c" }}>Контакти</p>
             <ul className="space-y-3 text-sm" style={{ color: "#6a5a50" }}>
               <li className="flex items-start gap-2">

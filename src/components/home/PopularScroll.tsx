@@ -206,6 +206,8 @@ export default function PopularScroll() {
         style={{
           paddingLeft: padLeft,
           paddingRight: padRight,
+          scrollPaddingLeft: padLeft,
+          scrollPaddingRight: padRight,
           scrollbarWidth: "none",
           msOverflowStyle: "none",
           overscrollBehaviorX: "contain",

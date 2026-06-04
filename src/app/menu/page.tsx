@@ -103,7 +103,7 @@ function DishRow({ item, onOpen }: { item: MenuItem; onOpen: (item: MenuItem) =>
             className="dish-add-circle flex items-center justify-center transition-all duration-300"
             style={{
               width: 34, height: 34, borderRadius: "50%",
-              background: added ? "#5a9a70" : "#1c1410",
+              background: added ? "#5a9a70" : "#8b1a2e",
               color: "#fff", flexShrink: 0,
             }}
             aria-label="Додати"

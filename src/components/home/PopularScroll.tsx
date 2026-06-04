@@ -150,17 +150,17 @@ function PopCard({ item }: { item: typeof popular[0] }) {
 
 export default function PopularScroll() {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const [padLeft, setPadLeft] = useState("20px");
+  const [padRight, setPadRight] = useState("20px");
 
   useEffect(() => {
-    const el = scrollRef.current;
-    if (!el) return;
     const update = () => {
       if (window.innerWidth >= 1280) {
-        el.style.paddingLeft = `${(window.innerWidth - 1280) / 2 + 24}px`;
-        el.style.paddingRight = "24px";
+        setPadLeft(`${(window.innerWidth - 1280) / 2 + 24}px`);
+        setPadRight("24px");
       } else {
-        el.style.paddingLeft = "20px";
-        el.style.paddingRight = "20px";
+        setPadLeft("20px");
+        setPadRight("20px");
       }
     };
     update();
@@ -204,6 +204,8 @@ export default function PopularScroll() {
         ref={scrollRef}
         className="pop-scroll flex gap-3 sm:gap-4 overflow-x-auto pb-4"
         style={{
+          paddingLeft: padLeft,
+          paddingRight: padRight,
           scrollbarWidth: "none",
           msOverflowStyle: "none",
           overscrollBehaviorX: "contain",

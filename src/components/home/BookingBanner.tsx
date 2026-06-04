@@ -6,11 +6,11 @@ export default function BookingBanner() {
   return (
     <section className="max-w-7xl mx-auto px-6 py-16">
       <div
-        className="rounded-sm overflow-hidden grid grid-cols-1 md:grid-cols-2"
+        className="rounded-sm overflow-hidden grid grid-cols-1 lg:grid-cols-2"
         style={{ background: "#1c1410", minHeight: "420px" }}
       >
         {/* Фото */}
-        <div className="relative min-h-[280px] md:min-h-0">
+        <div className="relative min-h-[280px] lg:min-h-0">
           <Image
             src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900&q=80"
             alt="Зал Brasa"

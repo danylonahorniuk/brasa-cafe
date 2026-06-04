@@ -166,7 +166,7 @@ export default function NewItems() {
           </h2>
           <Link
             href="/menu"
-            className="hidden md:flex items-center gap-2 text-[0.68rem] tracking-widest uppercase transition-all duration-300"
+            className="hidden lg:flex items-center gap-2 text-[0.68rem] tracking-widest uppercase transition-all duration-300"
             style={{ color: "#a09080" }}
             onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "#8b1a2e")}
             onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "#a09080")}
@@ -176,7 +176,7 @@ export default function NewItems() {
         </div>
 
         {/* Картки */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {newItems.map((item) => (
             <NewItemCard key={item.id} item={item} />
           ))}

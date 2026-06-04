@@ -480,15 +480,15 @@ export default function MenuPage() {
                 </div>
               </div>
 
-              {/* MOBILE — список рядків */}
-              <div className="sm:hidden">
+              {/* MOBILE/TABLET — список рядків */}
+              <div className="lg:hidden">
                 {cat.items.map((item) => (
                   <DishRow key={item.id} item={item} onOpen={setModalItem} />
                 ))}
               </div>
 
               {/* DESKTOP — сітка карток */}
-              <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+              <div className="hidden lg:grid lg:grid-cols-3 xl:grid-cols-4 gap-4">
                 {cat.items.map((item) => <DishCard key={item.id} item={item} />)}
               </div>
 

@@ -21,15 +21,15 @@ export default function CategoryGrid() {
           </h2>
           <Link
             href="/menu"
-            className="hidden md:inline-flex items-center gap-2 px-6 py-3 rounded-sm text-[0.72rem] tracking-widest uppercase cat-menu-btn transition-all duration-300"
+            className="hidden lg:inline-flex items-center gap-2 px-6 py-3 rounded-sm text-[0.72rem] tracking-widest uppercase cat-menu-btn transition-all duration-300"
             style={{ border: "1.5px solid #8b1a2e", color: "#8b1a2e", background: "transparent" }}
           >
             Все меню →
           </Link>
         </div>
 
-        {/* ── Десктопна сітка (md+) ── */}
-        <div className="hidden md:grid grid-cols-4 grid-rows-2 gap-3 h-[420px]">
+        {/* ── Десктопна сітка (lg+) ── */}
+        <div className="hidden lg:grid grid-cols-4 grid-rows-2 gap-3 h-[420px]">
 
           {/* Піца — велика ліва */}
           <Link
@@ -112,8 +112,8 @@ export default function CategoryGrid() {
           </Link>
         </div>
 
-        {/* ── Мобільна сітка (< md) ── */}
-        <div className="flex flex-col gap-3 md:hidden">
+        {/* ── Мобільна/планшетна сітка (< lg) ── */}
+        <div className="flex flex-col gap-3 lg:hidden">
 
           {/* Піца — повна ширина, широкий формат */}
           <Link
@@ -175,7 +175,7 @@ export default function CategoryGrid() {
         {/* Кнопка "Все меню" — мобіль */}
         <Link
           href="/menu"
-          className="mt-4 md:hidden w-full flex items-center justify-center gap-2 py-3.5 rounded-sm text-[0.72rem] tracking-widest uppercase transition-all duration-300"
+          className="mt-4 lg:hidden w-full flex items-center justify-center gap-2 py-3.5 rounded-sm text-[0.72rem] tracking-widest uppercase transition-all duration-300"
           style={{ border: "1.5px solid #8b1a2e", color: "#8b1a2e" }}
         >
           Все меню →

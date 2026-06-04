@@ -27,7 +27,7 @@ export default function Footer() {
         .footer-social:hover { border-color: #c49a3c !important; color: #c49a3c !important; }
       `}</style>
       <div className="max-w-7xl mx-auto px-5 sm:px-6 pb-10 sm:pb-16 pt-14 sm:pt-24">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">
             <span

@@ -77,7 +77,7 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop nav */}
-          <ul className="hidden md:flex items-center gap-8">
+          <ul className="hidden lg:flex items-center gap-8">
             {links.map((l) => {
               const active = pathname === l.href;
               return (
@@ -122,7 +122,7 @@ export default function Navbar() {
             </button>
 
             <button
-              className="md:hidden p-1.5 transition-colors"
+              className="lg:hidden p-1.5 transition-colors"
               style={{ color: "rgba(255,255,255,0.8)" }}
               onClick={() => setMobileOpen((v) => !v)}
               aria-label={mobileOpen ? "Закрити меню" : "Відкрити меню"}
@@ -135,7 +135,7 @@ export default function Navbar() {
 
       {/* Mobile full-screen overlay */}
       <div
-        className="fixed inset-0 z-40 md:hidden flex flex-col transition-all duration-500"
+        className="fixed inset-0 z-40 lg:hidden flex flex-col transition-all duration-500"
         style={{
           background: "#1a1208",
           opacity: mobileOpen ? 1 : 0,

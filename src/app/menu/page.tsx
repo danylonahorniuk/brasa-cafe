@@ -73,14 +73,14 @@ function DishRow({ item, onOpen }: { item: MenuItem; onOpen: (item: MenuItem) =>
 
         {/* Вибір розміру для піци */}
         {hasSize && (
-          <div className="flex gap-1.5 mb-2" onClick={e => e.stopPropagation()}>
+          <div className="inline-flex p-0.5 rounded-sm mb-2" style={{ background: "#e8e0d8" }} onClick={e => e.stopPropagation()}>
             {(["30","40"] as const).map((s) => (
               <button key={s} onClick={() => setSize(s)}
-                className="px-2.5 py-1 rounded-sm text-[0.6rem] tracking-wider transition-all duration-150"
+                className="px-3 py-1 rounded-sm text-[0.6rem] tracking-wider transition-all duration-150"
                 style={{
-                  background: size === s ? "#1c1410" : "#f5f0eb",
-                  color:      size === s ? "#fff"    : "#7a6a5e",
-                  border:     `1px solid ${size === s ? "#1c1410" : "#d4c4b8"}`,
+                  background: size === s ? "#fff" : "transparent",
+                  color:      size === s ? "#1c1410" : "#a09080",
+                  boxShadow:  size === s ? "0 1px 3px rgba(0,0,0,0.08)" : "none",
                 }}>
                 {s} см
               </button>

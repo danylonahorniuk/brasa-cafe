@@ -64,6 +64,7 @@ export default function CartPage() {
     setLoading(false);
     setSubmitted(true);
     clear();
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   if (submitted) {
@@ -77,9 +78,30 @@ export default function CartPage() {
           <p style={{ fontSize: "0.9rem", color: "#7a6a5e", lineHeight: 1.7, marginBottom: "2.5rem" }}>
             Наш менеджер зв'яжеться з вами найближчим часом для підтвердження.
           </p>
-          <Link href="/menu" style={{ fontSize: "0.72rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "#8b1a2e", textDecoration: "none", borderBottom: "1px solid rgba(139,26,46,0.3)", paddingBottom: "0.1rem" }}>
-            ← Назад до меню
-          </Link>
+          <p style={{ fontSize: "0.82rem", color: "#a09080", marginBottom: "1.5rem", lineHeight: 1.6 }}>
+            Поки чекаєте — дізнайтесь більше про Brasa
+          </p>
+          <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", justifyContent: "center" }}>
+            <Link href="/about" style={{
+              display: "inline-flex", alignItems: "center", gap: "0.5rem",
+              padding: "0.7rem 1.6rem",
+              background: "linear-gradient(135deg, #6b1220 0%, #4e0d18 100%)",
+              color: "#faf7f2", fontSize: "0.7rem", letterSpacing: "0.15em",
+              textTransform: "uppercase", textDecoration: "none",
+              border: "1px solid rgba(255,255,255,0.12)",
+            }}>
+              Про нас →
+            </Link>
+            <Link href="/" style={{
+              display: "inline-flex", alignItems: "center",
+              padding: "0.7rem 1.6rem",
+              color: "#a09080", fontSize: "0.7rem", letterSpacing: "0.15em",
+              textTransform: "uppercase", textDecoration: "none",
+              border: "1px solid #e8ddd4",
+            }}>
+              На головну
+            </Link>
+          </div>
         </div>
       </div>
     );

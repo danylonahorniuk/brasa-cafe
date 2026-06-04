@@ -48,8 +48,8 @@ export default function Navbar() {
         className="fixed top-0 left-0 right-0 z-50 transition-all duration-400"
         style={{
           background: showWhite ? "rgba(26,18,8,0.97)" : "transparent",
-          backdropFilter: showWhite ? "blur(16px)" : "none",
-          borderBottom: showWhite ? "1px solid rgba(255,255,255,0.06)" : "none",
+          backdropFilter: showWhite ? "blur(16px)" : undefined,
+          borderBottom: showWhite ? "1px solid rgba(255,255,255,0.06)" : undefined,
           boxShadow: showWhite ? "0 2px 24px rgba(0,0,0,0.25)" : "none",
         }}
       >
@@ -154,10 +154,9 @@ export default function Navbar() {
                 <li
                   key={l.href}
                   style={{
-                    transitionDelay: mobileOpen ? `${i * 60}ms` : "0ms",
                     transform: mobileOpen ? "translateX(0)" : "translateX(-16px)",
                     opacity: mobileOpen ? 1 : 0,
-                    transition: "transform 0.4s ease, opacity 0.4s ease",
+                    transition: `transform 0.4s ease ${mobileOpen ? i * 60 : 0}ms, opacity 0.4s ease ${mobileOpen ? i * 60 : 0}ms`,
                   }}
                 >
                   <Link

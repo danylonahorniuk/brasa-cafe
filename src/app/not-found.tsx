@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function NotFound() {
   return (
     <div
-      className="min-h-screen flex flex-col items-center justify-center px-6 pt-20"
+      className="min-h-screen flex flex-col items-center justify-center px-5 sm:px-6 pt-16 sm:pt-20"
       style={{ background: "#1c1410", color: "#faf7f2" }}
     >
       <style>{`

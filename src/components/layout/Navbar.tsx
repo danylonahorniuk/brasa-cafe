@@ -29,8 +29,17 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // На головній: прозорий поверх hero (темного фото) → після скролу білий
-  // На інших сторінках: одразу білий
+  // Закриваємо мобільне меню при навігації
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [pathname]);
+
+  // Блокуємо скрол body коли меню відкрите
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [mobileOpen]);
+
   const showWhite = scrolled || !isHome;
 
   return (
@@ -44,13 +53,13 @@ export default function Navbar() {
           boxShadow: showWhite ? "0 2px 24px rgba(0,0,0,0.25)" : "none",
         }}
       >
-        <nav className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+        <nav className="max-w-7xl mx-auto px-5 sm:px-6 h-16 sm:h-20 flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex flex-col leading-none">
             <span
               style={{
                 fontFamily: "var(--font-cormorant), serif",
-                fontSize: "1.9rem",
+                fontSize: "clamp(1.5rem, 5vw, 1.9rem)",
                 fontWeight: 400,
                 letterSpacing: "0.18em",
                 color: showWhite ? "#e8ddd4" : "#ffffff",
@@ -96,8 +105,8 @@ export default function Navbar() {
             })}
           </ul>
 
-          {/* Cart + mobile */}
-          <div className="flex items-center gap-4">
+          {/* Cart + burger */}
+          <div className="flex items-center gap-3">
             <button
               onClick={toggleCart}
               className="relative p-2 transition-colors"
@@ -113,40 +122,94 @@ export default function Navbar() {
             </button>
 
             <button
-              className="md:hidden p-1 transition-colors"
-              style={{ color: showWhite ? "rgba(255,255,255,0.65)" : "rgba(255,255,255,0.75)" }}
+              className="md:hidden p-1.5 transition-colors"
+              style={{ color: "rgba(255,255,255,0.8)" }}
               onClick={() => setMobileOpen((v) => !v)}
+              aria-label={mobileOpen ? "Закрити меню" : "Відкрити меню"}
             >
               {mobileOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
           </div>
         </nav>
-
-        {/* Mobile menu */}
-        <div
-          className="md:hidden overflow-hidden transition-all duration-300"
-          style={{
-            maxHeight: mobileOpen ? "320px" : "0",
-            background: "rgba(26,18,8,0.98)",
-            borderTop: mobileOpen ? "1px solid rgba(255,255,255,0.06)" : "none",
-          }}
-        >
-          <ul className="flex flex-col px-6 py-5 gap-4">
-            {links.map((l) => (
-              <li key={l.href}>
-                <Link
-                  href={l.href}
-                  onClick={() => setMobileOpen(false)}
-                  className="text-sm tracking-wider uppercase"
-                  style={{ color: pathname === l.href ? "#c49a3c" : "rgba(255,255,255,0.6)" }}
-                >
-                  {l.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
       </header>
+
+      {/* Mobile full-screen overlay */}
+      <div
+        className="fixed inset-0 z-40 md:hidden flex flex-col transition-all duration-500"
+        style={{
+          background: "#1a1208",
+          opacity: mobileOpen ? 1 : 0,
+          pointerEvents: mobileOpen ? "auto" : "none",
+          transform: mobileOpen ? "translateY(0)" : "translateY(-12px)",
+        }}
+      >
+        {/* Декоративна лінія зверху */}
+        <div className="h-px w-full" style={{ background: "rgba(196,154,60,0.25)", marginTop: "4rem" }} />
+
+        <nav className="flex flex-col justify-center flex-1 px-8">
+          <ul className="flex flex-col gap-1">
+            {links.map((l, i) => {
+              const active = pathname === l.href;
+              return (
+                <li
+                  key={l.href}
+                  style={{
+                    transitionDelay: mobileOpen ? `${i * 60}ms` : "0ms",
+                    transform: mobileOpen ? "translateX(0)" : "translateX(-16px)",
+                    opacity: mobileOpen ? 1 : 0,
+                    transition: "transform 0.4s ease, opacity 0.4s ease",
+                  }}
+                >
+                  <Link
+                    href={l.href}
+                    className="group flex items-center gap-4 py-4"
+                  >
+                    <span
+                      className="text-[0.6rem] tracking-[0.2em] tabular-nums transition-colors duration-300"
+                      style={{ color: active ? "#c49a3c" : "rgba(255,255,255,0.25)" }}
+                    >
+                      0{i + 1}
+                    </span>
+                    <span
+                      style={{
+                        fontFamily: "var(--font-cormorant), serif",
+                        fontSize: "clamp(2rem, 10vw, 2.8rem)",
+                        fontWeight: 300,
+                        letterSpacing: "0.04em",
+                        color: active ? "#c49a3c" : "#e8ddd4",
+                        transition: "color 0.3s",
+                      }}
+                    >
+                      {l.label}
+                    </span>
+                  </Link>
+                  <div
+                    className="h-px transition-all duration-300"
+                    style={{ background: active ? "rgba(196,154,60,0.3)" : "rgba(255,255,255,0.06)" }}
+                  />
+                </li>
+              );
+            })}
+          </ul>
+
+          {/* Контакти внизу */}
+          <div
+            className="mt-8 pt-6"
+            style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}
+          >
+            <p className="text-[0.65rem] tracking-[0.2em] uppercase mb-1" style={{ color: "rgba(255,255,255,0.3)" }}>
+              Замовлення
+            </p>
+            <a
+              href="tel:+380991234567"
+              className="text-lg"
+              style={{ fontFamily: "var(--font-cormorant), serif", color: "#c49a3c", letterSpacing: "0.05em" }}
+            >
+              +38 (099) 123-45-67
+            </a>
+          </div>
+        </nav>
+      </div>
 
       <CartDrawer />
     </>

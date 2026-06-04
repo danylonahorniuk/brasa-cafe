@@ -104,16 +104,16 @@ function PopCard({ item }: { item: typeof popular[0] }) {
 
         {/* Розміри піци */}
         {hasSizes && (
-          <div className="flex gap-1.5 mt-3">
+          <div className="flex p-0.5 rounded-sm mt-3" style={{ background: "#e8e0d8" }}>
             {(["30", "40"] as const).map((s) => (
               <button
                 key={s}
                 onClick={() => setSize(s)}
                 className="flex-1 py-1.5 rounded-sm text-[0.58rem] tracking-wider uppercase transition-all duration-200"
                 style={{
-                  background: size === s ? "#1c1410" : "#faf7f2",
-                  color: size === s ? "#fff" : "#7a6a5e",
-                  border: `1px solid ${size === s ? "#1c1410" : "#d4c4b8"}`,
+                  background: size === s ? "#fff" : "transparent",
+                  color:      size === s ? "#1c1410" : "#a09080",
+                  boxShadow:  size === s ? "0 1px 3px rgba(0,0,0,0.08)" : "none",
                 }}
               >
                 {s} см
@@ -134,9 +134,9 @@ function PopCard({ item }: { item: typeof popular[0] }) {
             onClick={handleAdd}
             className="pop-add-btn flex items-center gap-1.5 px-3.5 py-2 rounded-sm text-[0.6rem] tracking-wider uppercase transition-all duration-300"
             style={{
-              background: added ? "#8b1a2e" : "#faf7f2",
-              border: `1px solid ${added ? "#8b1a2e" : "#d4c4b8"}`,
-              color: added ? "#fff" : "#7a6a5e",
+              background: "#8b1a2e",
+              border: "1px solid #8b1a2e",
+              color: "#fff",
             }}
           >
             {added ? <span style={{ fontSize: "0.7rem" }}>✓</span> : <ShoppingCart size={12} />}

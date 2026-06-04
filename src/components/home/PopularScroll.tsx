@@ -185,7 +185,7 @@ export default function PopularScroll() {
       {/* Скрол */}
       <div
         ref={scrollRef}
-        className="pop-scroll flex gap-3 sm:gap-4 overflow-x-auto pb-4 pl-5 pr-5 xl:pl-[calc((100vw_-_1280px)_/_2_+_24px)] xl:pr-6"
+        className="pop-scroll flex gap-3 sm:gap-4 overflow-x-auto pb-4"
         style={{
           scrollbarWidth: "none",
           msOverflowStyle: "none",

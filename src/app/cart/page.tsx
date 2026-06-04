@@ -168,10 +168,48 @@ export default function CartPage() {
                 </div>
               ))}
             </div>
-            <div className="mt-5">
+            <div className="mt-5 flex items-center justify-between">
               <Link href="/menu" style={{ fontSize: "0.72rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "#a09080", textDecoration: "none" }}>
                 ← Додати ще
               </Link>
+              <span style={{ fontSize: "0.72rem", color: "#a09080" }}>
+                {items.reduce((s, i) => s + i.quantity, 0)} {items.reduce((s, i) => s + i.quantity, 0) === 1 ? "позиція" : "позиції"}
+              </span>
+            </div>
+
+            {/* Інфо-блок — десктоп */}
+            <div className="hidden lg:flex flex-col gap-3 mt-8 p-5 rounded-sm" style={{ background: "#faf7f2", border: "1px solid #e8ddd4" }}>
+              {/* Прогрес безкоштовної доставки */}
+              {form.delivery === "delivery" && (
+                <div>
+                  <div className="flex justify-between mb-2">
+                    <span style={{ fontSize: "0.7rem", color: "#7a6a5e" }}>
+                      {total >= 500
+                        ? "🎉 Безкоштовна доставка"
+                        : `До безкоштовної доставки: ${500 - total} ₴`}
+                    </span>
+                    <span style={{ fontSize: "0.7rem", color: "#a09080" }}>від 500 ₴</span>
+                  </div>
+                  <div className="w-full h-1 rounded-full overflow-hidden" style={{ background: "#e8ddd4" }}>
+                    <div
+                      className="h-full rounded-full transition-all duration-500"
+                      style={{ width: `${Math.min(100, (total / 500) * 100)}%`, background: total >= 500 ? "#5a9a6e" : "#c49a3c" }}
+                    />
+                  </div>
+                </div>
+              )}
+              {/* Умови */}
+              <div style={{ borderTop: "1px solid #e8ddd4", paddingTop: "0.75rem", display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                {[
+                  { icon: "⏱", text: "Доставка 40–60 хвилин" },
+                  { icon: "💳", text: "Оплата готівкою або карткою кур'єру" },
+                  { icon: "📞", text: "Підтвердження замовлення по телефону" },
+                ].map(({ icon, text }) => (
+                  <p key={text} style={{ fontSize: "0.78rem", color: "#a09080", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                    <span>{icon}</span> {text}
+                  </p>
+                ))}
+              </div>
             </div>
           </div>
 

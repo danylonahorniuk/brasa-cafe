@@ -123,15 +123,6 @@ export default function CartPage() {
       )}
       {/* Умови */}
       <div style={{ borderTop: form.delivery === "delivery" ? "1px solid #e8ddd4" : "none", paddingTop: form.delivery === "delivery" ? "0.75rem" : "0", display: "flex", flexDirection: "column", gap: "0.6rem" }}>
-        {form.delivery === "delivery" ? [
-          { Icon: Clock,       text: "Доставка 40–60 хвилин" },
-          { Icon: CreditCard,  text: "Готівка або карта кур'єру" },
-          { Icon: Phone,       text: "Підтвердження замовлення по телефону" },
-        ] : [
-          { Icon: Store,       text: "Заберіть замовлення з ресторану" },
-          { Icon: Clock,       text: "Готове через 20–30 хвилин" },
-          { Icon: CreditCard,  text: "Карта онлайн або розрахунок у ресторані" },
-        ]}
         {(form.delivery === "delivery" ? [
           { Icon: Clock,       text: "Доставка 40–60 хвилин" },
           { Icon: CreditCard,  text: "Готівка або карта кур'єру" },

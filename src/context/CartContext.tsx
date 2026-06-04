@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useReducer, ReactNode } from "react";
+import { createContext, useContext, useReducer, useEffect, ReactNode } from "react";
 import { MenuItem } from "@/data/menu";
 
 export interface CartItem extends MenuItem {
@@ -92,8 +92,24 @@ interface CartContextValue {
 
 const CartContext = createContext<CartContextValue | null>(null);
 
+function initCart(): CartState {
+  if (typeof window === "undefined") return { items: [], isOpen: false };
+  try {
+    const saved = localStorage.getItem("brasa-cart");
+    if (saved) return { items: JSON.parse(saved), isOpen: false };
+  } catch {}
+  return { items: [], isOpen: false };
+}
+
 export default function CartProvider({ children }: { children: ReactNode }) {
-  const [state, dispatch] = useReducer(cartReducer, { items: [], isOpen: false });
+  const [state, dispatch] = useReducer(cartReducer, undefined, initCart);
+
+  // Зберігаємо кошик при кожній зміні
+  useEffect(() => {
+    try {
+      localStorage.setItem("brasa-cart", JSON.stringify(state.items));
+    } catch {}
+  }, [state.items]);
 
   const total = state.items.reduce((sum, i) => sum + i.price * i.quantity, 0);
   const count = state.items.reduce((sum, i) => sum + i.quantity, 0);

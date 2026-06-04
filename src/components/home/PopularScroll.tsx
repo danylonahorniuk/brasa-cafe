@@ -191,6 +191,8 @@ export default function PopularScroll() {
           msOverflowStyle: "none",
           overscrollBehaviorX: "contain",
           scrollSnapType: "x mandatory",
+          paddingLeft: "20px",
+          paddingRight: "20px",
         }}
       >
         {popular.map((item) => (
@@ -236,18 +238,6 @@ export default function PopularScroll() {
           .pop-menu-link:hover {
             border-color: #8b1a2e !important;
             color: #8b1a2e !important;
-          }
-        }
-
-        /* Відступ скрол-контейнера */
-        .pop-scroll {
-          padding-left: 20px;
-          padding-right: 20px;
-        }
-        @media (min-width: 1280px) {
-          .pop-scroll {
-            padding-left: calc((100vw - 1280px) / 2 + 24px);
-            padding-right: 24px;
           }
         }
 

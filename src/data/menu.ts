@@ -20,7 +20,7 @@ export const menuItems: MenuItem[] = [
   // ── PIZZA ──
   {
     id: 1,
-    name: "Маргарита Брasa",
+    name: "Маргарита Brasa",
     description: "Томатний соус, моцарела фіор ді лате, базилік, оливкова олія",
     price: 289,
     category: "pizza",

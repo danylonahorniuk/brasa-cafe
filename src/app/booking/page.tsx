@@ -353,11 +353,11 @@ export default function BookingPage() {
     : (animDir === "left" ? "loc-enter-right" : "loc-enter-left");
 
   return (
-    <div className="pt-20 min-h-screen" style={{ background: "#faf7f2" }}>
+    <div className="pt-16 sm:pt-20 min-h-screen" style={{ background: "#faf7f2" }}>
 
       {/* ── Шапка ── */}
       <div className="relative overflow-hidden" style={{ background: "#1a1208", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
-        <div className="max-w-7xl mx-auto px-6 py-14 flex justify-center">
+        <div className="max-w-7xl mx-auto px-5 sm:px-6 py-10 sm:py-14 flex justify-center">
           <h1 className="text-5xl md:text-6xl mb-4"
             style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 300, lineHeight: 1.05, color: "#f0e8dc" }}>
             Забронюйте<br />
@@ -370,24 +370,29 @@ export default function BookingPage() {
 
       {/* ── Перемикач ── */}
       <div style={{ background: "#fff", borderBottom: "1px solid #e8ddd4" }}>
-        <div className="max-w-3xl mx-auto px-6">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6">
           <div className="flex items-stretch">
+
+            {/* Стрілка ліво */}
             <button onClick={() => switchLocation((locIndex - 1 + locations.length) % locations.length)}
-              className="loc-arrow flex items-center gap-2.5 py-3.5 pr-6 transition-all duration-200"
+              className="loc-arrow flex items-center gap-2 sm:gap-2.5 py-3.5 pr-3 sm:pr-6 transition-all duration-200"
               style={{ borderRight: "1px solid #e8ddd4" }}>
               <ChevronLeft size={15} style={{ color: "#c4b4a8" }} />
-              <div className="text-left">
+              {/* Текст попередньої — тільки десктоп */}
+              <div className="text-left hidden sm:block">
                 <p className="text-[0.48rem] tracking-[0.2em] uppercase mb-0.5" style={{ color: "#c4b4a8" }}>Попередній</p>
                 <p className="text-[0.8rem] font-medium" style={{ color: "#7a6a5e" }}>Brasa {prevLoc.name}</p>
                 <p className="text-[0.58rem]" style={{ color: "#c4b4a8" }}>{prevLoc.address}</p>
               </div>
             </button>
-            <div className={`flex-1 flex flex-col items-center justify-center py-3.5 px-4 ${animClass}`}>
+
+            {/* Центр — поточна локація */}
+            <div className={`flex-1 flex flex-col items-center justify-center py-3.5 px-3 sm:px-4 ${animClass}`}>
               <p className="text-[0.48rem] tracking-[0.25em] uppercase mb-0.5" style={{ color: "#c49a3c" }}>Ви бронюєте тут</p>
-              <p className="text-base" style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 400, color: "#1c1410" }}>
+              <p className="text-base text-center" style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 400, color: "#1c1410" }}>
                 Brasa {location.name}
               </p>
-              <p className="text-[0.6rem]" style={{ color: "#a09080" }}>{location.address}</p>
+              <p className="text-[0.6rem] text-center" style={{ color: "#a09080" }}>{location.address}</p>
               <div className="flex gap-1.5 mt-2">
                 {locations.map((_, i) => (
                   <button key={i} onClick={() => switchLocation(i)} className="rounded-full transition-all duration-300"
@@ -395,10 +400,13 @@ export default function BookingPage() {
                 ))}
               </div>
             </div>
+
+            {/* Стрілка право */}
             <button onClick={() => switchLocation((locIndex + 1) % locations.length)}
-              className="loc-arrow flex items-center gap-2.5 py-3.5 pl-6 transition-all duration-200"
+              className="loc-arrow flex items-center gap-2 sm:gap-2.5 py-3.5 pl-3 sm:pl-6 transition-all duration-200"
               style={{ borderLeft: "1px solid #e8ddd4" }}>
-              <div className="text-right">
+              {/* Текст наступної — тільки десктоп */}
+              <div className="text-right hidden sm:block">
                 <p className="text-[0.48rem] tracking-[0.2em] uppercase mb-0.5" style={{ color: "#c4b4a8" }}>Наступний</p>
                 <p className="text-[0.8rem] font-medium" style={{ color: "#7a6a5e" }}>Brasa {nextLoc.name}</p>
                 <p className="text-[0.58rem]" style={{ color: "#c4b4a8" }}>{nextLoc.address}</p>
@@ -409,8 +417,8 @@ export default function BookingPage() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 py-12">
-        <div className={`grid grid-cols-1 lg:grid-cols-2 gap-16 items-start ${animClass}`}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+        <div className={`grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start ${animClass}`}>
 
           {/* ── Ліва колонка ── */}
           <div>
@@ -462,14 +470,16 @@ export default function BookingPage() {
                 ))}
               </div>
 
-              {/* SVG план */}
-              <div style={{ background: "#ebe5dc" }}>
+              {/* SVG план — горизонтальний скрол на мобілі */}
+              <div style={{ background: "#ebe5dc", overflowX: "auto", WebkitOverflowScrolling: "touch" } as React.CSSProperties}>
+                <div style={{ minWidth: "520px" }}>
                 <FloorPlan
                   location={location}
                   form={{ date: form.date, time: form.time, tableId: form.tableId }}
                   canShowTables={!!canShowTables}
                   onTableClick={(id) => setForm((f) => ({ ...f, tableId: id }))}
                 />
+                </div>
               </div>
 
               {/* Вибраний столик */}
@@ -487,7 +497,7 @@ export default function BookingPage() {
           </div>
 
           {/* ── Форма ── */}
-          <form onSubmit={handleSubmit} className="space-y-5 p-8 rounded-sm"
+          <form onSubmit={handleSubmit} className="space-y-5 p-5 sm:p-8 rounded-sm"
             style={{ background: "#fff", border: "1px solid #e8ddd4", boxShadow: "0 4px 24px rgba(28,20,16,0.07)" }}>
             <div className="flex items-center justify-between mb-2">
               <p className="section-label">Деталі бронювання</p>
@@ -541,7 +551,7 @@ export default function BookingPage() {
             {canShowTables && !form.tableId && (
               <div className="flex items-center gap-2 px-3 py-2 rounded-sm text-[0.68rem]"
                 style={{ background: "rgba(196,154,60,0.07)", border: "1px solid rgba(196,154,60,0.2)", color: "#a07830" }}>
-                ← Оберіть столик на схемі залу зліва
+                ↑ Оберіть столик на схемі залу вище
               </div>
             )}
             {form.tableId > 0 && selectedTable && (
@@ -559,10 +569,10 @@ export default function BookingPage() {
               <label className="text-[0.65rem] uppercase tracking-wider mb-2 flex items-center gap-1.5" style={{ color: "#a09080" }}>
                 <Users size={11} /> Кількість гостей
               </label>
-              <div className="flex gap-2">
+              <div className="grid grid-cols-8 gap-1.5 sm:gap-2">
                 {guestOptions.map((g) => (
                   <button key={g} type="button" onClick={() => setForm((f) => ({ ...f, guests: g }))}
-                    className="flex-1 py-2 text-sm rounded-sm border transition-all"
+                    className="py-2.5 text-sm rounded-sm border transition-all"
                     style={{
                       background: form.guests === g ? "#8b1a2e" : "#fff",
                       color:      form.guests === g ? "#fff"     : "#7a6a5e",

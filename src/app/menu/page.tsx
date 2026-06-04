@@ -222,17 +222,17 @@ function DishModal({ item, onClose }: { item: MenuItem; onClose: () => void }) {
           {hasSize && (
             <div className="mb-5">
               <p className="text-[0.58rem] tracking-widest uppercase mb-2.5" style={{ color: "#a09080" }}>Оберіть розмір</p>
-              <div className="flex gap-2">
+              <div className="flex p-1 rounded-sm" style={{ background: "#ede8e1" }}>
                 {(["30","40"] as const).map(s => (
                   <button key={s} onClick={() => setSize(s)}
-                    className="flex-1 py-3 rounded-sm text-sm transition-all duration-200"
+                    className="flex-1 py-2.5 rounded-sm text-sm transition-all duration-200"
                     style={{
-                      background: size === s ? "#1c1410" : "#fff",
-                      color:      size === s ? "#fff"    : "#7a6a5e",
-                      border:     `1px solid ${size === s ? "#1c1410" : "#d4c4b8"}`,
+                      background: size === s ? "#fff" : "transparent",
+                      color:      size === s ? "#1c1410" : "#a09080",
+                      boxShadow:  size === s ? "0 1px 4px rgba(0,0,0,0.1)" : "none",
                     }}>
                     {s} см
-                    <span className="block text-[0.65rem] mt-0.5" style={{ opacity: 0.7 }}>
+                    <span className="block text-[0.65rem] mt-0.5" style={{ color: size === s ? "#c49a3c" : "#b8a898" }}>
                       {item.sizes![s]} ₴
                     </span>
                   </button>

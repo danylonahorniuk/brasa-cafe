@@ -64,7 +64,6 @@ function PromoModal({ promo, onClose }: { promo: Promo; onClose: () => void }) {
               width={1456}
               height={816}
               className="w-full h-auto block"
-              style={{ maxHeight: "220px", objectFit: "cover" }}
               sizes="576px"
             />
           ) : (

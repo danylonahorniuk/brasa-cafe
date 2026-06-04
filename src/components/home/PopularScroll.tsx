@@ -38,9 +38,14 @@ function PopCard({ item }: { item: typeof popular[0] }) {
   return (
     <div
       className="pop-card group flex-shrink-0 flex flex-col rounded-sm overflow-hidden"
-      style={{ width: "250px", background: "#fff", border: "1px solid #e8ddd4" }}
+      style={{
+        width: "clamp(200px, 68vw, 250px)",
+        background: "#fff",
+        border: "1px solid #e8ddd4",
+        scrollSnapAlign: "start",
+      }}
     >
-      {/* Фото — aspect-ratio 4/3 */}
+      {/* Фото */}
       <div className="relative overflow-hidden" style={{ aspectRatio: "4/3", background: "#f5f0eb" }}>
         <Image
           src={item.image}
@@ -48,7 +53,7 @@ function PopCard({ item }: { item: typeof popular[0] }) {
           fill
           className="object-cover transition-transform duration-700 group-hover:scale-105"
           style={{ objectPosition: item.imagePosition ?? "center" }}
-          sizes="250px"
+          sizes="(max-width: 640px) 68vw, 250px"
         />
 
         {/* Бейджі */}
@@ -83,31 +88,28 @@ function PopCard({ item }: { item: typeof popular[0] }) {
       </div>
 
       {/* Контент */}
-      <div className="flex flex-col flex-1 p-4">
+      <div className="flex flex-col flex-1 p-3.5 sm:p-4">
         <p className="text-[0.55rem] tracking-widest uppercase mb-1" style={{ color: "#a09080" }}>
           {categoryLabel[item.category]}
         </p>
         <h3
-          className="text-lg leading-snug mb-1"
+          className="text-base sm:text-lg leading-snug mb-1"
           style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 400, color: "#1c1410" }}
         >
           {item.name}
         </h3>
-        <p
-          className="text-[0.65rem] leading-relaxed mb-auto line-clamp-2"
-          style={{ color: "#a09080" }}
-        >
+        <p className="text-[0.65rem] leading-relaxed mb-auto line-clamp-2" style={{ color: "#a09080" }}>
           {item.description}
         </p>
 
-        {/* Вибір розміру для піци */}
+        {/* Розміри піци */}
         {hasSizes && (
           <div className="flex gap-1.5 mt-3">
             {(["30", "40"] as const).map((s) => (
               <button
                 key={s}
                 onClick={() => setSize(s)}
-                className="flex-1 py-1 rounded-sm text-[0.58rem] tracking-wider uppercase transition-all duration-200"
+                className="flex-1 py-1.5 rounded-sm text-[0.58rem] tracking-wider uppercase transition-all duration-200"
                 style={{
                   background: size === s ? "#1c1410" : "#faf7f2",
                   color: size === s ? "#fff" : "#7a6a5e",
@@ -130,14 +132,14 @@ function PopCard({ item }: { item: typeof popular[0] }) {
           </span>
           <button
             onClick={handleAdd}
-            className="pop-add-btn flex items-center gap-1.5 px-3 py-1.5 rounded-sm text-[0.6rem] tracking-wider uppercase transition-all duration-300"
+            className="pop-add-btn flex items-center gap-1.5 px-3.5 py-2 rounded-sm text-[0.6rem] tracking-wider uppercase transition-all duration-300"
             style={{
               background: added ? "#8b1a2e" : "#faf7f2",
               border: `1px solid ${added ? "#8b1a2e" : "#d4c4b8"}`,
               color: added ? "#fff" : "#7a6a5e",
             }}
           >
-            {added ? <span style={{ fontSize: "0.7rem" }}>✓</span> : <ShoppingCart size={11} />}
+            {added ? <span style={{ fontSize: "0.7rem" }}>✓</span> : <ShoppingCart size={12} />}
             {added ? "Додано" : "В кошик"}
           </button>
         </div>
@@ -155,9 +157,10 @@ export default function PopularScroll() {
   };
 
   return (
-    <section className="py-16" style={{ background: "#fff" }}>
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="flex items-end justify-between mb-8">
+    <section className="py-12 sm:py-16" style={{ background: "#fff" }}>
+      {/* Заголовок */}
+      <div className="max-w-7xl mx-auto px-5 sm:px-6">
+        <div className="flex items-end justify-between mb-6 sm:mb-8">
           <h2
             className="text-4xl md:text-5xl"
             style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 300, color: "#1c1410", lineHeight: 1.1 }}
@@ -169,10 +172,8 @@ export default function PopularScroll() {
               <button
                 key={dir}
                 onClick={() => scroll(dir)}
-                className="w-10 h-10 rounded-sm flex items-center justify-center transition-all duration-300"
+                className="pop-arrow w-10 h-10 rounded-sm flex items-center justify-center transition-all duration-300"
                 style={{ border: "1px solid #d4c4b8", color: "#a09080", background: "#fff" }}
-                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "#8b1a2e"; (e.currentTarget as HTMLElement).style.color = "#8b1a2e"; }}
-                onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "#d4c4b8"; (e.currentTarget as HTMLElement).style.color = "#a09080"; }}
               >
                 <Icon size={18} />
               </button>
@@ -184,26 +185,30 @@ export default function PopularScroll() {
       {/* Скрол */}
       <div
         ref={scrollRef}
-        className="flex gap-4 overflow-x-auto pb-4"
+        className="flex gap-3 sm:gap-4 overflow-x-auto pb-4"
         style={{
           scrollbarWidth: "none",
           msOverflowStyle: "none",
           overscrollBehaviorX: "contain",
-          paddingLeft: "calc((100vw - 1280px) / 2 + 24px)",
-          paddingRight: "24px",
+          scrollSnapType: "x mandatory",
+          paddingLeft: "max(20px, calc((100vw - 1280px) / 2 + 24px))",
+          paddingRight: "20px",
         }}
       >
         {popular.map((item) => (
           <PopCard key={item.id} item={item} />
         ))}
 
-        {/* "Все меню" в кінці */}
+        {/* Все меню */}
         <Link
           href="/menu"
-          className="flex-shrink-0 w-44 rounded-sm flex flex-col items-center justify-center gap-3 transition-all duration-300"
-          style={{ border: "1.5px dashed #d4c4b8", color: "#a09080" }}
-          onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "#8b1a2e"; (e.currentTarget as HTMLElement).style.color = "#8b1a2e"; }}
-          onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "#d4c4b8"; (e.currentTarget as HTMLElement).style.color = "#a09080"; }}
+          className="pop-menu-link flex-shrink-0 w-36 sm:w-44 rounded-sm flex flex-col items-center justify-center gap-3 transition-all duration-300"
+          style={{
+            border: "1.5px dashed #d4c4b8",
+            color: "#a09080",
+            scrollSnapAlign: "start",
+            minHeight: "160px",
+          }}
         >
           <span className="text-3xl">→</span>
           <span className="text-[0.7rem] tracking-widest uppercase">Все меню</span>
@@ -211,18 +216,41 @@ export default function PopularScroll() {
       </div>
 
       <style>{`
-        .pop-card {
-          transition: box-shadow 0.4s ease, border-color 0.4s ease, transform 0.4s ease;
+        /* Hover — тільки мишка */
+        @media (hover: hover) and (pointer: fine) {
+          .pop-card {
+            transition: box-shadow 0.4s ease, border-color 0.4s ease, transform 0.4s ease;
+          }
+          .pop-card:hover {
+            box-shadow: 0 8px 28px rgba(28,20,16,0.1);
+            border-color: rgba(139,26,46,0.18);
+            transform: translateY(-2px);
+          }
+          .pop-add-btn:hover {
+            background: #8b1a2e !important;
+            border-color: #8b1a2e !important;
+            color: #fff !important;
+          }
+          .pop-arrow:hover {
+            border-color: #8b1a2e !important;
+            color: #8b1a2e !important;
+          }
+          .pop-menu-link:hover {
+            border-color: #8b1a2e !important;
+            color: #8b1a2e !important;
+          }
         }
-        .pop-card:hover {
-          box-shadow: 0 8px 28px rgba(28,20,16,0.1);
-          border-color: rgba(139,26,46,0.18);
-          transform: translateY(-2px);
-        }
-        .pop-add-btn:hover {
-          background: #8b1a2e !important;
-          border-color: #8b1a2e !important;
-          color: #fff !important;
+
+        /* Активний стан для тач */
+        @media (hover: none) {
+          .pop-card:active {
+            border-color: rgba(139,26,46,0.25);
+          }
+          .pop-add-btn:active {
+            background: #8b1a2e !important;
+            border-color: #8b1a2e !important;
+            color: #fff !important;
+          }
         }
       `}</style>
     </section>

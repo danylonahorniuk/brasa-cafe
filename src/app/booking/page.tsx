@@ -420,9 +420,24 @@ export default function BookingPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
         <div className={`grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start ${animClass}`}>
 
-          {/* ── Ліва колонка ── */}
-          <div>
-            <div className="mb-8 rounded-sm overflow-hidden" style={{ background: "#fff", border: "1px solid #e8ddd4" }}>
+          {/* ── Ліва колонка (план залу) ── */}
+          <div className="order-2 lg:order-1">
+            {/* Інфо-рядок — тільки мобіль */}
+            <div className="lg:hidden mb-4 flex items-center gap-3 flex-wrap">
+              {[
+                { icon: Clock, text: location.hours },
+                { icon: Users, text: "До 8 гостей" },
+              ].map(({ icon: Icon, text }) => (
+                <div key={text} className="flex items-center gap-1.5 px-3 py-1.5 rounded-sm"
+                  style={{ background: "#fff", border: "1px solid #e8ddd4" }}>
+                  <Icon size={12} color="#8b1a2e" />
+                  <span className="text-[0.65rem]" style={{ color: "#5a4a3e" }}>{text}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* Інфо-картки — тільки десктоп */}
+            <div className="mb-8 rounded-sm overflow-hidden hidden lg:block" style={{ background: "#fff", border: "1px solid #e8ddd4" }}>
               {[
                 { icon: Clock,           title: location.hours,       sub: "Столик утримується 15 хвилин" },
                 { icon: Users,           title: "До 8 гостей онлайн", sub: "Більше — телефонуйте нам"      },
@@ -497,7 +512,7 @@ export default function BookingPage() {
           </div>
 
           {/* ── Форма ── */}
-          <form onSubmit={handleSubmit} className="space-y-5 p-5 sm:p-8 rounded-sm"
+          <form onSubmit={handleSubmit} className="order-1 lg:order-2 space-y-5 p-5 sm:p-8 rounded-sm"
             style={{ background: "#fff", border: "1px solid #e8ddd4", boxShadow: "0 4px 24px rgba(28,20,16,0.07)" }}>
             <div className="flex items-center justify-between mb-2">
               <p className="section-label">Деталі бронювання</p>
@@ -551,7 +566,8 @@ export default function BookingPage() {
             {canShowTables && !form.tableId && (
               <div className="flex items-center gap-2 px-3 py-2 rounded-sm text-[0.68rem]"
                 style={{ background: "rgba(196,154,60,0.07)", border: "1px solid rgba(196,154,60,0.2)", color: "#a07830" }}>
-                ↑ Оберіть столик на схемі залу вище
+                <span className="lg:hidden">↑ Оберіть столик на схемі залу нижче</span>
+              <span className="hidden lg:inline">← Оберіть столик на схемі залу зліва</span>
               </div>
             )}
             {form.tableId > 0 && selectedTable && (

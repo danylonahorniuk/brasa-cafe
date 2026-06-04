@@ -162,14 +162,8 @@ export default function Navbar() {
                 >
                   <Link
                     href={l.href}
-                    className="group flex items-center gap-4 py-4"
+                    className="group flex items-center py-4"
                   >
-                    <span
-                      className="text-[0.6rem] tracking-[0.2em] tabular-nums transition-colors duration-300"
-                      style={{ color: active ? "#c49a3c" : "rgba(255,255,255,0.25)" }}
-                    >
-                      0{i + 1}
-                    </span>
                     <span
                       style={{
                         fontFamily: "var(--font-cormorant), serif",

@@ -185,7 +185,7 @@ export default function PopularScroll() {
       {/* Скрол */}
       <div
         ref={scrollRef}
-        className="pop-scroll flex gap-3 sm:gap-4 overflow-x-auto pb-4"
+        className="pop-scroll flex gap-3 sm:gap-4 overflow-x-auto pb-4 pl-5 pr-5 xl:pl-[calc((100vw_-_1280px)_/_2_+_24px)] xl:pr-6"
         style={{
           scrollbarWidth: "none",
           msOverflowStyle: "none",
@@ -214,17 +214,6 @@ export default function PopularScroll() {
       </div>
 
       <style>{`
-        .pop-scroll {
-          padding-left: 20px;
-          padding-right: 20px;
-        }
-        @media (min-width: 1280px) {
-          .pop-scroll {
-            padding-left: calc((100vw - 1280px) / 2 + 24px);
-            padding-right: 24px;
-          }
-        }
-
         /* Hover — тільки мишка */
         @media (hover: hover) and (pointer: fine) {
           .pop-card {

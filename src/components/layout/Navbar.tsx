@@ -187,10 +187,7 @@ export default function Navbar() {
           </ul>
 
           {/* Контакти внизу */}
-          <div
-            className="mt-8 pt-6"
-            style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}
-          >
+          <div className="mt-8 pt-6">
             <p className="text-[0.65rem] tracking-[0.2em] uppercase mb-1" style={{ color: "rgba(255,255,255,0.3)" }}>
               Замовлення
             </p>

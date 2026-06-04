@@ -18,7 +18,6 @@ export default function HeroSlider() {
     return () => clearInterval(t);
   }, [next]);
 
-  // Swipe підтримка
   const onTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
   };
@@ -34,11 +33,11 @@ export default function HeroSlider() {
   return (
     <section
       className="relative overflow-hidden"
-      style={{ height: "100svh", minHeight: "580px" }}
+      style={{ height: "100svh", minHeight: "600px" }}
       onTouchStart={onTouchStart}
       onTouchEnd={onTouchEnd}
     >
-      {/* Фонові зображення */}
+      {/* Background images */}
       {promotions.map((p, i) => (
         <div
           key={p.id}
@@ -50,36 +49,31 @@ export default function HeroSlider() {
             alt={p.title}
             fill
             priority={i === 0}
-            className="object-cover object-center"
+            className="object-cover"
             sizes="100vw"
           />
         </div>
       ))}
 
-      {/* Desktop gradient — темніємо зліва для тексту */}
-      <div
-        className="absolute inset-0 z-10 hidden sm:block"
-        style={{
-          background:
-            "linear-gradient(to right, rgba(15,8,6,0.82) 0%, rgba(15,8,6,0.45) 55%, rgba(15,8,6,0.15) 100%)",
-        }}
-      />
-      {/* Mobile gradient — рівномірне темне накриття */}
-      <div
-        className="absolute inset-0 z-10 sm:hidden"
-        style={{ background: "rgba(15,8,6,0.55)" }}
-      />
-      {/* Загальний градієнт знизу */}
+      {/* Gradient overlays */}
       <div
         className="absolute inset-0 z-10"
         style={{
-          background: "linear-gradient(to top, rgba(15,8,6,0.75) 0%, transparent 45%)",
+          background:
+            "linear-gradient(to right, rgba(15,8,6,0.78) 0%, rgba(15,8,6,0.45) 55%, rgba(15,8,6,0.15) 100%)",
+        }}
+      />
+      <div
+        className="absolute inset-0 z-10"
+        style={{
+          background:
+            "linear-gradient(to top, rgba(15,8,6,0.6) 0%, transparent 50%)",
         }}
       />
 
-      {/* Декоративний BRASA — лише на десктопі */}
+      {/* Декоративний BRASA — тільки десктоп */}
       <div
-        className="absolute right-[-2vw] top-1/2 -translate-y-1/2 z-10 select-none pointer-events-none hidden sm:block"
+        className="absolute right-[-2vw] top-1/2 -translate-y-1/2 z-10 select-none pointer-events-none hidden md:block"
         style={{
           fontFamily: "var(--font-cormorant), serif",
           fontSize: "clamp(100px, 18vw, 280px)",
@@ -94,54 +88,38 @@ export default function HeroSlider() {
       </div>
 
       {/* Контент */}
-      <div className="absolute inset-0 z-20 flex items-end sm:items-center pb-28 sm:pb-0">
-        <div className="max-w-7xl mx-auto px-5 sm:px-12 w-full">
+      <div className="absolute inset-0 z-20 flex items-center">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 w-full">
           <div className="max-w-xl">
-            {/* Tag */}
-            <p
-              key={`tag-${active}`}
-              className="mb-3 text-[0.6rem] tracking-[0.25em] uppercase animate-fade-up"
-              style={{
-                color: "#c49a3c",
-                animationFillMode: "both",
-                animationDelay: "0ms",
-              }}
-            >
-              {slide.badge ?? "Brasa Café"}
-            </p>
-
-            {/* Title */}
             <h1
               key={`title-${active}`}
-              className="animate-fade-up text-white"
+              className="animate-fade-up delay-100 text-white"
               style={{
                 fontFamily: "var(--font-cormorant), serif",
-                fontSize: "clamp(2.4rem, 8vw, 5.2rem)",
+                fontSize: "clamp(2.6rem, 6vw, 5.2rem)",
                 fontWeight: 300,
                 lineHeight: 1.08,
                 letterSpacing: "-0.02em",
                 animationFillMode: "both",
-                animationDelay: "80ms",
                 textShadow: "0 2px 20px rgba(0,0,0,0.3)",
               }}
             >
               {slide.title}
             </h1>
 
-            {/* Subtitle */}
             <p
               key={`sub-${active}`}
-              className="mt-3 sm:mt-4 text-white/70 text-sm sm:text-base leading-relaxed max-w-xs sm:max-w-sm animate-fade-up"
-              style={{ animationFillMode: "both", animationDelay: "160ms" }}
+              className="mt-4 text-white/75 text-base leading-relaxed max-w-sm animate-fade-up delay-200"
+              style={{ animationFillMode: "both" }}
             >
               {slide.subtitle}
             </p>
 
-            {/* Buttons */}
+            {/* Кнопки — стовпчик на мобілі, ряд на десктопі */}
             <div
               key={`btns-${active}`}
-              className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-6 sm:mt-8 animate-fade-up"
-              style={{ animationFillMode: "both", animationDelay: "240ms" }}
+              className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-8 animate-fade-up delay-300"
+              style={{ animationFillMode: "both" }}
             >
               <Link href={slide.href} className="hero-btn-primary">
                 <span>{slide.cta}</span>
@@ -155,15 +133,15 @@ export default function HeroSlider() {
         </div>
       </div>
 
-      {/* Прогрес-індикатори + номер слайда */}
-      <div className="absolute bottom-6 sm:bottom-10 left-0 right-0 z-20 flex items-center justify-center gap-3">
+      {/* Прогрес-індикатори */}
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex items-center gap-3">
         {promotions.map((_, i) => (
           <button
             key={i}
             onClick={() => setActive(i)}
             className="relative h-0.5 rounded-full overflow-hidden transition-all duration-500"
             style={{
-              width: i === active ? "48px" : "18px",
+              width: i === active ? "52px" : "20px",
               background: "rgba(255,255,255,0.25)",
             }}
             aria-label={`Слайд ${i + 1}`}
@@ -178,22 +156,22 @@ export default function HeroSlider() {
         ))}
       </div>
 
-      {/* Номер слайда — лише десктоп */}
-      <div className="absolute bottom-10 right-8 z-20 text-white/40 text-xs tracking-widest hidden sm:block">
+      {/* Номер слайда — тільки десктоп */}
+      <div className="absolute bottom-10 right-8 z-20 text-white/40 text-xs tracking-widest hidden md:block">
         {String(active + 1).padStart(2, "0")} / {String(promotions.length).padStart(2, "0")}
       </div>
 
-      {/* Стрілки навігації — лише десктоп */}
+      {/* Стрілки — тільки десктоп */}
       <button
         onClick={back}
-        className="absolute left-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-sm items-center justify-center text-white/60 hover:text-white border border-white/20 hover:border-white/50 transition-all hidden sm:flex"
+        className="absolute left-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-sm hidden md:flex items-center justify-center text-white/60 hover:text-white border border-white/20 hover:border-white/50 transition-all"
         style={{ backdropFilter: "blur(8px)", background: "rgba(0,0,0,0.2)" }}
       >
         <ChevronLeft size={18} />
       </button>
       <button
         onClick={next}
-        className="absolute right-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-sm items-center justify-center text-white/60 hover:text-white border border-white/20 hover:border-white/50 transition-all hidden sm:flex"
+        className="absolute right-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-sm hidden md:flex items-center justify-center text-white/60 hover:text-white border border-white/20 hover:border-white/50 transition-all"
         style={{ backdropFilter: "blur(8px)", background: "rgba(0,0,0,0.2)" }}
       >
         <ChevronRight size={18} />
@@ -210,7 +188,7 @@ export default function HeroSlider() {
           align-items: center;
           justify-content: center;
           gap: 0.5rem;
-          padding: 0.82rem 1.8rem;
+          padding: 0.72rem 1.8rem;
           border-radius: 2px;
           font-size: 0.7rem;
           font-weight: 500;
@@ -249,7 +227,7 @@ export default function HeroSlider() {
           align-items: center;
           justify-content: center;
           gap: 0.5rem;
-          padding: 0.82rem 1.8rem;
+          padding: 0.72rem 1.8rem;
           border-radius: 2px;
           font-size: 0.7rem;
           font-weight: 400;

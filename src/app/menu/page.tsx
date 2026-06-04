@@ -124,6 +124,7 @@ function DishModal({ item, onClose }: { item: MenuItem; onClose: () => void }) {
   const [qty,     setQty]     = useState(1);
   const [size,    setSize]    = useState<"30" | "40">("30");
   const [added,   setAdded]   = useState(false);
+  const [open,    setOpen]    = useState(false);
   const [closing, setClosing] = useState(false);
 
   const hasSize      = item.category === "pizza" && !!item.sizes;
@@ -133,10 +134,16 @@ function DishModal({ item, onClose }: { item: MenuItem; onClose: () => void }) {
   const close = () => { setClosing(true); setTimeout(onClose, 320); };
 
   useEffect(() => {
+    // Запускаємо вхідну анімацію на наступному кадрі
+    const id = requestAnimationFrame(() => setOpen(true));
     document.body.style.overflow = "hidden";
     const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") close(); };
     window.addEventListener("keydown", onKey);
-    return () => { document.body.style.overflow = ""; window.removeEventListener("keydown", onKey); };
+    return () => {
+      cancelAnimationFrame(id);
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKey);
+    };
   }, []);
 
   const handleAdd = () => {
@@ -150,8 +157,8 @@ function DishModal({ item, onClose }: { item: MenuItem; onClose: () => void }) {
       className="fixed inset-0 z-50 flex items-end"
       style={{
         backdropFilter: "blur(4px)",
-        background: closing ? "rgba(0,0,0,0)" : "rgba(28,20,16,0.6)",
-        transition: "background 0.32s ease",
+        background: open && !closing ? "rgba(28,20,16,0.6)" : "rgba(0,0,0,0)",
+        transition: "background 0.35s ease",
       }}
       onClick={close}
     >
@@ -162,8 +169,8 @@ function DishModal({ item, onClose }: { item: MenuItem; onClose: () => void }) {
           background: "#faf7f2",
           maxHeight: "88svh",
           overflowY: "auto",
-          transform: closing ? "translateY(100%)" : "translateY(0)",
-          transition: "transform 0.32s cubic-bezier(0.4,0,0.2,1)",
+          transform: open && !closing ? "translateY(0)" : "translateY(100%)",
+          transition: "transform 0.38s cubic-bezier(0.32,0.72,0,1)",
         }}
       >
         {/* Фото */}

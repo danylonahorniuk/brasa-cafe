@@ -1,8 +1,12 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { Phone, Calendar } from "lucide-react";
+import { useLang } from "@/context/LangContext";
 
 export default function BookingBanner() {
+  const { t } = useLang();
   return (
     <section className="max-w-7xl mx-auto px-6 py-16">
       <div
@@ -30,17 +34,17 @@ export default function BookingBanner() {
             className="text-4xl md:text-5xl text-white mb-4"
             style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 300, lineHeight: 1.1 }}
           >
-            Забронюйте столик<br />
-            <em className="not-italic" style={{ color: "#c49a3c" }}>онлайн за хвилину</em>
+            {t("booking_banner.title1")}<br />
+            <em className="not-italic" style={{ color: "#c49a3c" }}>{t("booking_banner.title2")}</em>
           </h2>
           <p className="text-sm mb-8 leading-relaxed" style={{ color: "rgba(255,255,255,0.5)" }}>
-            Оберіть дату, час і кількість гостей. Підтвердження — одразу на телефон.
+            {t("booking_banner.subtitle")}
           </p>
 
           {/* Міні-інфо */}
           <div className="flex flex-col gap-2 mb-8">
             {[
-              { icon: Calendar, text: "Щодня 11:00 – 23:00" },
+              { icon: Calendar, text: t("booking_banner.daily") },
               { icon: Phone,    text: "+38 (044) 123-45-67" },
             ].map((item) => (
               <div key={item.text} className="flex items-center gap-3">
@@ -57,11 +61,11 @@ export default function BookingBanner() {
 
           <div className="flex flex-wrap gap-3">
             <Link href="/booking" className="booking-btn-primary">
-              <span>Забронювати</span>
+              <span>{t("booking_banner.bookBtn")}</span>
               <span className="booking-btn-arrow">→</span>
             </Link>
             <a href="tel:+380441234567" className="booking-btn-gold">
-              <Phone size={13} /> Зателефонувати
+              <Phone size={13} /> {t("booking_banner.callBtn")}
             </a>
           </div>
         </div>

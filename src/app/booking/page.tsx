@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { CheckCircle, Users, Calendar, Clock, MessageSquare, UtensilsCrossed, ChevronLeft, ChevronRight } from "lucide-react";
+import { useLang } from "@/context/LangContext";
 
 /* ─── Локації ─── */
 const locations = [
@@ -80,12 +81,14 @@ function isBooked(locationId: number, tableId: number, date: string, time: strin
 
 /* ─── SVG План залу ─── */
 function FloorPlan({
-  location, form, canShowTables, onTableClick,
+  location, form, canShowTables, onTableClick, overlayLine1, overlayLine2,
 }: {
   location: typeof locations[0];
   form: { date: string; time: string; tableId: number };
   canShowTables: boolean;
   onTableClick: (id: number) => void;
+  overlayLine1: string;
+  overlayLine2: string;
 }) {
   const W = "#3d2818";
   const FL = "#f8f4ef";
@@ -162,11 +165,11 @@ function FloorPlan({
     <text x={x} y={y} textAnchor="middle" fontSize="8" fill="#c4b4a8" letterSpacing="3" fontWeight="500" style={{ userSelect:"none" }}>{txt}</text>
   );
 
-  const Overlay = ({ cx }: { cx: number }) => !canShowTables ? (
+  const Overlay = ({ cx, line1, line2 }: { cx: number; line1: string; line2: string }) => !canShowTables ? (
     <g>
       <rect x="12" y="12" width={cx} height="406" fill="rgba(240,235,228,0.55)" />
-      <text x={12+cx/2} y="208" textAnchor="middle" fontSize="10" fill="#c4b4a8" letterSpacing="3">ОБЕРІТЬ ДАТУ ТА ЧАС</text>
-      <text x={12+cx/2} y="225" textAnchor="middle" fontSize="10" fill="#c4b4a8" letterSpacing="3">ЩОБ ПОБАЧИТИ ДОСТУПНІСТЬ</text>
+      <text x={12+cx/2} y="208" textAnchor="middle" fontSize="10" fill="#c4b4a8" letterSpacing="3">{line1}</text>
+      <text x={12+cx/2} y="225" textAnchor="middle" fontSize="10" fill="#c4b4a8" letterSpacing="3">{line2}</text>
     </g>
   ) : null;
 
@@ -194,7 +197,7 @@ function FloorPlan({
       ))}
       {ZL(83,  27, "ВІКНА")} {ZL(239, 27, "ЦЕНТР")} {ZL(411, 27, "БОКСИ")} {ZL(622, 44, "ТЕРАСА")}
       {location.tables.map(t => <T key={t.id} t={t} />)}
-      <Overlay cx={528} />
+      <Overlay cx={528} line1={overlayLine1} line2={overlayLine2} />
     </svg>
   );
 
@@ -225,7 +228,7 @@ function FloorPlan({
       <line x1="350" y1="20" x2="350" y2="410" stroke="#d4c4b4" strokeWidth="0.8" strokeDasharray="5,4" />
       {ZL(63,27,"БАР")} {ZL(244,27,"ЦЕНТР ЗАЛУ")} {ZL(473,27,"VIP ЗАЛ")} {ZL(473,314,"БАНКЕТ")}
       {location.tables.map(t => <T key={t.id} t={t} />)}
-      <Overlay cx={338} />
+      <Overlay cx={338} line1={overlayLine1} line2={overlayLine2} />
     </svg>
   );
 
@@ -254,7 +257,7 @@ function FloorPlan({
       ))}
       {ZL(80,27,"ВХІД")} {ZL(240,27,"ОСНОВНИЙ")} {ZL(424,27,"НАБЕРЕЖНА")} {ZL(609,27,"ТЕРАСА")}
       {location.tables.map(t => <T key={t.id} t={t} />)}
-      <Overlay cx={504} />
+      <Overlay cx={504} line1={overlayLine1} line2={overlayLine2} />
     </svg>
   );
 }
@@ -263,6 +266,7 @@ const inputStyle = { background: "#fff", border: "1px solid #d4c4b8", color: "#1
 const inputClass = "w-full px-3 py-2.5 text-sm rounded-sm outline-none transition-colors placeholder:text-[#c4b4a8]";
 
 export default function BookingPage() {
+  const { t } = useLang();
   const [locIndex, setLocIndex] = useState(0);
   const [form, setForm] = useState({ name: "", phone: "", date: "", time: "", guests: 2, comment: "", tableId: 0 });
   const [submitted, setSubmitted] = useState(false);
@@ -304,16 +308,16 @@ export default function BookingPage() {
         <div className="text-center max-w-md">
           <CheckCircle size={40} color="#8b1a2e" strokeWidth={1.2} className="mx-auto mb-6" />
           <h1 style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 300, fontSize: "clamp(2rem, 5vw, 3rem)", color: "#1c1410", marginBottom: "1rem" }}>
-            Бронювання підтверджено
+            {t("booking.confirmedTitle")}
           </h1>
           <p className="mb-1 text-sm" style={{ color: "#7a6a5e" }}>
-            {form.date} о {form.time} · {form.guests} {form.guests === 1 ? "гість" : "гостей"}
+            {form.date} о {form.time} · {form.guests} {form.guests === 1 ? t("booking.guest1") : t("booking.guestMany")}
           </p>
           <p className="mb-1 text-sm" style={{ color: "#7a6a5e" }}>{location.name} · {location.address}</p>
           {selectedTable && (
-            <p className="mb-1 text-sm" style={{ color: "#7a6a5e" }}>Столик {selectedTable.label} · {selectedTable.zone}</p>
+            <p className="mb-1 text-sm" style={{ color: "#7a6a5e" }}>{t("booking.tableLabel")} {selectedTable.label} · {selectedTable.zone}</p>
           )}
-          <p className="mb-8 text-sm" style={{ color: "#a09080" }}>Ми зателефонуємо для підтвердження</p>
+          <p className="mb-8 text-sm" style={{ color: "#a09080" }}>{t("booking.willCall")}</p>
           <a href="/"
             style={{
               display: "inline-flex",
@@ -342,7 +346,7 @@ export default function BookingPage() {
               el.style.transform = "translateY(0)";
               el.style.borderColor = "rgba(255,255,255,0.12)";
             }}
-          >← На головну</a>
+          >{t("booking.backHome")}</a>
         </div>
       </div>
     );
@@ -360,8 +364,8 @@ export default function BookingPage() {
         <div className="max-w-7xl mx-auto px-5 sm:px-6 py-10 sm:py-14 flex justify-center">
           <h1 className="text-5xl md:text-6xl mb-4"
             style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 300, lineHeight: 1.05, color: "#f0e8dc" }}>
-            Забронюйте<br />
-            <em className="not-italic" style={{ color: "#c49a3c" }}>свій столик</em>
+            {t("booking.pageTitle1")}<br />
+            <em className="not-italic" style={{ color: "#c49a3c" }}>{t("booking.pageTitle2")}</em>
           </h1>
         </div>
         <div className="absolute bottom-0 left-0 right-0 h-px"
@@ -374,7 +378,7 @@ export default function BookingPage() {
         {/* MOBILE — pill tabs */}
         <div className="lg:hidden px-4 py-3">
           <p className="text-[0.48rem] tracking-[0.25em] uppercase mb-2.5 text-center" style={{ color: "#c49a3c" }}>
-            Оберіть ресторан
+            {t("booking.chooseRestaurant")}
           </p>
           <div className="flex gap-2">
             {locations.map((loc, i) => {
@@ -416,13 +420,13 @@ export default function BookingPage() {
                 style={{ borderRight: "1px solid #e8ddd4" }}>
                 <ChevronLeft size={15} style={{ color: "#c4b4a8" }} />
                 <div className="text-left">
-                  <p className="text-[0.48rem] tracking-[0.2em] uppercase mb-0.5" style={{ color: "#c4b4a8" }}>Попередній</p>
+                  <p className="text-[0.48em] tracking-[0.2em] uppercase mb-0.5" style={{ color: "#c4b4a8" }}>{t("booking.previous")}</p>
                   <p className="text-[0.8rem] font-medium" style={{ color: "#7a6a5e" }}>Brasa {prevLoc.name}</p>
                   <p className="text-[0.58rem]" style={{ color: "#c4b4a8" }}>{prevLoc.address}</p>
                 </div>
               </button>
               <div className={`flex-1 flex flex-col items-center justify-center py-3.5 px-4 ${animClass}`}>
-                <p className="text-[0.48rem] tracking-[0.25em] uppercase mb-0.5" style={{ color: "#c49a3c" }}>Ви бронюєте тут</p>
+                <p className="text-[0.48rem] tracking-[0.25em] uppercase mb-0.5" style={{ color: "#c49a3c" }}>{t("booking.bookingHere")}</p>
                 <p className="text-base" style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 400, color: "#1c1410" }}>
                   Brasa {location.name}
                 </p>
@@ -438,7 +442,7 @@ export default function BookingPage() {
                 className="loc-arrow flex items-center gap-2.5 py-3.5 pl-6 transition-all duration-200"
                 style={{ borderLeft: "1px solid #e8ddd4" }}>
                 <div className="text-right">
-                  <p className="text-[0.48rem] tracking-[0.2em] uppercase mb-0.5" style={{ color: "#c4b4a8" }}>Наступний</p>
+                  <p className="text-[0.48rem] tracking-[0.2em] uppercase mb-0.5" style={{ color: "#c4b4a8" }}>{t("booking.next")}</p>
                   <p className="text-[0.8rem] font-medium" style={{ color: "#7a6a5e" }}>Brasa {nextLoc.name}</p>
                   <p className="text-[0.58rem]" style={{ color: "#c4b4a8" }}>{nextLoc.address}</p>
                 </div>
@@ -458,7 +462,7 @@ export default function BookingPage() {
             <div className="lg:hidden mb-4 flex items-center gap-3 flex-wrap">
               {[
                 { icon: Clock, text: location.hours },
-                { icon: Users, text: "До 8 гостей" },
+                { icon: Users, text: t("booking.upTo8label") },
               ].map(({ icon: Icon, text }) => (
                 <div key={text} className="flex items-center gap-1.5 px-3 py-1.5 rounded-sm"
                   style={{ background: "#fff", border: "1px solid #e8ddd4" }}>
@@ -471,9 +475,9 @@ export default function BookingPage() {
             {/* Інфо-картки — тільки десктоп */}
             <div className="mb-8 rounded-sm overflow-hidden hidden lg:block" style={{ background: "#fff", border: "1px solid #e8ddd4" }}>
               {[
-                { icon: Clock,           title: location.hours,       sub: "Столик утримується 15 хвилин" },
-                { icon: Users,           title: "До 8 гостей онлайн", sub: "Більше — телефонуйте нам"      },
-                { icon: UtensilsCrossed, title: "Кухня до 22:30",     sub: "Останнє замовлення о 22:30"    },
+                { icon: Clock,           title: location.hours,              sub: t("booking.holdTime") },
+                { icon: Users,           title: t("booking.upTo8"),  sub: t("booking.moreCall")             },
+                { icon: UtensilsCrossed, title: t("booking.kitchenUntil"), sub: t("booking.lastOrder")      },
               ].map((item, i, arr) => (
                 <div key={item.title} className="flex items-start gap-4 p-4"
                   style={{ borderBottom: i < arr.length - 1 ? "1px solid #f0e8e0" : "none" }}>
@@ -495,20 +499,20 @@ export default function BookingPage() {
               <div className="px-5 py-3 flex items-center justify-between"
                 style={{ background: "#1a1208", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
                 <div>
-                  <span className="text-[0.62rem] tracking-[0.2em] uppercase" style={{ color: "#c49a3c" }}>Схема залу</span>
+                  <span className="text-[0.62rem] tracking-[0.2em] uppercase" style={{ color: "#c49a3c" }}>{t("booking.floorPlan")}</span>
                   <span className="text-[0.55rem] ml-2" style={{ color: "#a09080" }}>Brasa {location.name}</span>
                 </div>
                 <span className="text-[0.58rem]" style={{ color: canShowTables ? "#c4b4a8" : "#7a6a5a" }}>
-                  {canShowTables ? `${form.date} · ${form.time}` : "Оберіть дату та час"}
+                  {canShowTables ? `${form.date} · ${form.time}` : t("booking.chooseDatetime")}
                 </span>
               </div>
 
               {/* Легенда */}
               <div className="px-5 py-2.5 flex items-center gap-5" style={{ background: "#fff", borderBottom: "1px solid #f0e8e0" }}>
                 {[
-                  { fill:"#e8f5ee", border:"#5a9a70", label:"Вільний" },
-                  { fill:"#fde8e8", border:"#e09090", label:"Зайнятий" },
-                  { fill:"#8b1a2e", border:"#8b1a2e", label:"Обраний" },
+                  { fill:"#e8f5ee", border:"#5a9a70", label:t("booking.free") },
+                  { fill:"#fde8e8", border:"#e09090", label:t("booking.occupied") },
+                  { fill:"#8b1a2e", border:"#8b1a2e", label:t("booking.selected") },
                 ].map((l) => (
                   <div key={l.label} className="flex items-center gap-1.5">
                     <div className="w-3.5 h-3.5 rounded-full" style={{ background: l.fill, border: `1.5px solid ${l.border}` }} />
@@ -533,6 +537,8 @@ export default function BookingPage() {
                       form={{ date: form.date, time: form.time, tableId: form.tableId }}
                       canShowTables={!!canShowTables}
                       onTableClick={(id) => setForm((f) => ({ ...f, tableId: id }))}
+                      overlayLine1={t("booking.overlayLine1")}
+                      overlayLine2={t("booking.overlayLine2")}
                     />
                   </div>
                 </div>
@@ -549,8 +555,8 @@ export default function BookingPage() {
                   style={{ background: "rgba(139,26,46,0.04)", borderTop: "1px solid rgba(139,26,46,0.1)" }}>
                   <div className="w-2 h-2 rounded-full" style={{ background: "#8b1a2e" }} />
                   <span className="text-xs" style={{ color: "#1c1410" }}>
-                    <span className="font-medium">Столик {selectedTable.label}</span>
-                    <span style={{ color: "#a09080" }}> · {selectedTable.zone} · до {selectedTable.seats} гостей</span>
+                    <span className="font-medium">{t("booking.tableLabel")} {selectedTable.label}</span>
+                    <span style={{ color: "#a09080" }}> · {selectedTable.zone} · {t("booking.upTo")} {selectedTable.seats} {t("booking.guestsSuffix")}</span>
                   </span>
                 </div>
               )}
@@ -561,14 +567,14 @@ export default function BookingPage() {
           <form onSubmit={handleSubmit} className="order-1 lg:order-2 space-y-5 p-5 sm:p-8 rounded-sm"
             style={{ background: "#fff", border: "1px solid #e8ddd4", boxShadow: "0 4px 24px rgba(28,20,16,0.07)" }}>
             <div className="flex items-center justify-between mb-2">
-              <p className="section-label">Деталі бронювання</p>
+              <p className="section-label">{t("booking.formTitle")}</p>
               <span className="text-[0.6rem] tracking-wider" style={{ color: "#c49a3c" }}>Brasa {location.name}</span>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               {[
-                { key: "name",  label: "Ім'я",    type: "text", placeholder: "Ваше ім'я" },
-                { key: "phone", label: "Телефон", type: "tel",  placeholder: "+38 (0__) ___-__-__" },
+                { key: "name",  label: t("booking.name"),  type: "text", placeholder: t("booking.namePlaceholder") },
+                { key: "phone", label: t("booking.phone"), type: "tel",  placeholder: t("booking.phonePlaceholder") },
               ].map((f) => (
                 <div key={f.key}>
                   <label className="text-[0.65rem] uppercase tracking-wider block mb-1.5" style={{ color: "#a09080" }}>{f.label}</label>
@@ -582,7 +588,7 @@ export default function BookingPage() {
 
             <div>
               <label className="text-[0.65rem] uppercase tracking-wider mb-1.5 flex items-center gap-1.5" style={{ color: "#a09080" }}>
-                <Calendar size={11} /> Дата
+                <Calendar size={11} /> {t("booking.date")}
               </label>
               <input type="date" required min={today} value={form.date}
                 onChange={(e) => setForm((f) => ({ ...f, date: e.target.value, tableId: 0 }))}
@@ -591,7 +597,7 @@ export default function BookingPage() {
 
             <div>
               <label className="text-[0.65rem] uppercase tracking-wider mb-2 flex items-center gap-1.5" style={{ color: "#a09080" }}>
-                <Clock size={11} /> Час
+                <Clock size={11} /> {t("booking.time")}
               </label>
               <div className="grid grid-cols-4 sm:grid-cols-6 gap-1.5">
                 {timeSlots.map((t) => (
@@ -612,24 +618,24 @@ export default function BookingPage() {
             {canShowTables && !form.tableId && (
               <div className="flex items-center gap-2 px-3 py-2 rounded-sm text-[0.68rem]"
                 style={{ background: "rgba(196,154,60,0.07)", border: "1px solid rgba(196,154,60,0.2)", color: "#a07830" }}>
-                <span className="lg:hidden">↑ Оберіть столик на схемі залу нижче</span>
-              <span className="hidden lg:inline">← Оберіть столик на схемі залу зліва</span>
+                <span className="lg:hidden">{t("booking.chooseSeatMobile")}</span>
+              <span className="hidden lg:inline">{t("booking.chooseSeatDesktop")}</span>
               </div>
             )}
             {form.tableId > 0 && selectedTable && (
               <div className="flex items-center justify-between px-3 py-2 rounded-sm"
                 style={{ background: "rgba(139,26,46,0.05)", border: "1px solid rgba(139,26,46,0.15)" }}>
                 <span className="text-[0.68rem]" style={{ color: "#8b1a2e" }}>
-                  ✓ Столик {selectedTable.label} · {selectedTable.zone}
+                  ✓ {t("booking.tableLabel")} {selectedTable.label} · {selectedTable.zone}
                 </span>
                 <button type="button" onClick={() => setForm((f) => ({ ...f, tableId: 0 }))}
-                  className="text-[0.6rem]" style={{ color: "#c4b4a8" }}>змінити</button>
+                  className="text-[0.6rem]" style={{ color: "#c4b4a8" }}>{t("booking.change")}</button>
               </div>
             )}
 
             <div>
               <label className="text-[0.65rem] uppercase tracking-wider mb-2 flex items-center gap-1.5" style={{ color: "#a09080" }}>
-                <Users size={11} /> Кількість гостей
+                <Users size={11} /> {t("booking.guests")}
               </label>
               <div className="grid grid-cols-8 gap-1.5 sm:gap-2">
                 {guestOptions.map((g) => (
@@ -648,9 +654,9 @@ export default function BookingPage() {
 
             <div>
               <label className="text-[0.65rem] uppercase tracking-wider mb-1.5 flex items-center gap-1.5" style={{ color: "#a09080" }}>
-                <MessageSquare size={11} /> Побажання
+                <MessageSquare size={11} /> {t("booking.comment")}
               </label>
-              <textarea rows={3} placeholder="Алергії, особливі побажання, привід..."
+              <textarea rows={3} placeholder={t("booking.commentPlaceholder")}
                 value={form.comment} onChange={(e) => setForm((f) => ({ ...f, comment: e.target.value }))}
                 className={`${inputClass} resize-none`} style={inputStyle} />
             </div>
@@ -674,12 +680,12 @@ export default function BookingPage() {
                 transition: "all 0.2s ease",
                 opacity: !form.time || !form.date || !form.tableId ? 0.5 : 1,
               }}>
-              {loading ? "Бронюємо..." : "Підтвердити бронювання"}
+              {loading ? t("booking.submitting") : t("booking.submit")}
             </button>
 
             {canShowTables && !form.tableId && (
               <p className="text-center text-[0.62rem]" style={{ color: "#c4b4a8" }}>
-                Для бронювання необхідно обрати столик
+                {t("booking.requireTable")}
               </p>
             )}
           </form>

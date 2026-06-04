@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import { MapPin, Clock, Phone, Mail } from "lucide-react";
+import { useLang } from "@/context/LangContext";
 
 const locations = [
   {
@@ -26,6 +29,7 @@ const locations = [
 ];
 
 export default function ContactPage() {
+  const { t } = useLang();
   return (
     <div className="pt-16 lg:pt-20" style={{ background: "#ffffff" }}>
 
@@ -38,7 +42,7 @@ export default function ContactPage() {
           lineHeight: 1.05,
           color: "#1c1410",
         }}>
-          Три локації в Києві
+          {t("contact.title")}
         </h1>
       </div>
 
@@ -75,7 +79,7 @@ export default function ContactPage() {
                     paddingBottom: "0.1rem",
                   }}
                 >
-                  На карті →
+                  {t("contact.mapsLinkMobile")}
                 </a>
               </div>
               <div className="flex flex-col gap-1.5">
@@ -152,7 +156,7 @@ export default function ContactPage() {
                   whiteSpace: "nowrap",
                 }}
               >
-                Google Maps →
+                {t("contact.mapsLinkDesktop")}
               </a>
             </div>
 
@@ -191,8 +195,8 @@ export default function ContactPage() {
           color: "#1c1410",
           lineHeight: 1.2,
         }}>
-          Є питання?<br />
-          <span style={{ color: "#8b1a2e" }}>Зателефонуйте нам.</span>
+          {t("contact.question")}<br />
+          <span style={{ color: "#8b1a2e" }}>{t("contact.callUs")}</span>
         </p>
 
         <div style={{ display: "flex", flexDirection: "column", gap: "0.85rem" }}>

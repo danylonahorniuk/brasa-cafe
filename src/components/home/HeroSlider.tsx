@@ -5,8 +5,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { promotions } from "@/data/menu";
+import { useLang } from "@/context/LangContext";
 
 export default function HeroSlider() {
+  const { t } = useLang();
   const [active, setActive] = useState(0);
   const touchStartX = useRef<number | null>(null);
 
@@ -126,7 +128,7 @@ export default function HeroSlider() {
                 <span className="hero-btn-arrow">→</span>
               </Link>
               <Link href="/booking" className="hero-btn-glass">
-                <span>Забронювати столик</span>
+                <span>{t("hero.bookTable")}</span>
               </Link>
             </div>
           </div>

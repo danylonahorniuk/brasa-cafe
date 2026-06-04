@@ -3,8 +3,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { categories } from "@/data/menu";
+import { useLang } from "@/context/LangContext";
 
 export default function CategoryGrid() {
+  const { t } = useLang();
   const [pizza, rolls, burgers, alcohol] = categories;
 
   return (
@@ -17,14 +19,14 @@ export default function CategoryGrid() {
             className="text-4xl md:text-5xl"
             style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 300, color: "#1c1410", lineHeight: 1.1 }}
           >
-            Що будемо їсти?
+            {t("categories.title")}
           </h2>
           <Link
             href="/menu"
             className="hidden lg:inline-flex items-center gap-2 px-6 py-3 rounded-sm text-[0.72rem] tracking-widest uppercase cat-menu-btn transition-all duration-300"
             style={{ border: "1.5px solid #8b1a2e", color: "#8b1a2e", background: "transparent" }}
           >
-            Все меню →
+            {t("categories.allMenu")}
           </Link>
         </div>
 
@@ -49,7 +51,7 @@ export default function CategoryGrid() {
                   style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 300 }}>{pizza.label}</h3>
               </div>
               <span className="cat-glass-btn flex-shrink-0 flex items-center gap-2 px-5 py-2.5 rounded-sm text-[0.68rem] tracking-widest uppercase opacity-0 group-hover:opacity-100 translate-y-3 group-hover:translate-y-0 transition-all duration-400">
-                Обрати →
+                {t("categories.choose")}
               </span>
             </div>
           </Link>
@@ -68,7 +70,7 @@ export default function CategoryGrid() {
                 <h3 className="text-white text-2xl" style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 300 }}>{rolls.label}</h3>
               </div>
               <span className="cat-glass-btn flex-shrink-0 flex items-center gap-1.5 px-3.5 py-2 rounded-sm text-[0.6rem] tracking-widest uppercase opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-400">
-                Обрати →
+                {t("categories.choose")}
               </span>
             </div>
           </Link>
@@ -87,7 +89,7 @@ export default function CategoryGrid() {
                 <h3 className="text-white text-2xl" style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 300 }}>{burgers.label}</h3>
               </div>
               <span className="cat-glass-btn flex-shrink-0 flex items-center gap-1.5 px-3.5 py-2 rounded-sm text-[0.6rem] tracking-widest uppercase opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-400">
-                Обрати →
+                {t("categories.choose")}
               </span>
             </div>
           </Link>
@@ -106,7 +108,7 @@ export default function CategoryGrid() {
                 <h3 className="text-white text-2xl" style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 300 }}>{alcohol.label}</h3>
               </div>
               <span className="cat-glass-btn flex-shrink-0 flex items-center gap-1.5 px-3.5 py-2 rounded-sm text-[0.6rem] tracking-widest uppercase opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-400">
-                Обрати →
+                {t("categories.choose")}
               </span>
             </div>
           </Link>
@@ -178,7 +180,7 @@ export default function CategoryGrid() {
           className="mt-4 lg:hidden w-full flex items-center justify-center gap-2 py-3.5 rounded-sm text-[0.72rem] tracking-widest uppercase transition-all duration-300"
           style={{ border: "1.5px solid #8b1a2e", color: "#8b1a2e" }}
         >
-          Все меню →
+          {t("categories.allMenu")}
         </Link>
       </div>
 

@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import CartProvider from "@/context/CartContext";
+import { LangProvider } from "@/context/LangContext";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
@@ -56,9 +57,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="uk" className={`${cormorant.variable} ${dmSans.variable}`} data-scroll-behavior="smooth">
       <body className="min-h-screen flex flex-col">
         <CartProvider>
-          <Navbar />
-          <main className="flex-1">{children}</main>
-          <Footer />
+          <LangProvider>
+            <Navbar />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </LangProvider>
         </CartProvider>
       </body>
     </html>

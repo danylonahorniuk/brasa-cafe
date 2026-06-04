@@ -6,19 +6,21 @@ import Link from "next/link";
 import { ShoppingCart, ChevronLeft, ChevronRight, Flame } from "lucide-react";
 import { menuItems } from "@/data/menu";
 import { useCart } from "@/context/CartContext";
+import { useLang } from "@/context/LangContext";
 
 const popular = menuItems.filter((m) => m.popular);
 
-const categoryLabel: Record<string, string> = {
-  pizza: "Піца",
-  rolls: "Роли",
-  burgers: "Бургер",
-  alcohol: "Напій",
-  drinks: "Напій",
-};
-
 function PopCard({ item }: { item: typeof popular[0] }) {
   const { add } = useCart();
+  const { t, lang } = useLang();
+
+  const categoryLabel: Record<string, string> = {
+    pizza: t("categoryLabel.pizza"),
+    rolls: t("categoryLabel.rolls"),
+    burgers: t("categoryLabel.burgers"),
+    alcohol: t("categoryLabel.alcohol"),
+    drinks: t("categoryLabel.drinks"),
+  };
   const [added, setAdded] = useState(false);
   const [size, setSize] = useState<"30" | "40">("30");
 
@@ -99,7 +101,7 @@ function PopCard({ item }: { item: typeof popular[0] }) {
           {item.name}
         </h3>
         <p className="text-[0.65rem] leading-relaxed mb-auto line-clamp-2" style={{ color: "#a09080" }}>
-          {item.description}
+          {lang === "en" && item.descriptionEn ? item.descriptionEn : item.description}
         </p>
 
         {/* Розміри піци */}
@@ -140,7 +142,7 @@ function PopCard({ item }: { item: typeof popular[0] }) {
             }}
           >
             {added ? <span style={{ fontSize: "0.7rem" }}>✓</span> : <ShoppingCart size={12} />}
-            {added ? "Додано" : "В кошик"}
+            {added ? t("popular.added") : t("popular.addToCart")}
           </button>
         </div>
       </div>
@@ -149,6 +151,7 @@ function PopCard({ item }: { item: typeof popular[0] }) {
 }
 
 export default function PopularScroll() {
+  const { t } = useLang();
   const scrollRef = useRef<HTMLDivElement>(null);
   const [padLeft, setPadLeft] = useState("20px");
   const [padRight, setPadRight] = useState("20px");
@@ -182,7 +185,7 @@ export default function PopularScroll() {
             className="text-4xl md:text-5xl"
             style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 300, color: "#1c1410", lineHeight: 1.1 }}
           >
-            Гості обирають частіше
+            {t("popular.title")}
           </h2>
           <div className="hidden md:flex gap-2">
             {[{ dir: "left" as const, Icon: ChevronLeft }, { dir: "right" as const, Icon: ChevronRight }].map(({ dir, Icon }) => (
@@ -230,7 +233,7 @@ export default function PopularScroll() {
           }}
         >
           <span className="text-3xl">→</span>
-          <span className="text-[0.7rem] tracking-widest uppercase">Все меню</span>
+          <span className="text-[0.7rem] tracking-widest uppercase">{t("popular.allMenu")}</span>
         </Link>
       </div>
 

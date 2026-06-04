@@ -5,21 +5,23 @@ import { usePathname } from "next/navigation";
 import { ShoppingCart, Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useCart } from "@/context/CartContext";
+import { useLang } from "@/context/LangContext";
 import CartDrawer from "@/components/ui/CartDrawer";
-
-const links = [
-  { href: "/",        label: "Головна"    },
-  { href: "/menu",    label: "Меню"       },
-  { href: "/booking", label: "Бронювання" },
-  { href: "/about",   label: "Про нас"    },
-  { href: "/contact", label: "Контакти"   },
-];
 
 export default function Navbar() {
   const pathname = usePathname();
   const { count, toggleCart } = useCart();
+  const { t, lang, setLang } = useLang();
   const [scrolled, setScrolled]     = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  const links = [
+    { href: "/",        label: t("nav.home")    },
+    { href: "/menu",    label: t("nav.menu")    },
+    { href: "/booking", label: t("nav.booking") },
+    { href: "/about",   label: t("nav.about")   },
+    { href: "/contact", label: t("nav.contact") },
+  ];
 
   const isHome = pathname === "/";
 
@@ -72,7 +74,7 @@ export default function Navbar() {
               className="text-[0.5rem] tracking-[0.35em] uppercase mt-0.5"
               style={{ color: showWhite ? "rgba(255,255,255,0.35)" : "rgba(255,255,255,0.55)", transition: "color 0.4s" }}
             >
-              Кафе & Доставка
+              {t("nav.subtitle")}
             </span>
           </Link>
 
@@ -105,13 +107,24 @@ export default function Navbar() {
             })}
           </ul>
 
-          {/* Cart + burger */}
+          {/* Cart + lang switcher + burger */}
           <div className="flex items-center gap-3">
+            {/* Lang switcher — desktop */}
+            <div className="hidden lg:flex items-center" style={{ marginRight: "4px" }}>
+              <button
+                onClick={() => setLang(lang === "uk" ? "en" : "uk")}
+                className="text-[0.62rem] tracking-[0.12em] uppercase transition-colors px-2 py-1"
+                style={{ color: showWhite ? "rgba(255,255,255,0.5)" : "rgba(255,255,255,0.6)" }}
+              >
+                {lang === "uk" ? "EN" : "UA"}
+              </button>
+            </div>
+
             <button
               onClick={toggleCart}
               className="relative p-2 transition-colors"
               style={{ color: showWhite ? "rgba(255,255,255,0.65)" : "rgba(255,255,255,0.75)" }}
-              aria-label="Кошик"
+              aria-label={t("cart.title")}
             >
               <ShoppingCart size={20} strokeWidth={1.5} />
               {count > 0 && (
@@ -125,7 +138,7 @@ export default function Navbar() {
               className="lg:hidden p-1.5 transition-colors"
               style={{ color: "rgba(255,255,255,0.8)" }}
               onClick={() => setMobileOpen((v) => !v)}
-              aria-label={mobileOpen ? "Закрити меню" : "Відкрити меню"}
+              aria-label={mobileOpen ? t("nav.closeMenu") : t("nav.openMenu")}
             >
               {mobileOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
@@ -188,7 +201,7 @@ export default function Navbar() {
           {/* Контакти внизу */}
           <div className="mt-8 pt-6">
             <p className="text-[0.65rem] tracking-[0.2em] uppercase mb-1" style={{ color: "rgba(255,255,255,0.3)" }}>
-              Замовлення
+              {t("nav.orders")}
             </p>
             <a
               href="tel:+380991234567"
@@ -197,6 +210,19 @@ export default function Navbar() {
             >
               +38 (099) 123-45-67
             </a>
+          </div>
+
+          {/* Lang switcher — mobile */}
+          <div className="mt-6">
+            <button
+              onClick={() => setLang(lang === "uk" ? "en" : "uk")}
+              className="flex items-center gap-2"
+              style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.7rem", letterSpacing: "0.2em", textTransform: "uppercase" }}
+            >
+              <span style={{ color: lang === "uk" ? "#c49a3c" : "rgba(255,255,255,0.4)" }}>UA</span>
+              <span style={{ color: "rgba(255,255,255,0.2)" }}>/</span>
+              <span style={{ color: lang === "en" ? "#c49a3c" : "rgba(255,255,255,0.4)" }}>EN</span>
+            </button>
           </div>
         </nav>
       </div>

@@ -1,13 +1,11 @@
-import type { Metadata } from "next";
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
-
-export const metadata: Metadata = {
-  title: "Про нас",
-  description: "Brasa — це жар і вугілля. Дров'яна піч при 450°C, локальна сировина і три локації в Києві.",
-};
+import { useLang } from "@/context/LangContext";
 
 export default function AboutPage() {
+  const { t } = useLang();
   return (
     <div className="pt-16 lg:pt-20" style={{ background: "#1c1410", color: "#faf7f2" }}>
       <div className="max-w-4xl mx-auto px-5 sm:px-6 py-10 sm:py-16 md:py-24">
@@ -22,7 +20,7 @@ export default function AboutPage() {
           marginBottom: "clamp(1.5rem, 4vw, 3rem)",
           maxWidth: "38rem",
         }}>
-          <span style={{ color: "#c49a3c" }}>Brasa</span> — іспанське слово для жару і розпеченого вугілля.
+          <span style={{ color: "#c49a3c" }}>Brasa</span> — {t("about.title")}
         </h1>
 
         {/* Divider */}
@@ -38,12 +36,8 @@ export default function AboutPage() {
           gap: "1.5rem",
           marginBottom: "clamp(2rem, 4vw, 3.5rem)",
         }}>
-          <p>
-            Ми відкрились у 2020 році на Подолі з простою ідеєю: готувати їжу так, як вона того заслуговує. Без поспіху, без напівфабрикатів, без компромісів у виборі продуктів.
-          </p>
-          <p>
-            Дров'яна піч при 450°C, тісто яке дозріває 48 годин, постачальники з Київщини і Карпат — це не маркетинг. Це просто те, як ми працюємо з першого дня.
-          </p>
+          <p>{t("about.p1")}</p>
+          <p>{t("about.p2")}</p>
         </div>
 
         {/* Pull quote */}
@@ -60,7 +54,7 @@ export default function AboutPage() {
             color: "#faf7f2",
             lineHeight: 1.35,
           }}>
-            "Ми не готуємо швидко — ми готуємо правильно."
+            {t("about.quote")}
           </p>
         </blockquote>
 
@@ -71,14 +65,14 @@ export default function AboutPage() {
           color: "rgba(250,247,242,0.6)",
           marginBottom: "clamp(2rem, 4vw, 3.5rem)",
         }}>
-          Сьогодні у нас три точки в Києві — Поділ, Печерськ, Оболонь. Меню з 36 позицій, яке змінюється під сезон. І та сама піч, що була з самого початку.
+          {t("about.p3")}
         </p>
 
         {/* Photo */}
         <div className="relative overflow-hidden" style={{ height: "clamp(220px, 50vw, 500px)", marginBottom: "clamp(2rem, 5vw, 3.5rem)" }}>
           <Image
             src="https://images.unsplash.com/photo-1536622308015-0740925b8221?w=1200&q=80"
-            alt="Кухня Brasa"
+            alt={t("about.imageAlt")}
             fill
             className="object-cover"
             style={{ filter: "brightness(0.75)" }}
@@ -97,7 +91,7 @@ export default function AboutPage() {
           lineHeight: 1.1,
           marginBottom: "2rem",
         }}>
-          Як ми готуємо
+          {t("about.howWeTitle")}
         </h2>
 
         <div style={{
@@ -109,16 +103,16 @@ export default function AboutPage() {
           gap: "1.5rem",
         }}>
           <p>
-            <span style={{ color: "#c49a3c", fontWeight: 400 }}>Живий вогонь.</span>{" "}
-            Дров'яна піч розігрівається до 450°C. Тісто дозріває 48 годин перед тим як потрапити до печі. Ні духовок, ні конвекції — тільки вогонь і час.
+            <span style={{ color: "#c49a3c", fontWeight: 400 }}>{t("about.fire")}</span>{" "}
+            {t("about.fireText")}
           </p>
           <p>
-            <span style={{ color: "#c49a3c", fontWeight: 400 }}>Локальна сировина.</span>{" "}
-            Овочі та зелень — з Київщини. М'ясо та сир — з перевірених господарств у Карпатах. Меню залежить від сезону, а не від складу на полиці.
+            <span style={{ color: "#c49a3c", fontWeight: 400 }}>{t("about.local")}</span>{" "}
+            {t("about.localText")}
           </p>
           <p>
-            <span style={{ color: "#c49a3c", fontWeight: 400 }}>Гарантія доставки.</span>{" "}
-            Якщо кур'єр спізнився більше ніж на 60 хвилин — наступне замовлення за наш рахунок. Без зірочок і умовних позначок.
+            <span style={{ color: "#c49a3c", fontWeight: 400 }}>{t("about.delivery")}</span>{" "}
+            {t("about.deliveryText")}
           </p>
         </div>
       </div>
@@ -186,16 +180,16 @@ export default function AboutPage() {
           color: "#faf7f2",
           lineHeight: 1.2,
         }}>
-          Слова — це добре.{" "}
-          <span style={{ color: "#c49a3c" }}>Смак — краще.</span>
+          {t("about.ctaText1")}{" "}
+          <span style={{ color: "#c49a3c" }}>{t("about.ctaText2")}</span>
         </p>
 
         <div style={{ display: "flex", gap: "0.75rem", flexShrink: 0, flexWrap: "wrap" }}>
           <Link href="/menu" className="about-btn-primary">
-            Переглянути меню
+            {t("about.menuBtn")}
           </Link>
           <Link href="/booking" className="about-btn-secondary">
-            Забронювати стіл
+            {t("about.bookBtn")}
           </Link>
         </div>
       </div>

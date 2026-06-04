@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import { Phone, MapPin, Clock } from "lucide-react";
+import { useLang } from "@/context/LangContext";
 
 function IconInstagram() {
   return (
@@ -20,6 +23,7 @@ function IconFacebook() {
 }
 
 export default function Footer() {
+  const { t } = useLang();
   return (
     <footer style={{ background: "#1a1208", color: "#f0ebe1" }}>
       <style>{`
@@ -42,7 +46,7 @@ export default function Footer() {
               BRASA
             </span>
             <p className="text-sm mt-3 leading-relaxed" style={{ color: "#6a5a50" }}>
-              Місце де смак зустрічає атмосферу. Піца, роли, бургери та авторські коктейлі.
+              {t("footer.tagline")}
             </p>
             <div className="flex gap-3 mt-5">
               <a
@@ -66,9 +70,14 @@ export default function Footer() {
 
           {/* Nav */}
           <div className="col-span-1">
-            <p className="section-label mb-5" style={{ color: "#c49a3c" }}>Навігація</p>
+            <p className="section-label mb-5" style={{ color: "#c49a3c" }}>{t("footer.navTitle")}</p>
             <ul className="space-y-3">
-              {[["Меню", "/menu"], ["Бронювання", "/booking"], ["Про нас", "/about"], ["Контакти", "/contact"]].map(([label, href]) => (
+              {[
+                [t("nav.menu"), "/menu"],
+                [t("nav.booking"), "/booking"],
+                [t("nav.about"), "/about"],
+                [t("nav.contact"), "/contact"],
+              ].map(([label, href]) => (
                 <li key={href}>
                   <Link href={href} className="footer-link text-sm transition-colors" style={{ color: "#6a5a50" }}>
                     {label}
@@ -80,31 +89,31 @@ export default function Footer() {
 
           {/* Hours */}
           <div className="col-span-1">
-            <p className="section-label mb-5" style={{ color: "#c49a3c" }}>Графік роботи</p>
+            <p className="section-label mb-5" style={{ color: "#c49a3c" }}>{t("footer.hoursTitle")}</p>
             <ul className="space-y-2 text-sm" style={{ color: "#6a5a50" }}>
               <li className="flex justify-between gap-4">
-                <span>Пн–Пт</span>
+                <span>{t("footer.weekdays")}</span>
                 <span style={{ color: "#a09080" }}>11:00–23:00</span>
               </li>
               <li className="flex justify-between gap-4">
-                <span>Сб–Нд</span>
+                <span>{t("footer.weekend")}</span>
                 <span style={{ color: "#a09080" }}>10:00–00:00</span>
               </li>
               <li className="flex items-center gap-2 mt-3" style={{ color: "#c49a3c" }}>
                 <Clock size={13} />
-                <span className="text-xs">Доставка до 22:30</span>
+                <span className="text-xs">{t("footer.delivery")}</span>
               </li>
             </ul>
           </div>
 
           {/* Contacts */}
           <div className="col-span-2 md:col-span-1">
-            <p className="section-label mb-5" style={{ color: "#c49a3c" }}>Контакти</p>
+            <p className="section-label mb-5" style={{ color: "#c49a3c" }}>{t("footer.contactsTitle")}</p>
             <ul className="space-y-3 text-sm" style={{ color: "#6a5a50" }}>
               <li className="flex items-start gap-2">
                 <MapPin size={14} style={{ color: "#8b1a2e" }} className="mt-0.5 flex-shrink-0" />
                 <Link href="/contact" className="footer-link transition-colors" style={{ color: "#6a5a50" }}>
-                  3 локації в Києві →
+                  {t("footer.locations")}
                 </Link>
               </li>
               <li className="flex items-center gap-2">
@@ -120,7 +129,7 @@ export default function Footer() {
         <div className="divider-accent mt-12 mb-6" />
 
         <div className="flex flex-col md:flex-row justify-between items-center gap-2 text-[0.68rem] tracking-wider" style={{ color: "#3a2e24" }}>
-          <span>© {new Date().getFullYear()} BRASA. Всі права захищені.</span>
+          <span>© {new Date().getFullYear()} BRASA. {t("footer.rights")}</span>
         </div>
       </div>
     </footer>

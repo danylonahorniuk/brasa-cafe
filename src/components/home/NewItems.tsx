@@ -6,19 +6,21 @@ import Link from "next/link";
 import { ShoppingCart, Flame, Sparkles } from "lucide-react";
 import { menuItems } from "@/data/menu";
 import { useCart } from "@/context/CartContext";
+import { useLang } from "@/context/LangContext";
 
 const newItems = menuItems.filter((m) => m.isNew);
 
-const categoryLabel: Record<string, string> = {
-  pizza: "Піца",
-  rolls: "Роли",
-  burgers: "Бургер",
-  alcohol: "Напій",
-  drinks: "Напій",
-};
-
 function NewItemCard({ item }: { item: typeof newItems[0] }) {
   const { add } = useCart();
+  const { t, lang } = useLang();
+
+  const categoryLabel: Record<string, string> = {
+    pizza: t("categoryLabel.pizza"),
+    rolls: t("categoryLabel.rolls"),
+    burgers: t("categoryLabel.burgers"),
+    alcohol: t("categoryLabel.alcohol"),
+    drinks: t("categoryLabel.drinks"),
+  };
   const [added, setAdded] = useState(false);
   const [size, setSize] = useState<"30" | "40">("30");
 
@@ -57,7 +59,7 @@ function NewItemCard({ item }: { item: typeof newItems[0] }) {
             className="px-2 py-0.5 text-[0.55rem] tracking-widest uppercase font-medium rounded-[2px] flex items-center gap-1"
             style={{ background: "#c49a3c", color: "#fff" }}
           >
-            <Sparkles size={7} /> Нове
+            <Sparkles size={7} /> {t("newItems.badge")}
           </span>
           {item.badge && (
             <span
@@ -103,7 +105,7 @@ function NewItemCard({ item }: { item: typeof newItems[0] }) {
           className="text-[0.65rem] leading-relaxed mb-auto line-clamp-2"
           style={{ color: "#a09080" }}
         >
-          {item.description}
+          {lang === "en" && item.descriptionEn ? item.descriptionEn : item.description}
         </p>
 
         {/* Вибір розміру для піци */}
@@ -141,7 +143,7 @@ function NewItemCard({ item }: { item: typeof newItems[0] }) {
             }}
           >
             {added ? <span style={{ fontSize: "0.7rem" }}>✓</span> : <ShoppingCart size={11} />}
-            {added ? "Додано" : "В кошик"}
+            {added ? t("newItems.added") : t("newItems.addToCart")}
           </button>
         </div>
       </div>
@@ -150,6 +152,7 @@ function NewItemCard({ item }: { item: typeof newItems[0] }) {
 }
 
 export default function NewItems() {
+  const { t } = useLang();
   if (newItems.length === 0) return null;
 
   return (
@@ -162,7 +165,7 @@ export default function NewItems() {
             className="text-4xl md:text-5xl"
             style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 300, color: "#1c1410", lineHeight: 1.1 }}
           >
-            Щойно в меню
+            {t("newItems.title")}
           </h2>
           <Link
             href="/menu"
@@ -171,7 +174,7 @@ export default function NewItems() {
             onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "#8b1a2e")}
             onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "#a09080")}
           >
-            Всі страви →
+            {t("newItems.allDishes")}
           </Link>
         </div>
 

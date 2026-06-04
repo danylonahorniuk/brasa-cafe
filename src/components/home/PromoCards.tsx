@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { X, ArrowRight } from "lucide-react";
 import { promos } from "@/data/menu";
+import { useLang } from "@/context/LangContext";
 
 type Promo = typeof promos[0];
 
@@ -12,6 +13,7 @@ const cardColors = ["#8b1a2e", "#c49a3c"];
 
 /* ─── Модальне вікно ─── */
 function PromoModal({ promo, onClose }: { promo: Promo; onClose: () => void }) {
+  const { t } = useLang();
   const color = cardColors[promos.indexOf(promo) % cardColors.length];
   const [closing, setClosing] = useState(false);
 
@@ -50,7 +52,7 @@ function PromoModal({ promo, onClose }: { promo: Promo; onClose: () => void }) {
           onClick={handleClose}
           className="absolute top-3 right-3 z-10 w-8 h-8 rounded-full flex items-center justify-center"
           style={{ background: "rgba(0,0,0,0.4)", color: "#fff" }}
-          aria-label="Закрити"
+          aria-label={t("promo.close")}
         >
           <X size={14} />
         </button>
@@ -93,7 +95,7 @@ function PromoModal({ promo, onClose }: { promo: Promo; onClose: () => void }) {
           </p>
           <div className="divider-warm mb-4" />
           <p className="text-xs leading-relaxed mb-5" style={{ color: "#a09080" }}>
-            * Акція не комбінується з іншими знижками. Умови можуть змінюватись. Деталі:{" "}
+            {t("promo.disclaimer")}{" "}
             <span style={{ color: "#8b1a2e" }}>+38 (044) 123-45-67</span>.
           </p>
 
@@ -104,13 +106,13 @@ function PromoModal({ promo, onClose }: { promo: Promo; onClose: () => void }) {
               onClick={handleClose}
               className="promo-btn-primary"
             >
-              Замовити зі знижкою <ArrowRight size={13} />
+              {t("promo.orderDiscount")} <ArrowRight size={13} />
             </Link>
             <button
               onClick={handleClose}
               className="promo-btn-secondary"
             >
-              Закрити
+              {t("promo.close")}
             </button>
           </div>
         </div>
@@ -121,6 +123,7 @@ function PromoModal({ promo, onClose }: { promo: Promo; onClose: () => void }) {
 
 /* ─── Секція акцій ─── */
 export default function PromoCards() {
+  const { t } = useLang();
   const [selected, setSelected] = useState<Promo | null>(null);
 
   return (
@@ -132,10 +135,10 @@ export default function PromoCards() {
             className="text-4xl md:text-5xl"
             style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 300, color: "#1c1410", lineHeight: 1.1 }}
           >
-            Вигідні пропозиції
+            {t("promo.title")}
           </h2>
           <span className="text-sm hidden md:block" style={{ color: "#a09080" }}>
-            {promos.length} акції
+            {promos.length} {t("promo.title").toLowerCase()}
           </span>
         </div>
 
@@ -194,7 +197,7 @@ export default function PromoCards() {
                 {/* CTA — тільки десктоп */}
                 <div className="flex-shrink-0 hidden sm:flex items-center gap-4">
                   <span className="promo-cta text-[0.65rem] tracking-wider uppercase font-medium" style={{ color }}>
-                    Детальніше →
+                    {t("promo.details")}
                   </span>
                 </div>
 

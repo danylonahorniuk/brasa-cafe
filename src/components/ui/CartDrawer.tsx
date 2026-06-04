@@ -2,11 +2,13 @@
 
 import { X, Minus, Plus, Trash2, ShoppingBag } from "lucide-react";
 import { useCart } from "@/context/CartContext";
+import { useLang } from "@/context/LangContext";
 import Link from "next/link";
 import Image from "next/image";
 
 export default function CartDrawer() {
   const { items, isOpen, closeCart, increment, decrement, remove, total } = useCart();
+  const { t } = useLang();
 
   return (
     <>
@@ -54,12 +56,12 @@ export default function CartDrawer() {
               color: "#1c1410",
               lineHeight: 1,
             }}>
-              Кошик
+              {t("cart.title")}
             </p>
             <p style={{ fontSize: "0.75rem", color: "#a09080", marginTop: "0.2rem" }}>
               {items.length === 0
-                ? "порожній"
-                : `${items.length} ${items.length === 1 ? "позиція" : items.length < 5 ? "позиції" : "позицій"}`}
+                ? t("cart.empty")
+                : `${items.length} ${items.length === 1 ? t("cart.item1") : items.length < 5 ? t("cart.item2") : t("cart.item5")}`}
             </p>
           </div>
           <button
@@ -77,10 +79,10 @@ export default function CartDrawer() {
               <ShoppingBag size={40} style={{ color: "#d4c4b8" }} strokeWidth={1.2} />
               <div>
                 <p style={{ fontSize: "0.95rem", color: "#7a6a5e", marginBottom: "0.35rem" }}>
-                  Кошик порожній
+                  {t("cart.emptyTitle")}
                 </p>
                 <p style={{ fontSize: "0.8rem", color: "#b0a090" }}>
-                  Додайте страви з меню
+                  {t("cart.emptySubtitle")}
                 </p>
               </div>
               <Link
@@ -96,7 +98,7 @@ export default function CartDrawer() {
                   paddingBottom: "0.1rem",
                 }}
               >
-                До меню →
+                {t("cart.toMenu")}
               </Link>
             </div>
           ) : (
@@ -211,7 +213,7 @@ export default function CartDrawer() {
           <div className="px-6 py-5" style={{ borderTop: "1px solid #e8ddd4" }}>
             <div className="flex justify-between items-baseline mb-5">
               <span style={{ fontSize: "0.8rem", color: "#a09080", letterSpacing: "0.05em" }}>
-                Разом
+                {t("cart.total")}
               </span>
               <span style={{
                 fontFamily: "var(--font-cormorant), serif",
@@ -239,7 +241,7 @@ export default function CartDrawer() {
                 transition: "background 0.2s",
               }}
             >
-              Оформити замовлення
+              {t("cart.checkout")}
             </Link>
           </div>
         )}

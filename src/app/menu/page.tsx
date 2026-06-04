@@ -5,18 +5,21 @@ import Image from "next/image";
 import { ShoppingCart, Flame, Plus, Minus, Search, Check, X } from "lucide-react";
 import { menuItems, menuCategories } from "@/data/menu";
 import { useCart } from "@/context/CartContext";
+import { useLang } from "@/context/LangContext";
 
 type MenuItem = typeof menuItems[0];
-
-const categoryLabel: Record<string, string> = {
-  pizza: "Піца", rolls: "Роли", burgers: "Бургер", drinks: "Напій", alcohol: "Алкоголь",
-};
 
 /* ════════════════════════════════════════
    MOBILE — рядок товару
 ════════════════════════════════════════ */
 function DishRow({ item, onOpen }: { item: MenuItem; onOpen: (item: MenuItem) => void }) {
   const { add } = useCart();
+  const { t } = useLang();
+
+  const categoryLabel: Record<string, string> = {
+    pizza: t("categoryLabel.pizza"), rolls: t("categoryLabel.rolls"), burgers: t("categoryLabel.burgers"),
+    drinks: t("categoryLabel.drinks"), alcohol: t("categoryLabel.alcohol"),
+  };
   const [added, setAdded] = useState(false);
   const [size,  setSize]  = useState<"30" | "40">("30");
 
@@ -62,13 +65,13 @@ function DishRow({ item, onOpen }: { item: MenuItem; onOpen: (item: MenuItem) =>
           )}
           {item.isNew && (
             <span className="flex-shrink-0 px-1.5 py-px text-[0.45rem] tracking-widest uppercase font-medium rounded-[2px] mt-0.5"
-              style={{ background: "#c49a3c", color: "#fff" }}>Нове</span>
+              style={{ background: "#c49a3c", color: "#fff" }}>{t("badge.new")}</span>
           )}
         </div>
 
         {/* Підказка "склад і деталі" */}
         <p className="text-[0.58rem] mb-1.5" style={{ color: "#b8a898" }}>
-          Склад і деталі →
+          {t("menu.details")}
         </p>
 
         {/* Вибір розміру для піци */}
@@ -121,6 +124,13 @@ function DishRow({ item, onOpen }: { item: MenuItem; onOpen: (item: MenuItem) =>
 ════════════════════════════════════════ */
 function DishModal({ item, onClose }: { item: MenuItem; onClose: () => void }) {
   const { add } = useCart();
+  const { t, lang } = useLang();
+
+  const categoryLabel: Record<string, string> = {
+    pizza: t("categoryLabel.pizza"), rolls: t("categoryLabel.rolls"), burgers: t("categoryLabel.burgers"),
+    drinks: t("categoryLabel.drinks"), alcohol: t("categoryLabel.alcohol"),
+  };
+
   const [qty,     setQty]     = useState(1);
   const [size,    setSize]    = useState<"30" | "40">("30");
   const [added,   setAdded]   = useState(false);
@@ -189,7 +199,7 @@ function DishModal({ item, onClose }: { item: MenuItem; onClose: () => void }) {
             {item.badge && <span className="px-2 py-0.5 text-[0.55rem] tracking-widest uppercase font-medium rounded-[2px]"
               style={{ background: "#8b1a2e", color: "#fff" }}>{item.badge}</span>}
             {item.isNew && <span className="px-2 py-0.5 text-[0.55rem] tracking-widest uppercase font-medium rounded-[2px]"
-              style={{ background: "#c49a3c", color: "#fff" }}>Нове</span>}
+              style={{ background: "#c49a3c", color: "#fff" }}>{t("badge.new")}</span>}
           </div>
         </div>
 
@@ -215,13 +225,13 @@ function DishModal({ item, onClose }: { item: MenuItem; onClose: () => void }) {
 
           {/* Опис */}
           <p className="text-sm leading-relaxed mb-5" style={{ color: "#5a4a3e" }}>
-            {item.description}
+            {lang === "en" && item.descriptionEn ? item.descriptionEn : item.description}
           </p>
 
           {/* Розмір (тільки піца) */}
           {hasSize && (
             <div className="mb-5">
-              <p className="text-[0.58rem] tracking-widest uppercase mb-2.5" style={{ color: "#a09080" }}>Оберіть розмір</p>
+              <p className="text-[0.58rem] tracking-widest uppercase mb-2.5" style={{ color: "#a09080" }}>{t("menu.chooseSize")}</p>
               <div className="flex p-1 rounded-sm" style={{ background: "#ede8e1" }}>
                 {(["30","40"] as const).map(s => (
                   <button key={s} onClick={() => setSize(s)}
@@ -263,7 +273,7 @@ function DishModal({ item, onClose }: { item: MenuItem; onClose: () => void }) {
               className="flex-1 h-12 flex items-center justify-center gap-2 rounded-sm text-[0.68rem] tracking-wider uppercase transition-all duration-300"
               style={{ background: added ? "#5a9a70" : "#8b1a2e", color: "#fff" }}>
               {added ? <Check size={15} /> : <ShoppingCart size={14} />}
-              <span>{added ? "Додано!" : `В кошик · ${currentPrice * qty} ₴`}</span>
+              <span>{added ? t("menu.added") : `${t("menu.addToCart")} · ${currentPrice * qty} ₴`}</span>
             </button>
           </div>
         </div>
@@ -277,6 +287,13 @@ function DishModal({ item, onClose }: { item: MenuItem; onClose: () => void }) {
 ════════════════════════════════════════ */
 function DishCard({ item }: { item: MenuItem }) {
   const { add } = useCart();
+  const { t, lang } = useLang();
+
+  const categoryLabel: Record<string, string> = {
+    pizza: t("categoryLabel.pizza"), rolls: t("categoryLabel.rolls"), burgers: t("categoryLabel.burgers"),
+    drinks: t("categoryLabel.drinks"), alcohol: t("categoryLabel.alcohol"),
+  };
+
   const [added, setAdded] = useState(false);
   const [qty,   setQty]   = useState(1);
   const [size,  setSize]  = useState<"30" | "40">("30");
@@ -303,7 +320,7 @@ function DishCard({ item }: { item: MenuItem }) {
           {item.badge && <span className="px-2 py-0.5 text-[0.55rem] tracking-widest uppercase font-medium rounded-[2px]"
             style={{ background: "#8b1a2e", color: "#fff" }}>{item.badge}</span>}
           {item.isNew && <span className="px-2 py-0.5 text-[0.55rem] tracking-widest uppercase font-medium rounded-[2px]"
-            style={{ background: "#c49a3c", color: "#fff" }}>Нове</span>}
+            style={{ background: "#c49a3c", color: "#fff" }}>{t("badge.new")}</span>}
           {item.spicy && <span className="w-5 h-5 rounded-full flex items-center justify-center"
             style={{ background: "linear-gradient(135deg,#ff8c42,#e63312)", boxShadow: "0 2px 8px rgba(230,80,18,.45)" }}>
             <Flame size={9} color="#fff" /></span>}
@@ -320,7 +337,7 @@ function DishCard({ item }: { item: MenuItem }) {
         <h3 className="text-xl leading-snug mb-2" style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 400, color: "#1c1410" }}>
           {item.name}
         </h3>
-        <p className="text-[0.72rem] leading-relaxed line-clamp-3 mb-auto" style={{ color: "#7a6a5e" }}>{item.description}</p>
+        <p className="text-[0.72rem] leading-relaxed line-clamp-3 mb-auto" style={{ color: "#7a6a5e" }}>{lang === "en" && item.descriptionEn ? item.descriptionEn : item.description}</p>
         {hasSize && (
           <div className="flex gap-2 mt-3">
             {(["30","40"] as const).map(s => (
@@ -348,7 +365,7 @@ function DishCard({ item }: { item: MenuItem }) {
             className="dish-add-btn flex items-center gap-1.5 px-3 py-1.5 rounded-sm text-[0.6rem] tracking-wider uppercase transition-all flex-shrink-0"
             style={{ background: added ? "#8b1a2e" : "#faf7f2", border: `1px solid ${added ? "#8b1a2e" : "#d4c4b8"}`, color: added ? "#fff" : "#7a6a5e" }}>
             {added ? <Check size={11} /> : <ShoppingCart size={11} />}
-            {added ? "Додано" : "В кошик"}
+            {added ? t("menu.addedShort") : t("menu.addToCart")}
           </button>
         </div>
       </div>
@@ -360,6 +377,7 @@ function DishCard({ item }: { item: MenuItem }) {
    СТОРІНКА
 ════════════════════════════════════════ */
 export default function MenuPage() {
+  const { t } = useLang();
   const [search,    setSearch]    = useState("");
   const [activeId,  setActiveId]  = useState("pizza");
   const [modalItem, setModalItem] = useState<MenuItem | null>(null);
@@ -405,7 +423,7 @@ export default function MenuPage() {
 
             <h1 className="text-5xl md:text-6xl"
               style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 300, lineHeight: 1.05, color: "#1c1410" }}>
-              Наше меню
+              {t("menu.title")}
             </h1>
             <div className="flex items-center gap-2.5 mt-3">
               <div className="h-px w-10" style={{ background: "#c49a3c" }} />
@@ -415,7 +433,7 @@ export default function MenuPage() {
           </div>
           <div className="relative w-full md:w-72">
             <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2" style={{ color: "#c4b4a8" }} />
-            <input type="text" placeholder="Пошук страви..." value={search}
+            <input type="text" placeholder={t("menu.search")} value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="w-full pl-9 pr-4 py-2.5 text-sm rounded-sm outline-none"
               style={{ background: "#fff", border: "1px solid #e8ddd4", color: "#1c1410" }} />
@@ -456,8 +474,8 @@ export default function MenuPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 pb-24">
         {grouped.length === 0 ? (
           <div className="text-center py-24" style={{ color: "#c4b4a8" }}>
-            <p className="text-2xl mb-2" style={{ fontFamily: "var(--font-cormorant), serif" }}>Нічого не знайдено</p>
-            <p className="text-sm">Спробуйте змінити запит</p>
+            <p className="text-2xl mb-2" style={{ fontFamily: "var(--font-cormorant), serif" }}>{t("menu.notFound")}</p>
+            <p className="text-sm">{t("menu.tryOther")}</p>
           </div>
         ) : (
           grouped.map((cat, i) => (
@@ -473,7 +491,7 @@ export default function MenuPage() {
                 <div className="flex items-center gap-2 mb-1">
                   <span style={{ color: "#c49a3c", fontSize: "0.42rem" }}>◆</span>
                   <span className="text-[0.52rem] tracking-[0.28em] uppercase" style={{ color: "#c4b4a8" }}>
-                    {cat.items.length} {cat.items.length === 1 ? "страва" : cat.items.length < 5 ? "страви" : "страв"}
+                    {cat.items.length} {cat.items.length === 1 ? t("menu.dish1") : cat.items.length < 5 ? t("menu.dish2") : t("menu.dish5")}
                   </span>
                 </div>
                 <h2 style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 300, fontStyle: "italic",

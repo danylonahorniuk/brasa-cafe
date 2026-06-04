@@ -118,7 +118,7 @@ export default function HeroSlider() {
             {/* Кнопки — стовпчик на мобілі, ряд на десктопі */}
             <div
               key={`btns-${active}`}
-              className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-8 animate-fade-up delay-300"
+              className="flex flex-row flex-wrap gap-3 sm:gap-4 mt-8 animate-fade-up delay-300"
               style={{ animationFillMode: "both" }}
             >
               <Link href={slide.href} className="hero-btn-primary">

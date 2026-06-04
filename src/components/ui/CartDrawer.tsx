@@ -10,6 +10,14 @@ export default function CartDrawer() {
 
   return (
     <>
+      <style>{`
+        @media (hover: hover) and (pointer: fine) {
+          .cart-ctrl-btn:hover { border-color: #1c1410 !important; color: #1c1410 !important; }
+          .cart-del-btn:hover  { border-color: #8b1a2e !important; color: #8b1a2e !important; background: rgba(139,26,46,0.04) !important; }
+        }
+        .cart-ctrl-btn:active { background: #f0ebe4 !important; }
+        .cart-del-btn:active  { border-color: #8b1a2e !important; color: #8b1a2e !important; }
+      `}</style>
       {/* Backdrop */}
       <div
         onClick={closeCart}
@@ -100,13 +108,13 @@ export default function CartDrawer() {
                   style={{ borderBottom: "1px solid #e8ddd4" }}
                 >
                   {/* Photo */}
-                  <div className="relative flex-shrink-0 overflow-hidden" style={{ width: 56, height: 56 }}>
+                  <div className="relative flex-shrink-0 overflow-hidden rounded-sm" style={{ width: 64, height: 64 }}>
                     <Image
                       src={item.image}
                       alt={item.name}
                       fill
                       className="object-cover"
-                      sizes="56px"
+                      sizes="64px"
                     />
                   </div>
 
@@ -135,30 +143,58 @@ export default function CartDrawer() {
 
                     <div className="flex items-center justify-between mt-3">
                       {/* Qty controls */}
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-1">
                         <button
                           onClick={() => decrement(item.cartKey)}
-                          style={{ color: "#a09080", lineHeight: 1 }}
+                          className="cart-ctrl-btn"
+                          style={{
+                            width: 32, height: 32,
+                            display: "flex", alignItems: "center", justifyContent: "center",
+                            border: "1px solid #d4c4b8",
+                            background: "#fff",
+                            borderRadius: "3px",
+                            color: "#7a6a5e",
+                            transition: "all 0.15s",
+                          }}
                         >
-                          <Minus size={13} />
+                          <Minus size={12} />
                         </button>
-                        <span style={{ fontSize: "0.85rem", color: "#1c1410", minWidth: "1rem", textAlign: "center" }}>
+                        <span style={{
+                          fontSize: "0.9rem", fontWeight: 500,
+                          color: "#1c1410", minWidth: "2rem", textAlign: "center",
+                        }}>
                           {item.quantity}
                         </span>
                         <button
                           onClick={() => increment(item.cartKey)}
-                          style={{ color: "#a09080", lineHeight: 1 }}
+                          className="cart-ctrl-btn"
+                          style={{
+                            width: 32, height: 32,
+                            display: "flex", alignItems: "center", justifyContent: "center",
+                            border: "1px solid #d4c4b8",
+                            background: "#fff",
+                            borderRadius: "3px",
+                            color: "#7a6a5e",
+                            transition: "all 0.15s",
+                          }}
                         >
-                          <Plus size={13} />
+                          <Plus size={12} />
                         </button>
                       </div>
 
                       {/* Delete */}
                       <button
                         onClick={() => remove(item.cartKey)}
-                        style={{ color: "#d4c4b8", lineHeight: 1, transition: "color 0.2s" }}
-                        onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "#8b1a2e"; }}
-                        onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "#d4c4b8"; }}
+                        className="cart-del-btn"
+                        style={{
+                          width: 32, height: 32,
+                          display: "flex", alignItems: "center", justifyContent: "center",
+                          border: "1px solid #e8ddd4",
+                          background: "transparent",
+                          borderRadius: "3px",
+                          color: "#c4b4a8",
+                          transition: "all 0.15s",
+                        }}
                       >
                         <Trash2 size={13} />
                       </button>

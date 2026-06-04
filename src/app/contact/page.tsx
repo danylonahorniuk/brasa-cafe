@@ -27,14 +27,14 @@ const locations = [
 
 export default function ContactPage() {
   return (
-    <div className="pt-20" style={{ background: "#ffffff" }}>
+    <div className="pt-16 lg:pt-20" style={{ background: "#ffffff" }}>
 
       {/* Header */}
-      <div className="max-w-7xl mx-auto px-6 pt-16 pb-16">
+      <div className="max-w-7xl mx-auto px-5 sm:px-6 pt-10 sm:pt-16 pb-8 sm:pb-12">
         <h1 style={{
           fontFamily: "var(--font-cormorant), serif",
           fontWeight: 300,
-          fontSize: "clamp(2.8rem, 6vw, 4.5rem)",
+          fontSize: "clamp(2.2rem, 6vw, 4.5rem)",
           lineHeight: 1.05,
           color: "#1c1410",
         }}>
@@ -44,101 +44,142 @@ export default function ContactPage() {
 
       {/* Locations */}
       {locations.map((loc, i) => (
-        <div
-          key={loc.name}
-          style={{
-            borderTop: "1px solid #e8ddd4",
-            paddingBottom: "5rem",
-          }}
-        >
-          {/* Info row */}
-          <div
-            className="max-w-7xl mx-auto px-6"
-            style={{
-              display: "flex",
-              alignItems: "baseline",
-              justifyContent: "space-between",
-              flexWrap: "wrap",
-              gap: "1.5rem",
-              paddingTop: "3rem",
-              paddingBottom: "2.5rem",
-            }}
-          >
-            <div style={{ display: "flex", alignItems: "baseline", gap: "2rem", flexWrap: "wrap" }}>
-              <h2 style={{
-                fontFamily: "var(--font-cormorant), serif",
-                fontWeight: 300,
-                fontSize: "clamp(2.2rem, 5vw, 3.5rem)",
-                color: "#1c1410",
-                lineHeight: 1,
-              }}>
-                {loc.name}
-              </h2>
-              <div style={{ display: "flex", gap: "2rem", flexWrap: "wrap" }}>
-                <span style={{
-                  display: "flex", alignItems: "center", gap: "0.4rem",
-                  fontSize: "0.85rem", color: "#7a6a5e",
+        <div key={loc.name} style={{ borderTop: "1px solid #e8ddd4" }}>
+
+          {/* MOBILE — стек: інфо → фото */}
+          <div className="lg:hidden">
+            {/* Інфо */}
+            <div className="px-5 pt-6 pb-5">
+              <div className="flex items-start justify-between gap-3 mb-3">
+                <h2 style={{
+                  fontFamily: "var(--font-cormorant), serif",
+                  fontWeight: 300,
+                  fontSize: "clamp(2rem, 8vw, 2.8rem)",
+                  color: "#1c1410",
+                  lineHeight: 1,
                 }}>
+                  {loc.name}
+                </h2>
+                <a
+                  href={loc.maps}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-shrink-0 mt-1"
+                  style={{
+                    fontSize: "0.62rem",
+                    letterSpacing: "0.12em",
+                    textTransform: "uppercase",
+                    color: "#8b1a2e",
+                    textDecoration: "none",
+                    borderBottom: "1px solid rgba(139,26,46,0.3)",
+                    paddingBottom: "0.1rem",
+                  }}
+                >
+                  На карті →
+                </a>
+              </div>
+              <div className="flex flex-col gap-1.5">
+                <span style={{ display: "flex", alignItems: "center", gap: "0.4rem", fontSize: "0.82rem", color: "#7a6a5e" }}>
                   <MapPin size={12} color="#c49a3c" />
                   {loc.address}
                 </span>
-                <span style={{
-                  display: "flex", alignItems: "center", gap: "0.4rem",
-                  fontSize: "0.85rem", color: "#7a6a5e",
-                }}>
+                <span style={{ display: "flex", alignItems: "center", gap: "0.4rem", fontSize: "0.82rem", color: "#7a6a5e" }}>
                   <Clock size={12} color="#c49a3c" />
                   {loc.hours}
                 </span>
               </div>
             </div>
 
-            <a
-              href={loc.maps}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                fontSize: "0.72rem",
-                letterSpacing: "0.12em",
-                textTransform: "uppercase",
-                color: "#8b1a2e",
-                textDecoration: "none",
-                borderBottom: "1px solid rgba(139,26,46,0.3)",
-                paddingBottom: "0.1rem",
-                whiteSpace: "nowrap",
-              }}
-            >
-              Google Maps →
-            </a>
+            {/* Фото — aspect ratio */}
+            <div className="relative overflow-hidden" style={{ aspectRatio: "16/9" }}>
+              <Image
+                src={loc.photo}
+                alt={`Brasa ${loc.name}`}
+                fill
+                className="object-cover"
+                priority={i === 0}
+              />
+            </div>
           </div>
 
-          {/* Photo */}
-          <div
-            className="max-w-7xl mx-auto px-6"
-          >
-          <div
-            className="relative overflow-hidden"
-            style={{ height: 440 }}
-          >
-            <Image
-              src={loc.photo}
-              alt={`Brasa ${loc.name}`}
-              fill
-              className="object-cover"
-              priority={i === 0}
-            />
+          {/* DESKTOP — editorial: інфо зверху → широке фото */}
+          <div className="hidden lg:block pb-20">
+            <div
+              className="max-w-7xl mx-auto px-6"
+              style={{
+                display: "flex",
+                alignItems: "baseline",
+                justifyContent: "space-between",
+                flexWrap: "wrap",
+                gap: "1.5rem",
+                paddingTop: "3rem",
+                paddingBottom: "2.5rem",
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "baseline", gap: "2rem", flexWrap: "wrap" }}>
+                <h2 style={{
+                  fontFamily: "var(--font-cormorant), serif",
+                  fontWeight: 300,
+                  fontSize: "clamp(2.2rem, 5vw, 3.5rem)",
+                  color: "#1c1410",
+                  lineHeight: 1,
+                }}>
+                  {loc.name}
+                </h2>
+                <div style={{ display: "flex", gap: "2rem", flexWrap: "wrap" }}>
+                  <span style={{ display: "flex", alignItems: "center", gap: "0.4rem", fontSize: "0.85rem", color: "#7a6a5e" }}>
+                    <MapPin size={12} color="#c49a3c" />
+                    {loc.address}
+                  </span>
+                  <span style={{ display: "flex", alignItems: "center", gap: "0.4rem", fontSize: "0.85rem", color: "#7a6a5e" }}>
+                    <Clock size={12} color="#c49a3c" />
+                    {loc.hours}
+                  </span>
+                </div>
+              </div>
+              <a
+                href={loc.maps}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  fontSize: "0.72rem",
+                  letterSpacing: "0.12em",
+                  textTransform: "uppercase",
+                  color: "#8b1a2e",
+                  textDecoration: "none",
+                  borderBottom: "1px solid rgba(139,26,46,0.3)",
+                  paddingBottom: "0.1rem",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                Google Maps →
+              </a>
+            </div>
+
+            <div className="max-w-7xl mx-auto px-6">
+              <div className="relative overflow-hidden" style={{ height: 440 }}>
+                <Image
+                  src={loc.photo}
+                  alt={`Brasa ${loc.name}`}
+                  fill
+                  className="object-cover"
+                  priority={i === 0}
+                />
+              </div>
+            </div>
           </div>
-          </div>
+
         </div>
       ))}
 
       {/* Bottom contacts */}
       <div
-        className="max-w-7xl mx-auto px-6 py-16"
+        className="max-w-7xl mx-auto px-5 sm:px-6 py-10 sm:py-16"
         style={{
           borderTop: "1px solid #e8ddd4",
           display: "flex",
           flexWrap: "wrap",
-          gap: "3rem",
+          gap: "2rem",
           alignItems: "center",
           justifyContent: "space-between",
         }}
@@ -146,7 +187,7 @@ export default function ContactPage() {
         <p style={{
           fontFamily: "var(--font-cormorant), serif",
           fontWeight: 300,
-          fontSize: "clamp(1.5rem, 3vw, 2.2rem)",
+          fontSize: "clamp(1.4rem, 3vw, 2.2rem)",
           color: "#1c1410",
           lineHeight: 1.2,
         }}>
@@ -154,7 +195,7 @@ export default function ContactPage() {
           <span style={{ color: "#8b1a2e" }}>Зателефонуйте нам.</span>
         </p>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "0.85rem" }}>
           <a href="tel:+380671234567" style={{
             display: "flex", alignItems: "center", gap: "0.75rem",
             fontSize: "1rem", color: "#1c1410", textDecoration: "none",

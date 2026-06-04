@@ -134,8 +134,8 @@ function DishModal({ item, onClose }: { item: MenuItem; onClose: () => void }) {
   const close = () => { setClosing(true); setTimeout(onClose, 320); };
 
   useEffect(() => {
-    // Запускаємо вхідну анімацію на наступному кадрі
-    const id = requestAnimationFrame(() => setOpen(true));
+    // Подвійний rAF — даємо браузеру намалювати початковий стан перед анімацією
+    const id = requestAnimationFrame(() => requestAnimationFrame(() => setOpen(true)));
     document.body.style.overflow = "hidden";
     const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") close(); };
     window.addEventListener("keydown", onKey);
@@ -158,7 +158,7 @@ function DishModal({ item, onClose }: { item: MenuItem; onClose: () => void }) {
       style={{
         backdropFilter: "blur(4px)",
         background: open && !closing ? "rgba(28,20,16,0.6)" : "rgba(0,0,0,0)",
-        transition: "background 0.35s ease",
+        transition: "background 0.5s ease",
       }}
       onClick={close}
     >
@@ -170,7 +170,7 @@ function DishModal({ item, onClose }: { item: MenuItem; onClose: () => void }) {
           maxHeight: "88svh",
           overflowY: "auto",
           transform: open && !closing ? "translateY(0)" : "translateY(100%)",
-          transition: "transform 0.38s cubic-bezier(0.32,0.72,0,1)",
+          transition: "transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
         }}
       >
         {/* Фото */}

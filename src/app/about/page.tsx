@@ -9,8 +9,8 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="pt-20" style={{ background: "#1c1410", color: "#faf7f2" }}>
-      <div className="max-w-4xl mx-auto px-6 py-24">
+    <div className="pt-16 lg:pt-20" style={{ background: "#1c1410", color: "#faf7f2" }}>
+      <div className="max-w-4xl mx-auto px-5 sm:px-6 py-10 sm:py-16 md:py-24">
 
         {/* Title */}
         <h1 style={{
@@ -19,14 +19,14 @@ export default function AboutPage() {
           fontSize: "clamp(2.8rem, 6vw, 4.5rem)",
           lineHeight: 1.05,
           color: "#faf7f2",
-          marginBottom: "3rem",
+          marginBottom: "clamp(1.5rem, 4vw, 3rem)",
           maxWidth: "38rem",
         }}>
           <span style={{ color: "#c49a3c" }}>Brasa</span> — іспанське слово для жару і розпеченого вугілля.
         </h1>
 
         {/* Divider */}
-        <div style={{ width: 48, height: 1, background: "#c49a3c", marginBottom: "3rem" }} />
+        <div style={{ width: 48, height: 1, background: "#c49a3c", marginBottom: "clamp(1.5rem, 4vw, 3rem)" }} />
 
         {/* Body */}
         <div style={{
@@ -36,7 +36,7 @@ export default function AboutPage() {
           display: "flex",
           flexDirection: "column",
           gap: "1.5rem",
-          marginBottom: "3.5rem",
+          marginBottom: "clamp(2rem, 4vw, 3.5rem)",
         }}>
           <p>
             Ми відкрились у 2020 році на Подолі з простою ідеєю: готувати їжу так, як вона того заслуговує. Без поспіху, без напівфабрикатів, без компромісів у виборі продуктів.
@@ -48,7 +48,7 @@ export default function AboutPage() {
 
         {/* Pull quote */}
         <blockquote style={{
-          margin: "0 0 3.5rem",
+          margin: "0 0 clamp(2rem, 4vw, 3.5rem)",
           paddingLeft: "1.75rem",
           borderLeft: "2px solid #c49a3c",
         }}>
@@ -69,13 +69,13 @@ export default function AboutPage() {
           fontSize: "1.05rem",
           lineHeight: 1.85,
           color: "rgba(250,247,242,0.6)",
-          marginBottom: "3.5rem",
+          marginBottom: "clamp(2rem, 4vw, 3.5rem)",
         }}>
           Сьогодні у нас три точки в Києві — Поділ, Печерськ, Оболонь. Меню з 36 позицій, яке змінюється під сезон. І та сама піч, що була з самого початку.
         </p>
 
         {/* Photo */}
-        <div className="relative overflow-hidden" style={{ height: 500, marginBottom: "5rem" }}>
+        <div className="relative overflow-hidden" style={{ height: "clamp(220px, 50vw, 500px)", marginBottom: "clamp(2rem, 5vw, 3.5rem)" }}>
           <Image
             src="https://images.unsplash.com/photo-1536622308015-0740925b8221?w=1200&q=80"
             alt="Кухня Brasa"
@@ -88,7 +88,7 @@ export default function AboutPage() {
       </div>
 
       {/* Principles as article continuation */}
-      <div className="max-w-4xl mx-auto px-6 pb-24">
+      <div className="max-w-4xl mx-auto px-5 sm:px-6 pb-12 sm:pb-24">
         <h2 style={{
           fontFamily: "var(--font-cormorant), serif",
           fontWeight: 300,
@@ -178,7 +178,7 @@ export default function AboutPage() {
           box-shadow: 0 4px 20px rgba(0,0,0,0.2);
         }
       `}</style>
-      <div className="max-w-4xl mx-auto px-6 py-20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8">
+      <div className="max-w-4xl mx-auto px-5 sm:px-6 py-10 sm:py-20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 sm:gap-8">
         <p style={{
           fontFamily: "var(--font-cormorant), serif",
           fontWeight: 300,

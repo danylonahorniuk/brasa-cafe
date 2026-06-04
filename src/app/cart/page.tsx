@@ -82,25 +82,8 @@ export default function CartPage() {
             Поки чекаєте — дізнайтесь більше про Brasa
           </p>
           <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", justifyContent: "center" }}>
-            <Link href="/about" style={{
-              display: "inline-flex", alignItems: "center", gap: "0.5rem",
-              padding: "0.7rem 1.6rem",
-              background: "linear-gradient(135deg, #6b1220 0%, #4e0d18 100%)",
-              color: "#faf7f2", fontSize: "0.7rem", letterSpacing: "0.15em",
-              textTransform: "uppercase", textDecoration: "none",
-              border: "1px solid rgba(255,255,255,0.12)",
-            }}>
-              Про нас →
-            </Link>
-            <Link href="/" style={{
-              display: "inline-flex", alignItems: "center",
-              padding: "0.7rem 1.6rem",
-              color: "#a09080", fontSize: "0.7rem", letterSpacing: "0.15em",
-              textTransform: "uppercase", textDecoration: "none",
-              border: "1px solid #e8ddd4",
-            }}>
-              На головну
-            </Link>
+            <Link href="/about" className="cart-success-btn-primary">Про нас →</Link>
+            <Link href="/" className="cart-success-btn-secondary">На головну</Link>
           </div>
         </div>
       </div>
@@ -191,6 +174,33 @@ export default function CartPage() {
         }
         .delivery-btn.active   { background: #6b1422; color: #faf7f2; }
         .delivery-btn.inactive { background: transparent; color: #a09080; }
+        .cart-success-btn-primary {
+          display: inline-flex; align-items: center; gap: 0.5rem;
+          padding: 0.75rem 1.8rem;
+          background: linear-gradient(135deg, #6b1220 0%, #4e0d18 100%);
+          color: #faf7f2; font-size: 0.7rem; letter-spacing: 0.15em;
+          text-transform: uppercase; text-decoration: none;
+          border: 1px solid rgba(255,255,255,0.12);
+          box-shadow: 0 4px 20px rgba(80,14,28,0.3);
+          transition: all 0.3s ease;
+        }
+        .cart-success-btn-primary:hover {
+          box-shadow: 0 6px 28px rgba(80,14,28,0.5);
+          transform: translateY(-2px);
+          border-color: rgba(255,255,255,0.22);
+        }
+        .cart-success-btn-secondary {
+          display: inline-flex; align-items: center;
+          padding: 0.75rem 1.8rem;
+          color: #7a6a5e; font-size: 0.7rem; letter-spacing: 0.15em;
+          text-transform: uppercase; text-decoration: none;
+          border: 1px solid #d4c4b8;
+          transition: all 0.3s ease;
+        }
+        .cart-success-btn-secondary:hover {
+          border-color: #8b1a2e; color: #8b1a2e;
+          transform: translateY(-2px);
+        }
         .cart-qty-btn {
           width: 32px; height: 32px;
           display: flex; align-items: center; justify-content: center;

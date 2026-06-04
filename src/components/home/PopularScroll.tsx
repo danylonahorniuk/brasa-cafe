@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ShoppingCart, ChevronLeft, ChevronRight, Flame } from "lucide-react";
@@ -150,6 +150,23 @@ function PopCard({ item }: { item: typeof popular[0] }) {
 
 export default function PopularScroll() {
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const update = () => {
+      if (window.innerWidth >= 1280) {
+        el.style.paddingLeft = `${(window.innerWidth - 1280) / 2 + 24}px`;
+        el.style.paddingRight = "24px";
+      } else {
+        el.style.paddingLeft = "20px";
+        el.style.paddingRight = "20px";
+      }
+    };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
 
   const scroll = (dir: "left" | "right") => {
     if (!scrollRef.current) return;

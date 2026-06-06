@@ -122,7 +122,7 @@ function NewItemCard({ item }: { item: typeof newItems[0] }) {
                   boxShadow:  size === s ? "0 1px 3px rgba(0,0,0,0.08)" : "none",
                 }}
               >
-                {s} см
+                {s} {lang === "en" ? "cm" : "см"}
               </button>
             ))}
           </div>

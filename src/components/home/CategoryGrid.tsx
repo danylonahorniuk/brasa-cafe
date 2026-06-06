@@ -6,7 +6,7 @@ import { categories } from "@/data/menu";
 import { useLang } from "@/context/LangContext";
 
 export default function CategoryGrid() {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const [pizza, rolls, burgers, alcohol] = categories;
 
   return (
@@ -46,9 +46,9 @@ export default function CategoryGrid() {
               style={{ background: "linear-gradient(to top, rgba(12,8,6,0.45) 0%, transparent 55%)" }} />
             <div className="absolute bottom-0 left-0 right-0 p-6 flex items-end justify-between gap-4">
               <div>
-                <p className="text-white/60 text-xs tracking-widest uppercase mb-1">{pizza.description}</p>
+                <p className="text-white/60 text-xs tracking-widest uppercase mb-1">{lang === "en" && pizza.descriptionEn ? pizza.descriptionEn : pizza.description}</p>
                 <h3 className="text-white text-4xl md:text-5xl"
-                  style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 300 }}>{pizza.label}</h3>
+                  style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 300 }}>{lang === "en" && pizza.labelEn ? pizza.labelEn : pizza.label}</h3>
               </div>
               <span className="cat-glass-btn flex-shrink-0 flex items-center gap-2 px-5 py-2.5 rounded-sm text-[0.68rem] tracking-widest uppercase opacity-0 group-hover:opacity-100 translate-y-3 group-hover:translate-y-0 transition-all duration-400">
                 {t("categories.choose")}
@@ -66,8 +66,8 @@ export default function CategoryGrid() {
               style={{ background: "linear-gradient(to top, rgba(12,8,6,0.4) 0%, transparent 55%)" }} />
             <div className="absolute bottom-0 left-0 right-0 p-4 flex items-end justify-between gap-2">
               <div>
-                <p className="text-white/55 text-[0.6rem] tracking-widest uppercase mb-0.5">{rolls.description}</p>
-                <h3 className="text-white text-2xl" style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 300 }}>{rolls.label}</h3>
+                <p className="text-white/55 text-[0.6rem] tracking-widest uppercase mb-0.5">{lang === "en" && rolls.descriptionEn ? rolls.descriptionEn : rolls.description}</p>
+                <h3 className="text-white text-2xl" style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 300 }}>{lang === "en" && rolls.labelEn ? rolls.labelEn : rolls.label}</h3>
               </div>
               <span className="cat-glass-btn flex-shrink-0 flex items-center gap-1.5 px-3.5 py-2 rounded-sm text-[0.6rem] tracking-widest uppercase opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-400">
                 {t("categories.choose")}
@@ -85,8 +85,8 @@ export default function CategoryGrid() {
               style={{ background: "linear-gradient(to top, rgba(12,8,6,0.4) 0%, transparent 55%)" }} />
             <div className="absolute bottom-0 left-0 right-0 p-4 flex items-end justify-between gap-2">
               <div>
-                <p className="text-white/55 text-[0.6rem] tracking-widest uppercase mb-0.5">{burgers.description}</p>
-                <h3 className="text-white text-2xl" style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 300 }}>{burgers.label}</h3>
+                <p className="text-white/55 text-[0.6rem] tracking-widest uppercase mb-0.5">{lang === "en" && burgers.descriptionEn ? burgers.descriptionEn : burgers.description}</p>
+                <h3 className="text-white text-2xl" style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 300 }}>{lang === "en" && burgers.labelEn ? burgers.labelEn : burgers.label}</h3>
               </div>
               <span className="cat-glass-btn flex-shrink-0 flex items-center gap-1.5 px-3.5 py-2 rounded-sm text-[0.6rem] tracking-widest uppercase opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-400">
                 {t("categories.choose")}
@@ -104,8 +104,8 @@ export default function CategoryGrid() {
               style={{ background: "linear-gradient(to top, rgba(12,8,6,0.4) 0%, transparent 55%)" }} />
             <div className="absolute bottom-0 left-0 right-0 p-4 flex items-end justify-between gap-2">
               <div>
-                <p className="text-white/55 text-[0.6rem] tracking-widest uppercase mb-0.5">{alcohol.description}</p>
-                <h3 className="text-white text-2xl" style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 300 }}>{alcohol.label}</h3>
+                <p className="text-white/55 text-[0.6rem] tracking-widest uppercase mb-0.5">{lang === "en" && alcohol.descriptionEn ? alcohol.descriptionEn : alcohol.description}</p>
+                <h3 className="text-white text-2xl" style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 300 }}>{lang === "en" && alcohol.labelEn ? alcohol.labelEn : alcohol.label}</h3>
               </div>
               <span className="cat-glass-btn flex-shrink-0 flex items-center gap-1.5 px-3.5 py-2 rounded-sm text-[0.6rem] tracking-widest uppercase opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-400">
                 {t("categories.choose")}
@@ -128,9 +128,9 @@ export default function CategoryGrid() {
             <div className="absolute inset-0"
               style={{ background: "linear-gradient(to top, rgba(28,20,16,0.82) 0%, rgba(28,20,16,0.1) 60%, transparent 100%)" }} />
             <div className="absolute bottom-0 left-0 right-0 p-5">
-              <p className="text-white/55 text-[0.58rem] tracking-widest uppercase mb-1">{pizza.description}</p>
+              <p className="text-white/55 text-[0.58rem] tracking-widest uppercase mb-1">{lang === "en" && pizza.descriptionEn ? pizza.descriptionEn : pizza.description}</p>
               <h3 className="text-white text-4xl"
-                style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 300 }}>{pizza.label}</h3>
+                style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 300 }}>{lang === "en" && pizza.labelEn ? pizza.labelEn : pizza.label}</h3>
             </div>
           </Link>
 
@@ -149,8 +149,8 @@ export default function CategoryGrid() {
                   style={{ background: "linear-gradient(to top, rgba(28,20,16,0.78) 0%, rgba(28,20,16,0.05) 60%)" }} />
                 <div className="absolute bottom-0 left-0 right-0 p-4">
                   <h3 className="text-white text-2xl"
-                    style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 300 }}>{cat.label}</h3>
-                  <p className="text-white/50 text-[0.58rem] tracking-wider uppercase mt-0.5">{cat.description}</p>
+                    style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 300 }}>{lang === "en" && (cat as { labelEn?: string }).labelEn ? (cat as { labelEn?: string }).labelEn : cat.label}</h3>
+                  <p className="text-white/50 text-[0.58rem] tracking-wider uppercase mt-0.5">{lang === "en" && (cat as { descriptionEn?: string }).descriptionEn ? (cat as { descriptionEn?: string }).descriptionEn : cat.description}</p>
                 </div>
               </Link>
             ))}
@@ -167,9 +167,9 @@ export default function CategoryGrid() {
             <div className="absolute inset-0"
               style={{ background: "linear-gradient(to top, rgba(28,20,16,0.82) 0%, rgba(28,20,16,0.1) 60%, transparent 100%)" }} />
             <div className="absolute bottom-0 left-0 right-0 p-5">
-              <p className="text-white/55 text-[0.58rem] tracking-widest uppercase mb-1">{alcohol.description}</p>
+              <p className="text-white/55 text-[0.58rem] tracking-widest uppercase mb-1">{lang === "en" && alcohol.descriptionEn ? alcohol.descriptionEn : alcohol.description}</p>
               <h3 className="text-white text-3xl"
-                style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 300 }}>{alcohol.label}</h3>
+                style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 300 }}>{lang === "en" && alcohol.labelEn ? alcohol.labelEn : alcohol.label}</h3>
             </div>
           </Link>
         </div>

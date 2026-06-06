@@ -9,27 +9,30 @@ const locations = [
     name: "Поділ",
     address: "вул. Сагайдачного 14",
     hours: "Пн–Пт 11:00–23:00 · Сб–Нд 10:00–00:00",
+    hoursEn: "Mon–Fri 11:00–23:00 · Sat–Sun 10:00–00:00",
     maps: "https://maps.google.com/?q=вул.+Сагайдачного+14,+Київ",
     photo: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1600&q=85",
   },
   {
     name: "Печерськ",
     address: "вул. Лаврська 8",
-    hours: "Пн–Пт 11:00–23:00 · Сб–Нд 10:00–00:00",
+    hours: "Пн–Нд 12:00–23:00",
+    hoursEn: "Mon–Sun 12:00–23:00",
     maps: "https://maps.google.com/?q=вул.+Лаврська+8,+Київ",
     photo: "https://images.unsplash.com/photo-1552566626-52f8b828add9?w=1600&q=85",
   },
   {
     name: "Оболонь",
     address: "просп. Оболонський 1",
-    hours: "Пн–Пт 12:00–23:00 · Сб–Нд 10:00–00:00",
+    hours: "Пн–Пт 11:00–22:30 · Сб–Нд 10:00–23:00",
+    hoursEn: "Mon–Fri 11:00–22:30 · Sat–Sun 10:00–23:00",
     maps: "https://maps.google.com/?q=просп.+Оболонський+1,+Київ",
     photo: "https://images.unsplash.com/photo-1544148103-0773bf10d330?w=1600&q=85",
   },
 ];
 
 export default function ContactPage() {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   return (
     <div className="pt-16 lg:pt-20" style={{ background: "#ffffff" }}>
 
@@ -89,7 +92,7 @@ export default function ContactPage() {
                 </span>
                 <span style={{ display: "flex", alignItems: "center", gap: "0.4rem", fontSize: "0.82rem", color: "#7a6a5e" }}>
                   <Clock size={12} color="#c49a3c" />
-                  {loc.hours}
+                  {lang === "en" ? loc.hoursEn : loc.hours}
                 </span>
               </div>
             </div>
@@ -137,7 +140,7 @@ export default function ContactPage() {
                   </span>
                   <span style={{ display: "flex", alignItems: "center", gap: "0.4rem", fontSize: "0.85rem", color: "#7a6a5e" }}>
                     <Clock size={12} color="#c49a3c" />
-                    {loc.hours}
+                    {lang === "en" ? loc.hoursEn : loc.hours}
                   </span>
                 </div>
               </div>

@@ -8,6 +8,7 @@ import {
   MapPin, Truck, Clock, CreditCard, Phone, Store, Banknote,
 } from "lucide-react";
 import { useCart } from "@/context/CartContext";
+import { useLang } from "@/context/LangContext";
 
 type FormState = {
   name: string;
@@ -24,6 +25,7 @@ type FormState = {
 
 export default function CartPage() {
   const { items, total, increment, decrement, remove, clear } = useCart();
+  const { t, lang } = useLang();
   const [form, setForm] = useState<FormState>({
     name: "", phone: "", address: "", delivery: "delivery", comment: "",
     payment: "cash", cardNumber: "", cardExpiry: "", cardCvv: "", cardName: "",
@@ -35,20 +37,18 @@ export default function CartPage() {
   const discount    = form.delivery === "pickup" ? Math.round(total * 0.2) : 0;
   const finalTotal  = total + deliveryFee - discount;
 
-  // Опції оплати залежно від типу
   const paymentOptions = form.delivery === "delivery"
     ? [
-        { value: "cash",         label: "Готівка кур'єру",  icon: Banknote    },
-        { value: "card_courier", label: "Карта кур'єру",    icon: CreditCard  },
+        { value: "cash",         label: t("cart.paymentCash"),        icon: Banknote    },
+        { value: "card_courier", label: t("cart.paymentCardCourier"), icon: CreditCard  },
       ]
     : [
-        { value: "card_online",    label: "Карта онлайн",      icon: CreditCard },
-        { value: "cash_restaurant",label: "У ресторані",       icon: Store      },
+        { value: "card_online",    label: t("cart.paymentCardOnline"),   icon: CreditCard },
+        { value: "cash_restaurant",label: t("cart.paymentRestaurant"),   icon: Store      },
       ];
 
   const isCardPayment = form.payment === "card_online";
 
-  // Якщо змінюємо тип доставки — скидаємо оплату на дефолт
   const switchDelivery = (type: "delivery" | "pickup") => {
     setForm(f => ({
       ...f,
@@ -102,17 +102,17 @@ export default function CartPage() {
         <div className="text-center max-w-md">
           <CheckCircle size={40} color="#8b1a2e" strokeWidth={1.2} className="mx-auto mb-6" />
           <h1 style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 300, fontSize: "clamp(2rem, 5vw, 3rem)", color: "#1c1410", marginBottom: "1rem" }}>
-            Замовлення прийнято
+            {t("cart.successTitle")}
           </h1>
           <p style={{ fontSize: "0.9rem", color: "#7a6a5e", lineHeight: 1.7, marginBottom: "2.5rem" }}>
-            Наш менеджер зв'яжеться з вами найближчим часом для підтвердження.
+            {t("cart.successSubtitle")}
           </p>
           <p style={{ fontSize: "0.82rem", color: "#a09080", marginBottom: "1.5rem", lineHeight: 1.6 }}>
-            Поки чекаєте — дізнайтесь більше про Brasa
+            {t("cart.successHint")}
           </p>
           <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", justifyContent: "center" }}>
-            <Link href="/about" className="cart-success-btn-primary">Про нас →</Link>
-            <Link href="/" className="cart-success-btn-secondary">На головну</Link>
+            <Link href="/about" className="cart-success-btn-primary">{t("cart.successAbout")}</Link>
+            <Link href="/" className="cart-success-btn-secondary">{t("cart.successHome")}</Link>
           </div>
         </div>
       </div>
@@ -125,13 +125,13 @@ export default function CartPage() {
         <div className="text-center max-w-sm">
           <ShoppingBag size={44} className="mx-auto mb-6" style={{ color: "#d4c4b8" }} strokeWidth={1.2} />
           <h1 style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 300, fontSize: "2.5rem", color: "#1c1410", marginBottom: "0.75rem" }}>
-            Кошик порожній
+            {t("cart.emptyTitle")}
           </h1>
           <p style={{ fontSize: "0.9rem", color: "#a09080", marginBottom: "2.5rem" }}>
-            Додайте щось смачне з нашого меню
+            {t("cart.emptySubtitle")}
           </p>
           <Link href="/menu" style={{ fontSize: "0.72rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "#8b1a2e", textDecoration: "none", borderBottom: "1px solid rgba(139,26,46,0.3)", paddingBottom: "0.1rem" }}>
-            До меню →
+            {t("cart.toMenu")}
           </Link>
         </div>
       </div>
@@ -145,9 +145,9 @@ export default function CartPage() {
         <div>
           <div className="flex justify-between mb-2">
             <span style={{ fontSize: "0.7rem", color: "#7a6a5e" }}>
-              {total >= 500 ? "Безкоштовна доставка" : `До безкоштовної: ${500 - total} ₴`}
+              {total >= 500 ? t("cart.freeDelivery") : `${t("cart.untilFree")} ${500 - total} ₴`}
             </span>
-            <span style={{ fontSize: "0.7rem", color: "#a09080" }}>від 500 ₴</span>
+            <span style={{ fontSize: "0.7rem", color: "#a09080" }}>{t("cart.fromAmount")}</span>
           </div>
           <div className="w-full h-1 rounded-full overflow-hidden" style={{ background: "#e8ddd4" }}>
             <div className="h-full rounded-full transition-all duration-500"
@@ -158,13 +158,13 @@ export default function CartPage() {
       {/* Умови */}
       <div style={{ borderTop: form.delivery === "delivery" ? "1px solid #e8ddd4" : "none", paddingTop: form.delivery === "delivery" ? "0.75rem" : "0", display: "flex", flexDirection: "column", gap: "0.6rem" }}>
         {(form.delivery === "delivery" ? [
-          { Icon: Clock,       text: "Доставка 40–60 хвилин" },
-          { Icon: CreditCard,  text: "Готівка або карта кур'єру" },
-          { Icon: Phone,       text: "Підтвердження замовлення по телефону" },
+          { Icon: Clock,       text: t("cart.deliveryTime") },
+          { Icon: CreditCard,  text: t("cart.deliveryPayment") },
+          { Icon: Phone,       text: t("cart.deliveryConfirm") },
         ] : [
-          { Icon: Store,       text: "Заберіть замовлення з ресторану" },
-          { Icon: Clock,       text: "Готове через 20–30 хвилин" },
-          { Icon: CreditCard,  text: "Карта онлайн або розрахунок у ресторані" },
+          { Icon: Store,       text: t("cart.pickupTitle") },
+          { Icon: Clock,       text: t("cart.pickupTime") },
+          { Icon: CreditCard,  text: t("cart.pickupPayment") },
         ]).map(({ Icon, text }) => (
           <p key={text} style={{ fontSize: "0.78rem", color: "#a09080", display: "flex", alignItems: "center", gap: "0.5rem" }}>
             <Icon size={13} color="#c49a3c" style={{ flexShrink: 0 }} /> {text}
@@ -254,7 +254,7 @@ export default function CartPage() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-14 pb-36 lg:pb-14">
         <h1 style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 300, fontSize: "clamp(2rem, 5vw, 3.5rem)", color: "#1c1410", marginBottom: "clamp(1.5rem, 4vw, 3rem)", lineHeight: 1 }}>
-          Ваш кошик
+          {t("cart.heading")}
         </h1>
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-16">
@@ -294,10 +294,10 @@ export default function CartPage() {
 
             <div className="mt-5 flex items-center justify-between">
               <Link href="/menu" style={{ fontSize: "0.72rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "#a09080", textDecoration: "none" }}>
-                ← Додати ще
+                {t("cart.addMore")}
               </Link>
               <span style={{ fontSize: "0.72rem", color: "#a09080" }}>
-                {items.reduce((s, i) => s + i.quantity, 0)} позиц.
+                {items.reduce((s, i) => s + i.quantity, 0)} {t("cart.itemsShort")}
               </span>
             </div>
 
@@ -314,8 +314,8 @@ export default function CartPage() {
               {/* Тип доставки */}
               <div className="flex mb-6" style={{ border: "1px solid #d4c4b8" }}>
                 {[
-                  { value: "delivery" as const, label: "Доставка",  Icon: Truck  },
-                  { value: "pickup"   as const, label: "Самовивіз", Icon: MapPin },
+                  { value: "delivery" as const, label: t("cart.deliveryType"), Icon: Truck  },
+                  { value: "pickup"   as const, label: t("cart.pickupType"),   Icon: MapPin },
                 ].map((opt) => (
                   <button key={opt.value} type="button"
                     onClick={() => switchDelivery(opt.value)}
@@ -329,8 +329,8 @@ export default function CartPage() {
               {/* Поля */}
               <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem", marginBottom: "1.75rem" }}>
                 {[
-                  { key: "name",  label: "Ім'я",    type: "text", placeholder: "Ваше ім'я",           required: true },
-                  { key: "phone", label: "Телефон", type: "tel",  placeholder: "+38 (0__) ___-__-__", required: true },
+                  { key: "name",  label: lang === "en" ? "Name" : "Ім'я",    type: "text", placeholder: lang === "en" ? "Your name" : "Ваше ім'я",           required: true },
+                  { key: "phone", label: lang === "en" ? "Phone" : "Телефон", type: "tel",  placeholder: "+38 (0__) ___-__-__", required: true },
                 ].map((field) => (
                   <div key={field.key}>
                     <label style={{ fontSize: "0.63rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "#a09080", display: "block", marginBottom: "0.35rem" }}>
@@ -346,9 +346,9 @@ export default function CartPage() {
                 {form.delivery === "delivery" && (
                   <div>
                     <label style={{ fontSize: "0.63rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "#a09080", display: "block", marginBottom: "0.35rem" }}>
-                      Адреса
+                      {t("cart.address")}
                     </label>
-                    <input type="text" required placeholder="вул. Назва, буд. 1, кв. 1"
+                    <input type="text" required placeholder={t("cart.addressPlaceholder")}
                       value={form.address} onChange={(e) => setForm((f) => ({ ...f, address: e.target.value }))}
                       className="cart-input" />
                   </div>
@@ -356,9 +356,9 @@ export default function CartPage() {
 
                 <div>
                   <label style={{ fontSize: "0.63rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "#a09080", display: "block", marginBottom: "0.35rem" }}>
-                    Коментар
+                    {t("cart.comment")}
                   </label>
-                  <textarea rows={2} placeholder="Побажання до замовлення..."
+                  <textarea rows={2} placeholder={t("cart.commentPlaceholder")}
                     value={form.comment} onChange={(e) => setForm((f) => ({ ...f, comment: e.target.value }))}
                     className="cart-input" style={{ resize: "none" }} />
                 </div>
@@ -366,7 +366,7 @@ export default function CartPage() {
                 {/* Спосіб оплати */}
                 <div>
                   <label style={{ fontSize: "0.63rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "#a09080", display: "block", marginBottom: "0.75rem" }}>
-                    Спосіб оплати
+                    {t("cart.paymentLabel")}
                   </label>
                   <div className="flex flex-col gap-2">
                     {paymentOptions.map((opt) => (
@@ -396,12 +396,12 @@ export default function CartPage() {
                 {isCardPayment && (
                   <div style={{ padding: "1rem", background: "#fff", border: "1px solid #e8ddd4", borderRadius: "2px" }}>
                     <p style={{ fontSize: "0.63rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "#a09080", marginBottom: "1rem" }}>
-                      Дані картки
+                      {t("cart.cardDetails")}
                     </p>
                     <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
                       <div>
                         <label style={{ fontSize: "0.6rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "#a09080", display: "block", marginBottom: "0.3rem" }}>
-                          Номер картки
+                          {t("cart.cardNumber")}
                         </label>
                         <input type="text" required={isCardPayment} placeholder="0000 0000 0000 0000" maxLength={19}
                           value={form.cardNumber}
@@ -414,9 +414,9 @@ export default function CartPage() {
                       <div className="flex gap-4">
                         <div className="flex-1">
                           <label style={{ fontSize: "0.6rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "#a09080", display: "block", marginBottom: "0.3rem" }}>
-                            MM / РР
+                            {t("cart.cardExpiry")}
                           </label>
-                          <input type="text" required={isCardPayment} placeholder="MM / РР" maxLength={7}
+                          <input type="text" required={isCardPayment} placeholder={t("cart.cardExpiry")} maxLength={7}
                             value={form.cardExpiry}
                             onChange={(e) => {
                               const v = e.target.value.replace(/\D/g, "").slice(0, 4);
@@ -426,7 +426,7 @@ export default function CartPage() {
                         </div>
                         <div style={{ width: "80px" }}>
                           <label style={{ fontSize: "0.6rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "#a09080", display: "block", marginBottom: "0.3rem" }}>
-                            CVV
+                            {t("cart.cardCvv")}
                           </label>
                           <input type="password" required={isCardPayment} placeholder="•••" maxLength={3}
                             value={form.cardCvv}
@@ -436,7 +436,7 @@ export default function CartPage() {
                       </div>
                       <div>
                         <label style={{ fontSize: "0.6rem", letterSpacing: "0.12em", textTransform: "uppercase", color: "#a09080", display: "block", marginBottom: "0.3rem" }}>
-                          Ім'я на картці
+                          {t("cart.cardHolder")}
                         </label>
                         <input type="text" required={isCardPayment} placeholder="IVAN PETRENKO"
                           value={form.cardName}
@@ -452,22 +452,22 @@ export default function CartPage() {
               <div className="hidden lg:block" style={{ borderTop: "1px solid #e8ddd4", paddingTop: "1.5rem" }}>
                 <div style={{ display: "flex", flexDirection: "column", gap: "0.65rem", marginBottom: "1.25rem" }}>
                   <div className="flex justify-between" style={{ fontSize: "0.85rem", color: "#a09080" }}>
-                    <span>Товари</span><span>{total.toLocaleString()} ₴</span>
+                    <span>{t("cart.summaryGoods")}</span><span>{total.toLocaleString()} ₴</span>
                   </div>
                   <div className="flex justify-between" style={{ fontSize: "0.85rem", color: "#a09080" }}>
-                    <span>Доставка</span>
+                    <span>{t("cart.summaryDelivery")}</span>
                     <span style={{ color: deliveryFee === 0 ? "#5a9a6e" : "#a09080" }}>
-                      {deliveryFee === 0 ? "Безкоштовно" : `${deliveryFee} ₴`}
+                      {deliveryFee === 0 ? t("cart.summaryFree") : `${deliveryFee} ₴`}
                     </span>
                   </div>
                   {discount > 0 && (
                     <div className="flex justify-between" style={{ fontSize: "0.85rem", color: "#5a9a6e" }}>
-                      <span>Знижка −20%</span><span>−{discount} ₴</span>
+                      <span>{t("cart.summaryDiscount")}</span><span>−{discount} ₴</span>
                     </div>
                   )}
                 </div>
                 <div className="flex justify-between items-baseline mb-5" style={{ borderTop: "1px solid #e8ddd4", paddingTop: "1.25rem" }}>
-                  <span style={{ fontSize: "0.85rem", color: "#7a6a5e" }}>Разом</span>
+                  <span style={{ fontSize: "0.85rem", color: "#7a6a5e" }}>{t("cart.summaryTotal")}</span>
                   <span style={{ fontFamily: "var(--font-cormorant), serif", fontSize: "2rem", fontWeight: 300, color: "#1c1410" }}>
                     {finalTotal.toLocaleString()} ₴
                   </span>
@@ -479,11 +479,11 @@ export default function CartPage() {
                   textTransform: "uppercase", border: "1px solid #8a1c2e",
                   cursor: loading ? "not-allowed" : "pointer", transition: "background 0.2s",
                 }}>
-                  {loading ? "Оформляємо..." : "Підтвердити замовлення"}
+                  {loading ? t("cart.submitLoading") : t("cart.submitBtn")}
                 </button>
                 {form.delivery === "delivery" && total < 500 && (
                   <p style={{ fontSize: "0.72rem", color: "#b0a090", textAlign: "center", marginTop: "0.75rem" }}>
-                    До безкоштовної доставки: {500 - total} ₴
+                    {t("cart.untilFree")} {500 - total} ₴
                   </p>
                 )}
               </div>
@@ -497,20 +497,20 @@ export default function CartPage() {
         style={{ background: "#fff", borderTop: "1px solid #e8ddd4", boxShadow: "0 -4px 24px rgba(28,20,16,0.08)" }}>
         <div className="px-4 pt-3 pb-1 flex items-center justify-between gap-4">
           <div className="flex flex-col">
-            <span style={{ fontSize: "0.58rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "#a09080" }}>Разом</span>
+            <span style={{ fontSize: "0.58rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "#a09080" }}>{t("cart.summaryTotal")}</span>
             <span style={{ fontFamily: "var(--font-cormorant), serif", fontSize: "1.5rem", fontWeight: 300, color: "#1c1410", lineHeight: 1 }}>
               {finalTotal.toLocaleString()} ₴
             </span>
           </div>
           <div className="flex flex-col items-end gap-0.5 text-right">
             {deliveryFee === 0
-              ? <span style={{ fontSize: "0.62rem", color: "#5a9a6e" }}>Доставка безкоштовна</span>
+              ? <span style={{ fontSize: "0.62rem", color: "#5a9a6e" }}>{t("cart.deliveryFreeLabel")}</span>
               : form.delivery === "delivery"
-                ? <span style={{ fontSize: "0.62rem", color: "#a09080" }}>Доставка {deliveryFee} ₴</span>
-                : <span style={{ fontSize: "0.62rem", color: "#5a9a6e" }}>Знижка −{discount} ₴</span>
+                ? <span style={{ fontSize: "0.62rem", color: "#a09080" }}>{t("cart.deliveryPaidLabel")} {deliveryFee} ₴</span>
+                : <span style={{ fontSize: "0.62rem", color: "#5a9a6e" }}>{t("cart.discountLabel")} −{discount} ₴</span>
             }
             {form.delivery === "delivery" && total < 500 && (
-              <span style={{ fontSize: "0.6rem", color: "#b0a090" }}>До безкоштовної: {500 - total} ₴</span>
+              <span style={{ fontSize: "0.6rem", color: "#b0a090" }}>{t("cart.untilFreeShort")} {500 - total} ₴</span>
             )}
           </div>
         </div>
@@ -522,7 +522,7 @@ export default function CartPage() {
             textTransform: "uppercase", border: "1px solid #8a1c2e",
             cursor: loading ? "not-allowed" : "pointer",
           }}>
-            {loading ? "Оформляємо..." : "Підтвердити замовлення"}
+            {loading ? t("cart.submitLoading") : t("cart.submitBtn")}
           </button>
         </div>
       </div>

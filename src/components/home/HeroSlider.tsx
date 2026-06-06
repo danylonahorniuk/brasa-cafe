@@ -8,7 +8,7 @@ import { promotions } from "@/data/menu";
 import { useLang } from "@/context/LangContext";
 
 export default function HeroSlider() {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const [active, setActive] = useState(0);
   const touchStartX = useRef<number | null>(null);
 
@@ -106,7 +106,7 @@ export default function HeroSlider() {
                 textShadow: "0 2px 20px rgba(0,0,0,0.3)",
               }}
             >
-              {slide.title}
+              {lang === "en" && (slide as { titleEn?: string }).titleEn ? (slide as { titleEn?: string }).titleEn : slide.title}
             </h1>
 
             <p
@@ -114,7 +114,7 @@ export default function HeroSlider() {
               className="mt-4 text-white/75 text-base leading-relaxed max-w-sm animate-fade-up delay-200"
               style={{ animationFillMode: "both" }}
             >
-              {slide.subtitle}
+              {lang === "en" && (slide as { subtitleEn?: string }).subtitleEn ? (slide as { subtitleEn?: string }).subtitleEn : slide.subtitle}
             </p>
 
             {/* Кнопки — стовпчик на мобілі, ряд на десктопі */}
@@ -124,7 +124,7 @@ export default function HeroSlider() {
               style={{ animationFillMode: "both" }}
             >
               <Link href={slide.href} className="hero-btn-primary">
-                <span>{slide.cta}</span>
+                <span>{lang === "en" && (slide as { ctaEn?: string }).ctaEn ? (slide as { ctaEn?: string }).ctaEn : slide.cta}</span>
                 <span className="hero-btn-arrow">→</span>
               </Link>
               <Link href="/booking" className="hero-btn-glass">

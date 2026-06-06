@@ -11,6 +11,7 @@ const locations = [
     name: "Поділ",
     address: "вул. Сагайдачного 14",
     hours: "Пн–Пт 11:00–23:00 · Сб–Нд 10:00–00:00",
+    hoursEn: "Mon–Fri 11:00–23:00 · Sat–Sun 10:00–00:00",
     tables: [
       { id: 1,  label: "№1",  seats: 2, zone: "Біля вікна", shape: "round", svgX: 75,  svgY: 72  },
       { id: 2,  label: "№2",  seats: 2, zone: "Біля вікна", shape: "round", svgX: 75,  svgY: 158 },
@@ -31,6 +32,7 @@ const locations = [
     name: "Печерськ",
     address: "вул. Велика Васильківська 55",
     hours: "Щодня 12:00–23:00",
+    hoursEn: "Mon–Sun 12:00–23:00",
     tables: [
       { id: 1,  label: "№1",  seats: 2, zone: "Бар",        shape: "round", svgX: 72,  svgY: 100 },
       { id: 2,  label: "№2",  seats: 2, zone: "Бар",        shape: "round", svgX: 72,  svgY: 215 },
@@ -49,6 +51,7 @@ const locations = [
     name: "Оболонь",
     address: "просп. Оболонський 1",
     hours: "Пн–Нд 11:00–22:00",
+    hoursEn: "Mon–Fri 11:00–22:30 · Sat–Sun 10:00–23:00",
     tables: [
       { id: 1,  label: "№1",  seats: 2, zone: "Вхід",       shape: "round", svgX: 74,  svgY: 128 },
       { id: 2,  label: "№2",  seats: 2, zone: "Вхід",       shape: "round", svgX: 74,  svgY: 302 },
@@ -265,8 +268,22 @@ function FloorPlan({
 const inputStyle = { background: "#fff", border: "1px solid #d4c4b8", color: "#1c1410" };
 const inputClass = "w-full px-3 py-2.5 text-sm rounded-sm outline-none transition-colors placeholder:text-[#c4b4a8]";
 
+const zoneEn: Record<string, string> = {
+  "Біля вікна": "Window seat",
+  "Центр залу": "Center hall",
+  "Бокс": "Booth",
+  "Тераса": "Terrace",
+  "Бар": "Bar",
+  "VIP зал": "VIP room",
+  "Банкет": "Banquet",
+  "Вхід": "Entrance",
+  "Основний": "Main hall",
+  "Набережна": "Riverside",
+};
+
 export default function BookingPage() {
-  const { t } = useLang();
+  const { t, lang } = useLang();
+  const getZone = (z: string) => lang === "en" ? (zoneEn[z] ?? z) : z;
   const [locIndex, setLocIndex] = useState(0);
   const [form, setForm] = useState({ name: "", phone: "", date: "", time: "", guests: 2, comment: "", tableId: 0 });
   const [submitted, setSubmitted] = useState(false);
@@ -311,11 +328,11 @@ export default function BookingPage() {
             {t("booking.confirmedTitle")}
           </h1>
           <p className="mb-1 text-sm" style={{ color: "#7a6a5e" }}>
-            {form.date} о {form.time} · {form.guests} {form.guests === 1 ? t("booking.guest1") : t("booking.guestMany")}
+            {form.date} {lang === "en" ? "at" : "о"} {form.time} · {form.guests} {form.guests === 1 ? t("booking.guest1") : t("booking.guestMany")}
           </p>
           <p className="mb-1 text-sm" style={{ color: "#7a6a5e" }}>{location.name} · {location.address}</p>
           {selectedTable && (
-            <p className="mb-1 text-sm" style={{ color: "#7a6a5e" }}>{t("booking.tableLabel")} {selectedTable.label} · {selectedTable.zone}</p>
+            <p className="mb-1 text-sm" style={{ color: "#7a6a5e" }}>{t("booking.tableLabel")} {selectedTable.label} · {getZone(selectedTable.zone)}</p>
           )}
           <p className="mb-8 text-sm" style={{ color: "#a09080" }}>{t("booking.willCall")}</p>
           <a href="/"
@@ -461,7 +478,7 @@ export default function BookingPage() {
             {/* Інфо-рядок — тільки мобіль */}
             <div className="lg:hidden mb-4 flex items-center gap-3 flex-wrap">
               {[
-                { icon: Clock, text: location.hours },
+                { icon: Clock, text: lang === "en" ? ((location as { hoursEn?: string }).hoursEn ?? location.hours) : location.hours },
                 { icon: Users, text: t("booking.upTo8label") },
               ].map(({ icon: Icon, text }) => (
                 <div key={text} className="flex items-center gap-1.5 px-3 py-1.5 rounded-sm"
@@ -475,7 +492,7 @@ export default function BookingPage() {
             {/* Інфо-картки — тільки десктоп */}
             <div className="mb-8 rounded-sm overflow-hidden hidden lg:block" style={{ background: "#fff", border: "1px solid #e8ddd4" }}>
               {[
-                { icon: Clock,           title: location.hours,              sub: t("booking.holdTime") },
+                { icon: Clock,           title: lang === "en" ? ((location as { hoursEn?: string }).hoursEn ?? location.hours) : location.hours, sub: t("booking.holdTime") },
                 { icon: Users,           title: t("booking.upTo8"),  sub: t("booking.moreCall")             },
                 { icon: UtensilsCrossed, title: t("booking.kitchenUntil"), sub: t("booking.lastOrder")      },
               ].map((item, i, arr) => (
@@ -556,7 +573,7 @@ export default function BookingPage() {
                   <div className="w-2 h-2 rounded-full" style={{ background: "#8b1a2e" }} />
                   <span className="text-xs" style={{ color: "#1c1410" }}>
                     <span className="font-medium">{t("booking.tableLabel")} {selectedTable.label}</span>
-                    <span style={{ color: "#a09080" }}> · {selectedTable.zone} · {t("booking.upTo")} {selectedTable.seats} {t("booking.guestsSuffix")}</span>
+                    <span style={{ color: "#a09080" }}> · {getZone(selectedTable.zone)} · {t("booking.upTo")} {selectedTable.seats} {t("booking.guestsSuffix")}</span>
                   </span>
                 </div>
               )}
@@ -626,7 +643,7 @@ export default function BookingPage() {
               <div className="flex items-center justify-between px-3 py-2 rounded-sm"
                 style={{ background: "rgba(139,26,46,0.05)", border: "1px solid rgba(139,26,46,0.15)" }}>
                 <span className="text-[0.68rem]" style={{ color: "#8b1a2e" }}>
-                  ✓ {t("booking.tableLabel")} {selectedTable.label} · {selectedTable.zone}
+                  ✓ {t("booking.tableLabel")} {selectedTable.label} · {getZone(selectedTable.zone)}
                 </span>
                 <button type="button" onClick={() => setForm((f) => ({ ...f, tableId: 0 }))}
                   className="text-[0.6rem]" style={{ color: "#c4b4a8" }}>{t("booking.change")}</button>

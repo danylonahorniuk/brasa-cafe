@@ -77,6 +77,61 @@ export const uk = {
     toMenu: "До меню →",
     total: "Разом",
     checkout: "Оформити замовлення",
+    // Payment methods
+    paymentCash: "Готівка кур'єру",
+    paymentCardCourier: "Карта кур'єру",
+    paymentCardOnline: "Карта онлайн",
+    paymentRestaurant: "У ресторані",
+    // Success screen
+    successTitle: "Замовлення прийнято",
+    successSubtitle: "Наш менеджер зв'яжеться з вами найближчим часом для підтвердження.",
+    successHint: "Поки чекаєте — дізнайтесь більше про Brasa",
+    successAbout: "Про нас →",
+    successHome: "На головну",
+    // Delivery bar
+    freeDelivery: "Безкоштовна доставка",
+    untilFree: "До безкоштовної:",
+    fromAmount: "від 500 ₴",
+    // Info cards
+    deliveryTime: "Доставка 40–60 хвилин",
+    deliveryPayment: "Готівка або карта кур'єру",
+    deliveryConfirm: "Підтвердження замовлення по телефону",
+    pickupTitle: "Заберіть замовлення з ресторану",
+    pickupTime: "Готове через 20–30 хвилин",
+    pickupPayment: "Карта онлайн або розрахунок у ресторані",
+    // Heading & delivery type
+    heading: "Ваш кошик",
+    deliveryType: "Доставка",
+    pickupType: "Самовивіз",
+    // Form labels
+    address: "Адреса",
+    addressPlaceholder: "вул. Назва, буд. 1, кв. 1",
+    comment: "Коментар",
+    commentPlaceholder: "Побажання до замовлення...",
+    paymentLabel: "Спосіб оплати",
+    // Card section
+    cardDetails: "Дані картки",
+    cardNumber: "Номер картки",
+    cardExpiry: "MM / РР",
+    cardCvv: "CVV",
+    cardHolder: "Ім'я на картці",
+    // Summary
+    summaryGoods: "Товари",
+    summaryDelivery: "Доставка",
+    summaryFree: "Безкоштовно",
+    summaryDiscount: "Знижка −20%",
+    summaryTotal: "Разом",
+    // Submit
+    submitLoading: "Оформляємо...",
+    submitBtn: "Підтвердити замовлення",
+    // Mobile bar
+    deliveryFreeLabel: "Доставка безкоштовна",
+    deliveryPaidLabel: "Доставка",
+    discountLabel: "Знижка",
+    untilFreeShort: "До безкоштовної:",
+    // Add more
+    addMore: "← Додати ще",
+    itemsShort: "позиц.",
   },
   menu: {
     title: "Наше меню",
@@ -167,6 +222,8 @@ export const uk = {
   badge: {
     hit: "Хіт",
     new: "Нове",
+    top: "Топ",
+    premium: "Преміум",
   },
   categoryLabel: {
     pizza: "Піца",

@@ -14,7 +14,7 @@ const cardColors = ["#8b1a2e", "#c49a3c"];
 
 /* ─── Модальне вікно ─── */
 function PromoModal({ promo, onClose }: { promo: Promo; onClose: () => void }) {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const color = cardColors[promos.indexOf(promo) % cardColors.length];
   const [closing, setClosing] = useState(false);
 
@@ -83,16 +83,16 @@ function PromoModal({ promo, onClose }: { promo: Promo; onClose: () => void }) {
             className="inline-block px-2.5 py-0.5 text-[0.55rem] tracking-widest uppercase font-medium rounded-[2px] mb-3"
             style={{ background: color, color: "#fff" }}
           >
-            {promo.label}
+            {lang === "en" && (promo as { labelEn?: string }).labelEn ? (promo as { labelEn?: string }).labelEn : promo.label}
           </span>
           <h2
             className="text-xl sm:text-2xl mb-2 leading-tight"
             style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 300, color: "#1c1410" }}
           >
-            {promo.subtitle}
+            {lang === "en" && (promo as { subtitleEn?: string }).subtitleEn ? (promo as { subtitleEn?: string }).subtitleEn : promo.subtitle}
           </h2>
           <p className="text-sm leading-relaxed mb-4" style={{ color: "#5a4a3e" }}>
-            {promo.description}
+            {lang === "en" && (promo as { descriptionEn?: string }).descriptionEn ? (promo as { descriptionEn?: string }).descriptionEn : promo.description}
           </p>
           <div className="divider-warm mb-4" />
           <p className="text-xs leading-relaxed mb-5" style={{ color: "#a09080" }}>
@@ -126,7 +126,7 @@ function PromoModal({ promo, onClose }: { promo: Promo; onClose: () => void }) {
 
 /* ─── Секція акцій ─── */
 export default function PromoCards() {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const [selected, setSelected] = useState<Promo | null>(null);
 
   return (
@@ -183,17 +183,17 @@ export default function PromoCards() {
                     className="inline-block px-2 py-0.5 text-[0.52rem] tracking-widest uppercase font-medium rounded-[2px] mb-1"
                     style={{ background: color, color: "#fff" }}
                   >
-                    {promo.label}
+                    {lang === "en" && (promo as { labelEn?: string }).labelEn ? (promo as { labelEn?: string }).labelEn : promo.label}
                   </span>
                   <h3
                     className="text-base sm:text-lg leading-tight sm:truncate"
                     style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 400, color: "#1c1410" }}
                   >
-                    {promo.subtitle}
+                    {lang === "en" && (promo as { subtitleEn?: string }).subtitleEn ? (promo as { subtitleEn?: string }).subtitleEn : promo.subtitle}
                   </h3>
                   {/* Опис — тільки десктоп */}
                   <p className="text-xs leading-relaxed line-clamp-1 hidden sm:block mt-0.5" style={{ color: "#a09080" }}>
-                    {promo.description}
+                    {lang === "en" && (promo as { descriptionEn?: string }).descriptionEn ? (promo as { descriptionEn?: string }).descriptionEn : promo.description}
                   </p>
                 </div>
 

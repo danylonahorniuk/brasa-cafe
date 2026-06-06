@@ -77,6 +77,61 @@ export const en = {
     toMenu: "To menu →",
     total: "Total",
     checkout: "Checkout",
+    // Payment methods
+    paymentCash: "Cash to courier",
+    paymentCardCourier: "Card to courier",
+    paymentCardOnline: "Card online",
+    paymentRestaurant: "Pay at restaurant",
+    // Success screen
+    successTitle: "Order received",
+    successSubtitle: "Our manager will contact you shortly to confirm.",
+    successHint: "While you wait — learn more about Brasa",
+    successAbout: "About us →",
+    successHome: "Back to home",
+    // Delivery bar
+    freeDelivery: "Free delivery",
+    untilFree: "Until free delivery:",
+    fromAmount: "from 500 ₴",
+    // Info cards
+    deliveryTime: "Delivery 40–60 min",
+    deliveryPayment: "Cash or card to courier",
+    deliveryConfirm: "Order confirmed by phone",
+    pickupTitle: "Pick up from restaurant",
+    pickupTime: "Ready in 20–30 min",
+    pickupPayment: "Card online or pay at restaurant",
+    // Heading & delivery type
+    heading: "Your cart",
+    deliveryType: "Delivery",
+    pickupType: "Pickup",
+    // Form labels
+    address: "Address",
+    addressPlaceholder: "Street name, building, apt.",
+    comment: "Comment",
+    commentPlaceholder: "Order notes...",
+    paymentLabel: "Payment method",
+    // Card section
+    cardDetails: "Card details",
+    cardNumber: "Card number",
+    cardExpiry: "MM / YY",
+    cardCvv: "CVV",
+    cardHolder: "Cardholder name",
+    // Summary
+    summaryGoods: "Items",
+    summaryDelivery: "Delivery",
+    summaryFree: "Free",
+    summaryDiscount: "Discount −20%",
+    summaryTotal: "Total",
+    // Submit
+    submitLoading: "Processing...",
+    submitBtn: "Confirm order",
+    // Mobile bar
+    deliveryFreeLabel: "Free delivery",
+    deliveryPaidLabel: "Delivery",
+    discountLabel: "Discount",
+    untilFreeShort: "Until free delivery:",
+    // Add more
+    addMore: "← Add more",
+    itemsShort: "items",
   },
   menu: {
     title: "Our menu",
@@ -167,6 +222,8 @@ export const en = {
   badge: {
     hit: "Hit",
     new: "New",
+    top: "Top",
+    premium: "Premium",
   },
   categoryLabel: {
     pizza: "Pizza",

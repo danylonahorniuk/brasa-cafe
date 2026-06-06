@@ -14,7 +14,7 @@ type MenuItem = typeof menuItems[0];
 ════════════════════════════════════════ */
 function DishRow({ item, onOpen }: { item: MenuItem; onOpen: (item: MenuItem) => void }) {
   const { add } = useCart();
-  const { t } = useLang();
+  const { t, lang } = useLang();
 
   const categoryLabel: Record<string, string> = {
     pizza: t("categoryLabel.pizza"), rolls: t("categoryLabel.rolls"), burgers: t("categoryLabel.burgers"),
@@ -46,7 +46,9 @@ function DishRow({ item, onOpen }: { item: MenuItem; onOpen: (item: MenuItem) =>
           style={{ objectPosition: item.imagePosition ?? "center" }} sizes="80px" />
         {item.badge && (
           <span className="absolute top-1 left-1 px-1.5 py-px text-[0.45rem] tracking-widest uppercase font-medium rounded-[2px]"
-            style={{ background: "#8b1a2e", color: "#fff" }}>{item.badge}</span>
+            style={{ background: "#8b1a2e", color: "#fff" }}>
+            {({ "Хіт": t("badge.hit"), "Топ": t("badge.top"), "Преміум": t("badge.premium") } as Record<string, string>)[item.badge] ?? item.badge}
+          </span>
         )}
       </div>
 
@@ -85,7 +87,7 @@ function DishRow({ item, onOpen }: { item: MenuItem; onOpen: (item: MenuItem) =>
                   color:      size === s ? "#1c1410" : "#a09080",
                   boxShadow:  size === s ? "0 1px 3px rgba(0,0,0,0.08)" : "none",
                 }}>
-                {s} см
+                {s} {lang === "en" ? "cm" : "см"}
               </button>
             ))}
           </div>
@@ -197,7 +199,7 @@ function DishModal({ item, onClose }: { item: MenuItem; onClose: () => void }) {
           {/* Бейджі */}
           <div className="absolute top-3 left-3 flex gap-1.5">
             {item.badge && <span className="px-2 py-0.5 text-[0.55rem] tracking-widest uppercase font-medium rounded-[2px]"
-              style={{ background: "#8b1a2e", color: "#fff" }}>{item.badge}</span>}
+              style={{ background: "#8b1a2e", color: "#fff" }}>{({ "Хіт": t("badge.hit"), "Топ": t("badge.top"), "Преміум": t("badge.premium") } as Record<string, string>)[item.badge] ?? item.badge}</span>}
             {item.isNew && <span className="px-2 py-0.5 text-[0.55rem] tracking-widest uppercase font-medium rounded-[2px]"
               style={{ background: "#c49a3c", color: "#fff" }}>{t("badge.new")}</span>}
           </div>
@@ -241,7 +243,7 @@ function DishModal({ item, onClose }: { item: MenuItem; onClose: () => void }) {
                       color:      size === s ? "#1c1410" : "#a09080",
                       boxShadow:  size === s ? "0 1px 4px rgba(0,0,0,0.1)" : "none",
                     }}>
-                    {s} см
+                    {s} {lang === "en" ? "cm" : "см"}
                     <span className="block text-[0.65rem] mt-0.5" style={{ color: size === s ? "#c49a3c" : "#b8a898" }}>
                       {item.sizes![s]} ₴
                     </span>
@@ -318,7 +320,7 @@ function DishCard({ item }: { item: MenuItem }) {
           sizes="(max-width: 1024px) 50vw, 25vw" />
         <div className="absolute top-2.5 left-2.5 flex gap-1.5 z-10">
           {item.badge && <span className="px-2 py-0.5 text-[0.55rem] tracking-widest uppercase font-medium rounded-[2px]"
-            style={{ background: "#8b1a2e", color: "#fff" }}>{item.badge}</span>}
+            style={{ background: "#8b1a2e", color: "#fff" }}>{({ "Хіт": t("badge.hit"), "Топ": t("badge.top"), "Преміум": t("badge.premium") } as Record<string, string>)[item.badge] ?? item.badge}</span>}
           {item.isNew && <span className="px-2 py-0.5 text-[0.55rem] tracking-widest uppercase font-medium rounded-[2px]"
             style={{ background: "#c49a3c", color: "#fff" }}>{t("badge.new")}</span>}
           {item.spicy && <span className="w-5 h-5 rounded-full flex items-center justify-center"
@@ -345,7 +347,7 @@ function DishCard({ item }: { item: MenuItem }) {
                 className="flex-1 py-1.5 rounded-sm text-[0.65rem] tracking-wider uppercase transition-all"
                 style={{ background: size === s ? "#1c1410" : "#faf7f2", color: size === s ? "#fff" : "#7a6a5e",
                   border: `1px solid ${size === s ? "#1c1410" : "#d4c4b8"}` }}>
-                {s} см
+                {s} {lang === "en" ? "cm" : "см"}
               </button>
             ))}
           </div>
@@ -377,7 +379,7 @@ function DishCard({ item }: { item: MenuItem }) {
    СТОРІНКА
 ════════════════════════════════════════ */
 export default function MenuPage() {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const [search,    setSearch]    = useState("");
   const [activeId,  setActiveId]  = useState("pizza");
   const [modalItem, setModalItem] = useState<MenuItem | null>(null);
@@ -454,7 +456,7 @@ export default function MenuPage() {
                     className="menu-nav-item flex-shrink-0 px-4 sm:px-6 py-3 sm:py-4 relative transition-all duration-300"
                     style={{ color: isActive ? "#1c1410" : "#a09080" }}>
                     <span className="text-[0.68rem] sm:text-[0.72rem] tracking-[0.1em] uppercase font-medium whitespace-nowrap">
-                      {cat.label}
+                      {lang === "en" && (cat as { labelEn?: string }).labelEn ? (cat as { labelEn?: string }).labelEn : cat.label}
                     </span>
                     <span className="absolute bottom-0 left-0 right-0 h-[2px] transition-all duration-300"
                       style={{ background: "#8b1a2e", opacity: isActive ? 1 : 0,
@@ -496,7 +498,7 @@ export default function MenuPage() {
                 </div>
                 <h2 style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 300, fontStyle: "italic",
                   fontSize: "clamp(1.9rem, 8vw, 4rem)", lineHeight: 1, color: "#1c1410" }}>
-                  {cat.label}
+                  {lang === "en" && (cat as { labelEn?: string }).labelEn ? (cat as { labelEn?: string }).labelEn : cat.label}
                 </h2>
                 <div className="flex items-center gap-2 mt-2.5">
                   <div className="h-px w-10" style={{ background: "#c49a3c" }} />

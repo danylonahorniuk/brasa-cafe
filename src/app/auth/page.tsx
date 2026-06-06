@@ -96,12 +96,6 @@ export default function AuthPage() {
         >
           BRASA
         </span>
-        <span
-          className="text-[0.48rem] tracking-[0.38em] uppercase mt-0.5"
-          style={{ color: "rgba(255,255,255,0.3)" }}
-        >
-          {t("nav.subtitle")}
-        </span>
       </Link>
 
       {/* Card */}

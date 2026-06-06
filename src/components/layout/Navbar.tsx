@@ -87,12 +87,6 @@ export default function Navbar() {
             >
               BRASA
             </span>
-            <span
-              className="text-[0.5rem] tracking-[0.35em] uppercase mt-0.5"
-              style={{ color: showWhite ? "rgba(255,255,255,0.35)" : "rgba(255,255,255,0.55)", transition: "color 0.4s" }}
-            >
-              {t("nav.subtitle")}
-            </span>
           </Link>
 
           {/* Desktop nav links */}

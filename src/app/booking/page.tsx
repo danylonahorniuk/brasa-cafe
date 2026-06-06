@@ -8,8 +8,8 @@ import { useLang } from "@/context/LangContext";
 const locations = [
   {
     id: 1,
-    name: "Поділ",
-    address: "вул. Сагайдачного 14",
+    name: "Поділ",        nameEn: "Podil",
+    address: "вул. Сагайдачного 14",    addressEn: "14 Sahaidachnoho St.",
     hours: "Пн–Пт 11:00–23:00 · Сб–Нд 10:00–00:00",
     hoursEn: "Mon–Fri 11:00–23:00 · Sat–Sun 10:00–00:00",
     tables: [
@@ -29,8 +29,8 @@ const locations = [
   },
   {
     id: 2,
-    name: "Печерськ",
-    address: "вул. Велика Васильківська 55",
+    name: "Печерськ",     nameEn: "Pechersk",
+    address: "вул. Велика Васильківська 55",  addressEn: "55 Velyka Vasylkivska St.",
     hours: "Щодня 12:00–23:00",
     hoursEn: "Mon–Sun 12:00–23:00",
     tables: [
@@ -48,8 +48,8 @@ const locations = [
   },
   {
     id: 3,
-    name: "Оболонь",
-    address: "просп. Оболонський 1",
+    name: "Оболонь",      nameEn: "Obolon",
+    address: "просп. Оболонський 1",    addressEn: "1 Obolonskyi Ave.",
     hours: "Пн–Нд 11:00–22:00",
     hoursEn: "Mon–Fri 11:00–22:30 · Sat–Sun 10:00–23:00",
     tables: [
@@ -284,6 +284,8 @@ const zoneEn: Record<string, string> = {
 export default function BookingPage() {
   const { t, lang } = useLang();
   const getZone = (z: string) => lang === "en" ? (zoneEn[z] ?? z) : z;
+  const locName = (loc: typeof locations[0]) => lang === "en" ? loc.nameEn : loc.name;
+  const locAddr = (loc: typeof locations[0]) => lang === "en" ? loc.addressEn : loc.address;
   const [locIndex, setLocIndex] = useState(0);
   const [form, setForm] = useState({ name: "", phone: "", date: "", time: "", guests: 2, comment: "", tableId: 0 });
   const [submitted, setSubmitted] = useState(false);
@@ -330,7 +332,7 @@ export default function BookingPage() {
           <p className="mb-1 text-sm" style={{ color: "#7a6a5e" }}>
             {form.date} {lang === "en" ? "at" : "о"} {form.time} · {form.guests} {form.guests === 1 ? t("booking.guest1") : t("booking.guestMany")}
           </p>
-          <p className="mb-1 text-sm" style={{ color: "#7a6a5e" }}>{location.name} · {location.address}</p>
+          <p className="mb-1 text-sm" style={{ color: "#7a6a5e" }}>{locName(location)} · {locAddr(location)}</p>
           {selectedTable && (
             <p className="mb-1 text-sm" style={{ color: "#7a6a5e" }}>{t("booking.tableLabel")} {selectedTable.label} · {getZone(selectedTable.zone)}</p>
           )}
@@ -414,13 +416,13 @@ export default function BookingPage() {
                     className="text-[0.72rem] font-medium tracking-wide"
                     style={{ color: active ? "#e8ddd4" : "#7a6a5e" }}
                   >
-                    {loc.name}
+                    {locName(loc)}
                   </span>
                   <span
                     className="text-[0.52rem] mt-0.5 truncate w-full text-center"
                     style={{ color: active ? "rgba(196,154,60,0.8)" : "#b8a898" }}
                   >
-                    {loc.address.split(" ").slice(0, 2).join(" ")}
+                    {locAddr(loc).split(" ").slice(0, 3).join(" ")}
                   </span>
                 </button>
               );
@@ -438,16 +440,16 @@ export default function BookingPage() {
                 <ChevronLeft size={15} style={{ color: "#c4b4a8" }} />
                 <div className="text-left">
                   <p className="text-[0.48em] tracking-[0.2em] uppercase mb-0.5" style={{ color: "#c4b4a8" }}>{t("booking.previous")}</p>
-                  <p className="text-[0.8rem] font-medium" style={{ color: "#7a6a5e" }}>Brasa {prevLoc.name}</p>
-                  <p className="text-[0.58rem]" style={{ color: "#c4b4a8" }}>{prevLoc.address}</p>
+                  <p className="text-[0.8rem] font-medium" style={{ color: "#7a6a5e" }}>Brasa {locName(prevLoc)}</p>
+                  <p className="text-[0.58rem]" style={{ color: "#c4b4a8" }}>{locAddr(prevLoc)}</p>
                 </div>
               </button>
               <div className={`flex-1 flex flex-col items-center justify-center py-3.5 px-4 ${animClass}`}>
                 <p className="text-[0.48rem] tracking-[0.25em] uppercase mb-0.5" style={{ color: "#c49a3c" }}>{t("booking.bookingHere")}</p>
                 <p className="text-base" style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 400, color: "#1c1410" }}>
-                  Brasa {location.name}
+                  Brasa {locName(location)}
                 </p>
-                <p className="text-[0.6rem]" style={{ color: "#a09080" }}>{location.address}</p>
+                <p className="text-[0.6rem]" style={{ color: "#a09080" }}>{locAddr(location)}</p>
                 <div className="flex gap-1.5 mt-2">
                   {locations.map((_, i) => (
                     <button key={i} onClick={() => switchLocation(i)} className="rounded-full transition-all duration-300"
@@ -460,8 +462,8 @@ export default function BookingPage() {
                 style={{ borderLeft: "1px solid #e8ddd4" }}>
                 <div className="text-right">
                   <p className="text-[0.48rem] tracking-[0.2em] uppercase mb-0.5" style={{ color: "#c4b4a8" }}>{t("booking.next")}</p>
-                  <p className="text-[0.8rem] font-medium" style={{ color: "#7a6a5e" }}>Brasa {nextLoc.name}</p>
-                  <p className="text-[0.58rem]" style={{ color: "#c4b4a8" }}>{nextLoc.address}</p>
+                  <p className="text-[0.8rem] font-medium" style={{ color: "#7a6a5e" }}>Brasa {locName(nextLoc)}</p>
+                  <p className="text-[0.58rem]" style={{ color: "#c4b4a8" }}>{locAddr(nextLoc)}</p>
                 </div>
                 <ChevronRight size={15} style={{ color: "#c4b4a8" }} />
               </button>
@@ -517,7 +519,7 @@ export default function BookingPage() {
                 style={{ background: "#1a1208", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
                 <div>
                   <span className="text-[0.62rem] tracking-[0.2em] uppercase" style={{ color: "#c49a3c" }}>{t("booking.floorPlan")}</span>
-                  <span className="text-[0.55rem] ml-2" style={{ color: "#a09080" }}>Brasa {location.name}</span>
+                  <span className="text-[0.55rem] ml-2" style={{ color: "#a09080" }}>Brasa {locName(location)}</span>
                 </div>
                 <span className="text-[0.58rem]" style={{ color: canShowTables ? "#c4b4a8" : "#7a6a5a" }}>
                   {canShowTables ? `${form.date} · ${form.time}` : t("booking.chooseDatetime")}
@@ -585,7 +587,7 @@ export default function BookingPage() {
             style={{ background: "#fff", border: "1px solid #e8ddd4", boxShadow: "0 4px 24px rgba(28,20,16,0.07)" }}>
             <div className="flex items-center justify-between mb-2">
               <p className="section-label">{t("booking.formTitle")}</p>
-              <span className="text-[0.6rem] tracking-wider" style={{ color: "#c49a3c" }}>Brasa {location.name}</span>
+              <span className="text-[0.6rem] tracking-wider" style={{ color: "#c49a3c" }}>Brasa {locName(location)}</span>
             </div>
 
             <div className="grid grid-cols-2 gap-4">

@@ -6,24 +6,24 @@ import { useLang } from "@/context/LangContext";
 
 const locations = [
   {
-    name: "Поділ",
-    address: "вул. Сагайдачного 14",
+    name: "Поділ",        nameEn: "Podil",
+    address: "вул. Сагайдачного 14",    addressEn: "14 Sahaidachnoho St.",
     hours: "Пн–Пт 11:00–23:00 · Сб–Нд 10:00–00:00",
     hoursEn: "Mon–Fri 11:00–23:00 · Sat–Sun 10:00–00:00",
     maps: "https://maps.google.com/?q=вул.+Сагайдачного+14,+Київ",
     photo: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1600&q=85",
   },
   {
-    name: "Печерськ",
-    address: "вул. Лаврська 8",
+    name: "Печерськ",     nameEn: "Pechersk",
+    address: "вул. Лаврська 8",         addressEn: "8 Lavrska St.",
     hours: "Пн–Нд 12:00–23:00",
     hoursEn: "Mon–Sun 12:00–23:00",
     maps: "https://maps.google.com/?q=вул.+Лаврська+8,+Київ",
     photo: "https://images.unsplash.com/photo-1552566626-52f8b828add9?w=1600&q=85",
   },
   {
-    name: "Оболонь",
-    address: "просп. Оболонський 1",
+    name: "Оболонь",      nameEn: "Obolon",
+    address: "просп. Оболонський 1",    addressEn: "1 Obolonskyi Ave.",
     hours: "Пн–Пт 11:00–22:30 · Сб–Нд 10:00–23:00",
     hoursEn: "Mon–Fri 11:00–22:30 · Sat–Sun 10:00–23:00",
     maps: "https://maps.google.com/?q=просп.+Оболонський+1,+Київ",
@@ -51,7 +51,7 @@ export default function ContactPage() {
 
       {/* Locations */}
       {locations.map((loc, i) => (
-        <div key={loc.name} style={{ borderTop: "1px solid #e8ddd4" }}>
+        <div key={lang === "en" ? loc.nameEn : loc.name} style={{ borderTop: "1px solid #e8ddd4" }}>
 
           {/* MOBILE — стек: інфо → фото */}
           <div className="lg:hidden">
@@ -65,7 +65,7 @@ export default function ContactPage() {
                   color: "#1c1410",
                   lineHeight: 1,
                 }}>
-                  {loc.name}
+                  {lang === "en" ? loc.nameEn : loc.name}
                 </h2>
                 <a
                   href={loc.maps}
@@ -88,7 +88,7 @@ export default function ContactPage() {
               <div className="flex flex-col gap-1.5">
                 <span style={{ display: "flex", alignItems: "center", gap: "0.4rem", fontSize: "0.82rem", color: "#7a6a5e" }}>
                   <MapPin size={12} color="#c49a3c" />
-                  {loc.address}
+                  {lang === "en" ? loc.addressEn : loc.address}
                 </span>
                 <span style={{ display: "flex", alignItems: "center", gap: "0.4rem", fontSize: "0.82rem", color: "#7a6a5e" }}>
                   <Clock size={12} color="#c49a3c" />
@@ -101,7 +101,7 @@ export default function ContactPage() {
             <div className="relative overflow-hidden" style={{ aspectRatio: "16/9" }}>
               <Image
                 src={loc.photo}
-                alt={`Brasa ${loc.name}`}
+                alt={`Brasa ${lang === "en" ? loc.nameEn : loc.name}`}
                 fill
                 className="object-cover"
                 priority={i === 0}
@@ -131,12 +131,12 @@ export default function ContactPage() {
                   color: "#1c1410",
                   lineHeight: 1,
                 }}>
-                  {loc.name}
+                  {lang === "en" ? loc.nameEn : loc.name}
                 </h2>
                 <div style={{ display: "flex", gap: "2rem", flexWrap: "wrap" }}>
                   <span style={{ display: "flex", alignItems: "center", gap: "0.4rem", fontSize: "0.85rem", color: "#7a6a5e" }}>
                     <MapPin size={12} color="#c49a3c" />
-                    {loc.address}
+                    {lang === "en" ? loc.addressEn : loc.address}
                   </span>
                   <span style={{ display: "flex", alignItems: "center", gap: "0.4rem", fontSize: "0.85rem", color: "#7a6a5e" }}>
                     <Clock size={12} color="#c49a3c" />
@@ -167,7 +167,7 @@ export default function ContactPage() {
               <div className="relative overflow-hidden" style={{ height: 440 }}>
                 <Image
                   src={loc.photo}
-                  alt={`Brasa ${loc.name}`}
+                  alt={`Brasa ${lang === "en" ? loc.nameEn : loc.name}`}
                   fill
                   className="object-cover"
                   priority={i === 0}

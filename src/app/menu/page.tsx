@@ -57,7 +57,7 @@ function DishRow({ item, onOpen }: { item: MenuItem; onOpen: (item: MenuItem) =>
         {/* Назва + бейджі */}
         <div className="flex items-start gap-1.5 mb-0.5">
           <p className="text-sm font-medium leading-snug flex-1" style={{ color: "#1c1410" }}>
-            {item.name}
+            {lang === "en" && item.nameEn ? item.nameEn : item.name}
           </p>
           {item.spicy && (
             <span className="flex-shrink-0 w-4 h-4 rounded-full flex items-center justify-center mt-0.5"
@@ -210,7 +210,7 @@ function DishModal({ item, onClose }: { item: MenuItem; onClose: () => void }) {
           {/* Назва + гострота */}
           <div className="flex items-start justify-between gap-2 mb-1">
             <h2 style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 300, fontSize: "1.75rem", color: "#1c1410", lineHeight: 1.1 }}>
-              {item.name}
+              {lang === "en" && item.nameEn ? item.nameEn : item.name}
             </h2>
             {item.spicy && (
               <span className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center mt-1"
@@ -337,7 +337,7 @@ function DishCard({ item }: { item: MenuItem }) {
       <div className="flex flex-col flex-1 p-4">
         <p className="text-[0.58rem] tracking-widest uppercase mb-1" style={{ color: "#a09080" }}>{categoryLabel[item.category]}</p>
         <h3 className="text-xl leading-snug mb-2" style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 400, color: "#1c1410" }}>
-          {item.name}
+          {lang === "en" && item.nameEn ? item.nameEn : item.name}
         </h3>
         <p className="text-[0.72rem] leading-relaxed line-clamp-3 mb-auto" style={{ color: "#7a6a5e" }}>{lang === "en" && item.descriptionEn ? item.descriptionEn : item.description}</p>
         {hasSize && (
@@ -389,7 +389,10 @@ export default function MenuPage() {
   const grouped = menuCategories.map((cat) => ({
     ...cat,
     items: menuItems.filter(
-      (item) => item.category === cat.id && item.name.toLowerCase().includes(search.toLowerCase())
+      (item) => item.category === cat.id && (
+        item.name.toLowerCase().includes(search.toLowerCase()) ||
+        (item.nameEn ?? "").toLowerCase().includes(search.toLowerCase())
+      )
     ),
   })).filter((cat) => cat.items.length > 0);
 

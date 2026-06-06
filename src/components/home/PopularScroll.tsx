@@ -98,7 +98,7 @@ function PopCard({ item }: { item: typeof popular[0] }) {
           className="text-base sm:text-lg leading-snug mb-1"
           style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 400, color: "#1c1410" }}
         >
-          {item.name}
+          {lang === "en" && item.nameEn ? item.nameEn : item.name}
         </h3>
         <p className="text-[0.65rem] leading-relaxed mb-auto line-clamp-2" style={{ color: "#a09080" }}>
           {lang === "en" && item.descriptionEn ? item.descriptionEn : item.description}

@@ -99,7 +99,7 @@ function NewItemCard({ item }: { item: typeof newItems[0] }) {
           className="text-xl leading-snug mb-1"
           style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 400, color: "#1c1410" }}
         >
-          {item.name}
+          {lang === "en" && item.nameEn ? item.nameEn : item.name}
         </h3>
         <p
           className="text-[0.65rem] leading-relaxed mb-auto line-clamp-2"

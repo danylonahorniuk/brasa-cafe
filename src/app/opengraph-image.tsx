@@ -6,6 +6,10 @@ export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 export default async function Image() {
+  const fontData = await fetch(
+    "https://fonts.gstatic.com/s/cormorantgaramond/v22/co3YmX5slCNuHLi8bLeY9MK7whWMhyjYqXtK.woff2"
+  ).then((res) => res.arrayBuffer());
+
   return new ImageResponse(
     (
       <div
@@ -14,7 +18,7 @@ export default async function Image() {
           height: "630px",
           display: "flex",
           position: "relative",
-          fontFamily: "Georgia, serif",
+          fontFamily: "Cormorant Garamond, serif",
         }}
       >
         {/* Background image */}
@@ -34,7 +38,7 @@ export default async function Image() {
           style={{
             position: "absolute",
             inset: 0,
-            background: "linear-gradient(135deg, rgba(10,6,2,0.72) 0%, rgba(10,6,2,0.35) 60%, rgba(10,6,2,0.15) 100%)",
+            background: "linear-gradient(135deg, rgba(10,6,2,0.75) 0%, rgba(10,6,2,0.4) 55%, rgba(10,6,2,0.1) 100%)",
             display: "flex",
           }}
         />
@@ -53,12 +57,13 @@ export default async function Image() {
           {/* BRASA wordmark */}
           <div
             style={{
-              fontSize: "120px",
+              fontSize: "130px",
               fontWeight: 300,
-              letterSpacing: "0.18em",
+              letterSpacing: "0.2em",
               color: "#f5f0e8",
               lineHeight: 1,
-              marginBottom: "24px",
+              marginBottom: "28px",
+              fontFamily: "Cormorant Garamond, serif",
             }}
           >
             BRASA
@@ -70,18 +75,19 @@ export default async function Image() {
               width: "80px",
               height: "2px",
               background: "#c49a3c",
-              marginBottom: "28px",
+              marginBottom: "32px",
             }}
           />
 
           {/* Subtitle */}
           <div
             style={{
-              fontSize: "28px",
+              fontSize: "30px",
               fontWeight: 300,
               letterSpacing: "0.06em",
-              color: "rgba(240,235,225,0.8)",
+              color: "rgba(240,235,225,0.75)",
               lineHeight: 1.4,
+              fontFamily: "Cormorant Garamond, serif",
             }}
           >
             Піца на дровах · Роли · Бургери · Доставка по Києву
@@ -89,6 +95,16 @@ export default async function Image() {
         </div>
       </div>
     ),
-    { ...size }
+    {
+      ...size,
+      fonts: [
+        {
+          name: "Cormorant Garamond",
+          data: fontData,
+          style: "normal",
+          weight: 300,
+        },
+      ],
+    }
   );
 }

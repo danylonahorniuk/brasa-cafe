@@ -7,7 +7,8 @@ export const contentType = "image/png";
 
 export default async function Image() {
   /* ── Cormorant Garamond via Google Fonts ── */
-  let fonts: ConstructorParameters<typeof ImageResponse>[1]["fonts"] = [];
+  type FontEntry = { name: string; data: ArrayBuffer; style: "normal" | "italic"; weight: 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 };
+  let fonts: FontEntry[] = [];
   try {
     const css = await fetch(
       "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300&display=swap",

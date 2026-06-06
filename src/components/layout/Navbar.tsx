@@ -291,7 +291,23 @@ export default function Navbar() {
           );
         })()}
 
-        {/* 2. Меню (FAB — центр) */}
+        {/* 2. Бронювання */}
+        {(() => {
+          const { href, label, Icon } = bottomNav[2];
+          const active = pathname === href;
+          return (
+            <Link
+              href={href}
+              className="flex-1 flex flex-col items-center justify-center gap-1 transition-colors duration-200 h-[60px]"
+              style={{ color: active ? "#c49a3c" : "rgba(255,255,255,0.42)" }}
+            >
+              <Icon size={19} strokeWidth={active ? 1.8 : 1.5} />
+              <span className="text-[0.52rem] tracking-wider uppercase">{label}</span>
+            </Link>
+          );
+        })()}
+
+        {/* 3. Меню (FAB — центр) */}
         {(() => {
           const { href, label, Icon } = bottomNav[1];
           const active = pathname === href;
@@ -304,7 +320,6 @@ export default function Navbar() {
                 paddingBottom: "6px",
               }}
             >
-              {/* Піднята кругла кнопка */}
               <span
                 className="flex items-center justify-center rounded-full transition-all duration-300"
                 style={{
@@ -328,22 +343,6 @@ export default function Navbar() {
               >
                 {label}
               </span>
-            </Link>
-          );
-        })()}
-
-        {/* 3. Бронювання */}
-        {(() => {
-          const { href, label, Icon } = bottomNav[2];
-          const active = pathname === href;
-          return (
-            <Link
-              href={href}
-              className="flex-1 flex flex-col items-center justify-center gap-1 transition-colors duration-200 h-[60px]"
-              style={{ color: active ? "#c49a3c" : "rgba(255,255,255,0.42)" }}
-            >
-              <Icon size={19} strokeWidth={active ? 1.8 : 1.5} />
-              <span className="text-[0.52rem] tracking-wider uppercase">{label}</span>
             </Link>
           );
         })()}

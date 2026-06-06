@@ -74,7 +74,7 @@ export default function Navbar() {
       >
         <nav className="max-w-7xl mx-auto px-5 sm:px-6 h-16 sm:h-20 flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex flex-col leading-none">
+          <Link href="/" className="flex items-center leading-none">
             <span
               style={{
                 fontFamily: "var(--font-cormorant), serif",

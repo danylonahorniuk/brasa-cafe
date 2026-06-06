@@ -265,74 +265,93 @@ export default function Navbar() {
 
       {/* ═══════════════════ MOBILE BOTTOM NAV ═══════════════════ */}
       <nav
-        className="fixed bottom-0 left-0 right-0 z-40 lg:hidden flex items-stretch"
+        className="fixed bottom-0 left-0 right-0 z-40 lg:hidden flex items-end"
         style={{
           background: "rgba(22,14,6,0.97)",
           backdropFilter: "blur(20px)",
           borderTop: "1px solid rgba(255,255,255,0.07)",
           height: "calc(60px + env(safe-area-inset-bottom))",
           paddingBottom: "env(safe-area-inset-bottom)",
+          overflow: "visible",
         }}
       >
-        {/* Головна */}
-        {bottomNav.slice(0, 1).map(({ href, label, Icon, center }) => {
-          const active = pathname === href;
-          return (
-            <Link
-              key={href}
-              href={href}
-              className="flex-1 flex flex-col items-center justify-center gap-1 transition-colors duration-200"
-              style={{ color: active ? "#c49a3c" : "rgba(255,255,255,0.42)" }}
-            >
-              <Icon size={center ? 22 : 19} strokeWidth={active ? 1.8 : 1.5} />
-              <span className="text-[0.52rem] tracking-wider uppercase">{label}</span>
-            </Link>
-          );
-        })}
-
-        {/* Меню (центр) */}
+        {/* 1. Головна */}
         {(() => {
-          const { href, label, Icon } = bottomNav[1];
+          const { href, label, Icon } = bottomNav[0];
           const active = pathname === href;
           return (
             <Link
               href={href}
-              className="flex-1 flex flex-col items-center justify-center gap-1 transition-colors duration-200 relative"
-              style={{ color: active ? "#c49a3c" : "rgba(255,255,255,0.62)" }}
-            >
-              {/* Subtle top accent line when active */}
-              {active && (
-                <span
-                  className="absolute top-0 left-1/2 -translate-x-1/2 rounded-b-full"
-                  style={{ width: "28px", height: "2px", background: "#c49a3c" }}
-                />
-              )}
-              <Icon size={22} strokeWidth={active ? 1.8 : 1.6} />
-              <span className="text-[0.52rem] tracking-wider uppercase font-medium">{label}</span>
-            </Link>
-          );
-        })()}
-
-        {/* Бронювання */}
-        {bottomNav.slice(2).map(({ href, label, Icon }) => {
-          const active = pathname === href;
-          return (
-            <Link
-              key={href}
-              href={href}
-              className="flex-1 flex flex-col items-center justify-center gap-1 transition-colors duration-200"
+              className="flex-1 flex flex-col items-center justify-center gap-1 transition-colors duration-200 h-[60px]"
               style={{ color: active ? "#c49a3c" : "rgba(255,255,255,0.42)" }}
             >
               <Icon size={19} strokeWidth={active ? 1.8 : 1.5} />
               <span className="text-[0.52rem] tracking-wider uppercase">{label}</span>
             </Link>
           );
-        })}
+        })()}
+
+        {/* 2. Меню (FAB — центр) */}
+        {(() => {
+          const { href, label, Icon } = bottomNav[1];
+          const active = pathname === href;
+          return (
+            <Link
+              href={href}
+              className="flex-1 flex flex-col items-center gap-1.5 transition-colors duration-200"
+              style={{
+                color: active ? "#c49a3c" : "rgba(255,255,255,0.55)",
+                paddingBottom: "6px",
+              }}
+            >
+              {/* Піднята кругла кнопка */}
+              <span
+                className="flex items-center justify-center rounded-full transition-all duration-300"
+                style={{
+                  width: "54px",
+                  height: "54px",
+                  background: active
+                    ? "linear-gradient(135deg, #c49a3c 0%, #a07828 100%)"
+                    : "linear-gradient(135deg, #a02030 0%, #8b1a2e 100%)",
+                  boxShadow: active
+                    ? "0 -4px 20px rgba(196,154,60,0.4), 0 4px 12px rgba(0,0,0,0.3)"
+                    : "0 -4px 20px rgba(139,26,46,0.45), 0 4px 12px rgba(0,0,0,0.3)",
+                  transform: "translateY(-14px)",
+                  flexShrink: 0,
+                }}
+              >
+                <Icon size={22} color="#fff" strokeWidth={1.8} />
+              </span>
+              <span
+                className="text-[0.52rem] tracking-wider uppercase"
+                style={{ marginTop: "-8px" }}
+              >
+                {label}
+              </span>
+            </Link>
+          );
+        })()}
+
+        {/* 3. Бронювання */}
+        {(() => {
+          const { href, label, Icon } = bottomNav[2];
+          const active = pathname === href;
+          return (
+            <Link
+              href={href}
+              className="flex-1 flex flex-col items-center justify-center gap-1 transition-colors duration-200 h-[60px]"
+              style={{ color: active ? "#c49a3c" : "rgba(255,255,255,0.42)" }}
+            >
+              <Icon size={19} strokeWidth={active ? 1.8 : 1.5} />
+              <span className="text-[0.52rem] tracking-wider uppercase">{label}</span>
+            </Link>
+          );
+        })()}
 
         {/* Кошик */}
         <button
           onClick={toggleCart}
-          className="flex-1 flex flex-col items-center justify-center gap-1 transition-colors duration-200 relative"
+          className="flex-1 flex flex-col items-center justify-center gap-1 transition-colors duration-200 h-[60px]"
           style={{ color: count > 0 ? "rgba(255,255,255,0.75)" : "rgba(255,255,255,0.42)" }}
           aria-label={t("cart.title")}
         >
@@ -353,7 +372,7 @@ export default function Navbar() {
         {/* Ще */}
         <button
           onClick={() => setMoreOpen((v) => !v)}
-          className="flex-1 flex flex-col items-center justify-center gap-1 transition-colors duration-200"
+          className="flex-1 flex flex-col items-center justify-center gap-1 transition-colors duration-200 h-[60px]"
           style={{ color: moreOpen ? "#c49a3c" : "rgba(255,255,255,0.42)" }}
           aria-label={t("nav.more")}
         >

@@ -540,27 +540,15 @@ export default function BookingPage() {
                 ))}
               </div>
 
-              {/* SVG план — горизонтальний скрол на мобілі, вільний на десктопі */}
-              <div className="relative">
-                <div
-                  className="overflow-x-auto overflow-y-hidden lg:overflow-x-hidden"
-                  style={{ background: "#ebe5dc", WebkitOverflowScrolling: "touch" } as React.CSSProperties}
-                >
-                  <div className="lg:min-w-0" style={{ minWidth: "600px" }}>
-                    <FloorPlan
-                      location={location}
-                      form={{ date: form.date, time: form.time, tableId: form.tableId }}
-                      canShowTables={!!canShowTables}
-                      onTableClick={(id) => setForm((f) => ({ ...f, tableId: id }))}
-                      overlayLine1={t("booking.overlayLine1")}
-                      overlayLine2={t("booking.overlayLine2")}
-                    />
-                  </div>
-                </div>
-                {/* Fade-хінт "є ще вправо" — тільки мобіль */}
-                <div
-                  className="absolute right-0 top-0 bottom-0 w-10 pointer-events-none lg:hidden"
-                  style={{ background: "linear-gradient(to right, transparent, rgba(235,229,220,0.9))" }}
+              {/* SVG план — масштабується до ширини на мобілі, без скролу */}
+              <div style={{ background: "#ebe5dc" }}>
+                <FloorPlan
+                  location={location}
+                  form={{ date: form.date, time: form.time, tableId: form.tableId }}
+                  canShowTables={!!canShowTables}
+                  onTableClick={(id) => setForm((f) => ({ ...f, tableId: id }))}
+                  overlayLine1={t("booking.overlayLine1")}
+                  overlayLine2={t("booking.overlayLine2")}
                 />
               </div>
 

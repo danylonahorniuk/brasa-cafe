@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 import { ShoppingCart, Flame, Plus, Minus, Search, Check, X } from "lucide-react";
 import { menuItems, menuCategories } from "@/data/menu";
@@ -164,7 +165,7 @@ function DishModal({ item, onClose }: { item: MenuItem; onClose: () => void }) {
     setTimeout(() => { close(); }, 900);
   };
 
-  return (
+  const modal = (
     <div
       className="fixed inset-0 z-50 flex items-end"
       style={{
@@ -282,6 +283,7 @@ function DishModal({ item, onClose }: { item: MenuItem; onClose: () => void }) {
       </div>
     </div>
   );
+  return createPortal(modal, document.body);
 }
 
 /* ════════════════════════════════════════

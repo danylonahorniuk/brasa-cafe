@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
-  ShoppingCart, Menu, X,
-  Home, UtensilsCrossed, CalendarDays, MoreHorizontal,
+  ShoppingCart, X,
+  Home, UtensilsCrossed, CalendarDays, MoreHorizontal, UserCircle,
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useCart } from "@/context/CartContext";
@@ -46,10 +46,11 @@ export default function Navbar() {
     { href: "/contact", label: t("nav.contact") },
   ];
 
-  /* ── "Ще" sidebar links (About + Contact) ── */
+  /* ── "Ще" sidebar links ── */
   const moreLinks = [
-    { href: "/about",   label: t("nav.about")   },
-    { href: "/contact", label: t("nav.contact") },
+    { href: "/auth",    label: t("auth.cabinet"), icon: <UserCircle size={18} /> },
+    { href: "/about",   label: t("nav.about"),    icon: null },
+    { href: "/contact", label: t("nav.contact"),  icon: null },
   ];
 
   /* ── Bottom nav items ── */
@@ -196,11 +197,12 @@ export default function Navbar() {
         <nav className="flex flex-col px-6 pt-6 gap-1">
           {moreLinks.map((l, i) => {
             const active = pathname === l.href;
+            const isCabinet = l.href === "/auth";
             return (
               <Link
                 key={l.href}
                 href={l.href}
-                className="flex items-center py-3.5"
+                className="flex items-center justify-between py-3.5"
                 style={{
                   borderBottom: "1px solid rgba(255,255,255,0.05)",
                   transform: moreOpen ? "translateX(0)" : "translateX(12px)",
@@ -211,7 +213,7 @@ export default function Navbar() {
                 <span
                   style={{
                     fontFamily: "var(--font-cormorant), serif",
-                    fontSize: "1.6rem",
+                    fontSize: isCabinet ? "1.4rem" : "1.6rem",
                     fontWeight: 300,
                     color: active ? "#c49a3c" : "#e8ddd4",
                     letterSpacing: "0.03em",
@@ -219,6 +221,9 @@ export default function Navbar() {
                 >
                   {l.label}
                 </span>
+                {isCabinet && (
+                  <span style={{ color: "rgba(255,255,255,0.25)" }}>{l.icon}</span>
+                )}
               </Link>
             );
           })}

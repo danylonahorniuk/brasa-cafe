@@ -137,6 +137,16 @@ export default function Navbar() {
               </button>
             </div>
 
+            {/* Cabinet — desktop only */}
+            <Link
+              href="/auth"
+              className="relative p-2 transition-colors hidden lg:block"
+              style={{ color: pathname === "/auth" ? "#c49a3c" : showWhite ? "rgba(255,255,255,0.65)" : "rgba(255,255,255,0.75)" }}
+              aria-label={t("auth.cabinet")}
+            >
+              <UserCircle size={20} strokeWidth={1.5} />
+            </Link>
+
             {/* Cart — desktop only (mobile has it in bottom nav) */}
             <button
               onClick={toggleCart}

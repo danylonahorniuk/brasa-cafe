@@ -540,9 +540,10 @@ export default function BookingPage() {
                 ))}
               </div>
 
-              {/* SVG план — горизонтальний скрол на мобілі */}
+              {/* SVG план — горизонтальний скрол на мобілі, вільний на десктопі */}
               <div className="relative">
                 <div
+                  className="lg:overflow-visible"
                   style={{
                     background: "#ebe5dc",
                     overflowX: "auto",
@@ -550,7 +551,7 @@ export default function BookingPage() {
                     WebkitOverflowScrolling: "touch",
                   } as React.CSSProperties}
                 >
-                  <div style={{ minWidth: "600px" }}>
+                  <div className="lg:min-w-0" style={{ minWidth: "600px" }}>
                     <FloorPlan
                       location={location}
                       form={{ date: form.date, time: form.time, tableId: form.tableId }}

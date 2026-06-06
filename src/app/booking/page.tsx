@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { CheckCircle, Users, Calendar, Clock, MessageSquare, UtensilsCrossed, ChevronLeft, ChevronRight } from "lucide-react";
 import { useLang } from "@/context/LangContext";
 
@@ -312,13 +312,16 @@ export default function BookingPage() {
     }, 220);
   };
 
+  useEffect(() => {
+    if (submitted) window.scrollTo({ top: 0, behavior: "instant" });
+  }, [submitted]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     await new Promise((r) => setTimeout(r, 1200));
     setLoading(false);
     setSubmitted(true);
-    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   if (submitted) {

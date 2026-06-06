@@ -29,6 +29,15 @@ export const metadata: Metadata = {
   },
   description: "Піца на дровах, роли, бургери та авторські коктейлі. Доставка по Києву. Три локації: Поділ, Печерськ, Оболонь.",
   metadataBase: new URL("https://brasa-cafe-w12n.vercel.app"),
+  icons: {
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico", sizes: "any" },
+    ],
+    apple: [
+      { url: "/apple-icon.svg", type: "image/svg+xml" },
+    ],
+  },
   openGraph: {
     title: "Brasa — Кафе з доставкою",
     description: "Піца на дровах, роли, бургери та авторські коктейлі. Доставка по Києву.",

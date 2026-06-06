@@ -543,13 +543,8 @@ export default function BookingPage() {
               {/* SVG план — горизонтальний скрол на мобілі, вільний на десктопі */}
               <div className="relative">
                 <div
-                  className="lg:overflow-visible"
-                  style={{
-                    background: "#ebe5dc",
-                    overflowX: "auto",
-                    overflowY: "hidden",
-                    WebkitOverflowScrolling: "touch",
-                  } as React.CSSProperties}
+                  className="overflow-x-auto overflow-y-hidden lg:overflow-x-hidden"
+                  style={{ background: "#ebe5dc", WebkitOverflowScrolling: "touch" } as React.CSSProperties}
                 >
                   <div className="lg:min-w-0" style={{ minWidth: "600px" }}>
                     <FloorPlan

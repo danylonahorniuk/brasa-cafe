@@ -275,9 +275,11 @@ export default function Navbar() {
           background: "rgba(22,14,6,0.97)",
           backdropFilter: "blur(20px)",
           borderTop: "1px solid rgba(255,255,255,0.07)",
-          height: "calc(60px + env(safe-area-inset-bottom))",
-          paddingBottom: "env(safe-area-inset-bottom)",
+          height: "60px",
+          paddingBottom: "0px",
           overflow: "visible",
+          transform: "translateZ(0)",
+          willChange: "transform",
         }}
       >
         {/* 1. Головна */}

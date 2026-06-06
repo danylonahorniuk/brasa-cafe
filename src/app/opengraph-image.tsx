@@ -6,110 +6,54 @@ export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 export default async function Image() {
-  /* ── Завантажуємо Cormorant Garamond через Google Fonts API ── */
-  let fontData: ArrayBuffer | null = null;
+  /* ── Cormorant Garamond via Google Fonts ── */
+  let fonts: ConstructorParameters<typeof ImageResponse>[1]["fonts"] = [];
   try {
-    const cssRes = await fetch(
+    const css = await fetch(
       "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300&display=swap",
-      { headers: { "User-Agent": "Mozilla/5.0 (compatible; NextJS)" } }
-    );
-    const css = await cssRes.text();
-    const match = css.match(/url\((https:\/\/fonts\.gstatic\.com\/[^)]+\.woff2)\)/);
-    if (match) {
-      fontData = await fetch(match[1]).then((r) => r.arrayBuffer());
+      { headers: { "User-Agent": "Mozilla/5.0" } }
+    ).then((r) => r.text());
+    const url = css.match(/src: url\((https:\/\/fonts\.gstatic\.com\/[^)]+\.woff2)\)/)?.[1];
+    if (url) {
+      const data = await fetch(url).then((r) => r.arrayBuffer());
+      fonts = [{ name: "CG", data, style: "normal", weight: 300 }];
     }
-  } catch {
-    // якщо не завантажилось — рендеримо з fallback шрифтом
-  }
+  } catch { /* fallback to Georgia */ }
 
-  const fonts = fontData
-    ? [{ name: "Cormorant", data: fontData, style: "normal" as const, weight: 300 as const }]
-    : [];
+  const ff = fonts.length ? "CG, Georgia, serif" : "Georgia, serif";
 
   return new ImageResponse(
     (
-      <div
-        style={{
-          width: "1200px",
-          height: "630px",
-          display: "flex",
-          position: "relative",
-          fontFamily: fontData ? "Cormorant, serif" : "Georgia, serif",
-        }}
-      >
-        {/* Background image */}
+      <div style={{ width: 1200, height: 630, display: "flex", position: "relative" }}>
+
+        {/* Фонове фото */}
         <img
           src="https://images.unsplash.com/photo-1536622308015-0740925b8221?w=1200&q=80"
-          style={{
-            position: "absolute",
-            inset: 0,
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-          }}
+          style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", objectFit: "cover" }}
         />
 
-        {/* Dark overlay */}
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            background:
-              "linear-gradient(135deg, rgba(10,6,2,0.78) 0%, rgba(10,6,2,0.42) 55%, rgba(10,6,2,0.12) 100%)",
-            display: "flex",
-          }}
-        />
+        {/* Темний градієнт */}
+        <div style={{
+          position: "absolute", top: 0, left: 0, right: 0, bottom: 0,
+          background: "linear-gradient(135deg, rgba(10,6,2,0.80) 0%, rgba(10,6,2,0.45) 55%, rgba(10,6,2,0.12) 100%)",
+          display: "flex",
+        }} />
 
-        {/* Content */}
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            padding: "60px 80px",
-          }}
-        >
-          {/* BRASA wordmark */}
-          <div
-            style={{
-              fontSize: "130px",
-              fontWeight: 300,
-              letterSpacing: "0.2em",
-              color: "#f5f0e8",
-              lineHeight: 1,
-              marginBottom: "28px",
-              fontFamily: fontData ? "Cormorant, serif" : "Georgia, serif",
-            }}
-          >
+        {/* Текст */}
+        <div style={{
+          position: "absolute", top: 0, left: 0, right: 0, bottom: 0,
+          display: "flex", flexDirection: "column", justifyContent: "center",
+          paddingLeft: 80, paddingRight: 80,
+        }}>
+          <div style={{ fontSize: 128, fontWeight: 300, letterSpacing: "0.2em", color: "#f5f0e8", lineHeight: 1, marginBottom: 28, fontFamily: ff }}>
             BRASA
           </div>
-
-          {/* Gold divider */}
-          <div
-            style={{
-              width: "80px",
-              height: "2px",
-              background: "#c49a3c",
-              marginBottom: "32px",
-            }}
-          />
-
-          {/* Subtitle */}
-          <div
-            style={{
-              fontSize: "30px",
-              fontWeight: 300,
-              letterSpacing: "0.06em",
-              color: "rgba(240,235,225,0.75)",
-              lineHeight: 1.4,
-              fontFamily: fontData ? "Cormorant, serif" : "Georgia, serif",
-            }}
-          >
+          <div style={{ width: 80, height: 2, background: "#c49a3c", marginBottom: 32 }} />
+          <div style={{ fontSize: 30, fontWeight: 300, letterSpacing: "0.05em", color: "rgba(240,235,225,0.75)", lineHeight: 1.4, fontFamily: ff }}>
             Піца на дровах · Роли · Бургери · Доставка по Києву
           </div>
         </div>
+
       </div>
     ),
     { ...size, fonts }

@@ -178,7 +178,7 @@ function FloorPlan({
 
   /* ── ПОДІЛ ── */
   if (location.id === 1) return (
-    <svg viewBox="0 0 700 430" width="100%" style={{ display:"block" }}>
+    <svg viewBox="0 0 730 430" width="100%" style={{ display:"block" }}>
       <rect width="700" height="430" fill="#ebe5dc" />
       <rect x="12" y="12" width="528" height="406" fill={FL} />
       <rect x="556" y="58" width="132" height="314" fill="#f5f0e8" />
@@ -206,7 +206,7 @@ function FloorPlan({
 
   /* ── ПЕЧЕРСЬК ── */
   if (location.id === 2) return (
-    <svg viewBox="0 0 700 430" width="100%" style={{ display:"block" }}>
+    <svg viewBox="0 0 730 430" width="100%" style={{ display:"block" }}>
       <rect width="700" height="430" fill="#ebe5dc" />
       <rect x="12" y="12" width="338" height="406" fill={FL} />
       <rect x="360" y="12" width="226" height="276" fill="#f5f0e8" />
@@ -237,7 +237,7 @@ function FloorPlan({
 
   /* ── ОБОЛОНЬ ── */
   return (
-    <svg viewBox="0 0 700 430" width="100%" style={{ display:"block" }}>
+    <svg viewBox="0 0 730 430" width="100%" style={{ display:"block" }}>
       <rect width="700" height="430" fill="#ebe5dc" />
       <rect x="12" y="12" width="504" height="406" fill={FL} />
       <rect x="530" y="55" width="158" height="320" fill="#edf5e4" />

@@ -25,7 +25,7 @@ function IconFacebook() {
 export default function Footer() {
   const { t } = useLang();
   return (
-    <footer style={{ background: "#1a1208", color: "#f0ebe1" }}>
+    <footer className="pt-[60px] lg:pt-0" style={{ background: "#1a1208", color: "#f0ebe1" }}>
       <style>{`
         .footer-link:hover { color: #c49a3c !important; }
         .footer-social:hover { border-color: #c49a3c !important; color: #c49a3c !important; }

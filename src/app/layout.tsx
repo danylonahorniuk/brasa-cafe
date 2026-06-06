@@ -59,7 +59,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <CartProvider>
           <LangProvider>
             <Navbar />
-            <main className="flex-1 pb-[60px] lg:pb-0">{children}</main>
+            <main className="flex-1">{children}</main>
             <Footer />
           </LangProvider>
         </CartProvider>

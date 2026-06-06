@@ -2,7 +2,10 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ShoppingCart, Menu, X } from "lucide-react";
+import {
+  ShoppingCart, Menu, X,
+  Home, UtensilsCrossed, CalendarDays, MoreHorizontal,
+} from "lucide-react";
 import { useState, useEffect } from "react";
 import { useCart } from "@/context/CartContext";
 import { useLang } from "@/context/LangContext";
@@ -12,16 +15,8 @@ export default function Navbar() {
   const pathname = usePathname();
   const { count, toggleCart } = useCart();
   const { t, lang, setLang } = useLang();
-  const [scrolled, setScrolled]     = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
-
-  const links = [
-    { href: "/",        label: t("nav.home")    },
-    { href: "/menu",    label: t("nav.menu")    },
-    { href: "/booking", label: t("nav.booking") },
-    { href: "/about",   label: t("nav.about")   },
-    { href: "/contact", label: t("nav.contact") },
-  ];
+  const [scrolled, setScrolled]   = useState(false);
+  const [moreOpen, setMoreOpen]   = useState(false);
 
   const isHome = pathname === "/";
 
@@ -31,21 +26,42 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Закриваємо мобільне меню при навігації
-  useEffect(() => {
-    setMobileOpen(false);
-  }, [pathname]);
+  // Close "Ще" panel on route change
+  useEffect(() => { setMoreOpen(false); }, [pathname]);
 
-  // Блокуємо скрол body коли меню відкрите
+  // Lock body scroll when panel open
   useEffect(() => {
-    document.body.style.overflow = mobileOpen ? "hidden" : "";
+    document.body.style.overflow = moreOpen ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
-  }, [mobileOpen]);
+  }, [moreOpen]);
 
   const showWhite = scrolled || !isHome;
 
+  /* ── Desktop nav links ── */
+  const desktopLinks = [
+    { href: "/",        label: t("nav.home")    },
+    { href: "/menu",    label: t("nav.menu")    },
+    { href: "/booking", label: t("nav.booking") },
+    { href: "/about",   label: t("nav.about")   },
+    { href: "/contact", label: t("nav.contact") },
+  ];
+
+  /* ── "Ще" sidebar links (About + Contact) ── */
+  const moreLinks = [
+    { href: "/about",   label: t("nav.about")   },
+    { href: "/contact", label: t("nav.contact") },
+  ];
+
+  /* ── Bottom nav items ── */
+  const bottomNav = [
+    { href: "/",        label: t("nav.home"),    Icon: Home,            center: false },
+    { href: "/menu",    label: t("nav.menu"),    Icon: UtensilsCrossed, center: true  },
+    { href: "/booking", label: t("nav.booking"), Icon: CalendarDays,    center: false },
+  ];
+
   return (
     <>
+      {/* ═══════════════════ TOP HEADER ═══════════════════ */}
       <header
         className="fixed top-0 left-0 right-0 z-50 transition-all duration-400"
         style={{
@@ -78,9 +94,9 @@ export default function Navbar() {
             </span>
           </Link>
 
-          {/* Desktop nav */}
+          {/* Desktop nav links */}
           <ul className="hidden lg:flex items-center gap-8">
-            {links.map((l) => {
+            {desktopLinks.map((l) => {
               const active = pathname === l.href;
               return (
                 <li key={l.href}>
@@ -107,9 +123,9 @@ export default function Navbar() {
             })}
           </ul>
 
-          {/* Cart + lang switcher + burger */}
+          {/* Right side: lang + cart (desktop) | cart hidden on mobile → in bottom nav */}
           <div className="flex items-center gap-3">
-            {/* Lang switcher — desktop */}
+            {/* Lang switcher — desktop only */}
             <div className="hidden lg:flex items-center" style={{ marginRight: "4px" }}>
               <button
                 onClick={() => setLang(lang === "uk" ? "en" : "uk")}
@@ -120,9 +136,10 @@ export default function Navbar() {
               </button>
             </div>
 
+            {/* Cart — desktop only (mobile has it in bottom nav) */}
             <button
               onClick={toggleCart}
-              className="relative p-2 transition-colors"
+              className="relative p-2 transition-colors hidden lg:block"
               style={{ color: showWhite ? "rgba(255,255,255,0.65)" : "rgba(255,255,255,0.75)" }}
               aria-label={t("cart.title")}
             >
@@ -133,99 +150,217 @@ export default function Navbar() {
                 </span>
               )}
             </button>
-
-            <button
-              className="lg:hidden p-1.5 transition-colors"
-              style={{ color: "rgba(255,255,255,0.8)" }}
-              onClick={() => setMobileOpen((v) => !v)}
-              aria-label={mobileOpen ? t("nav.closeMenu") : t("nav.openMenu")}
-            >
-              {mobileOpen ? <X size={22} /> : <Menu size={22} />}
-            </button>
           </div>
         </nav>
       </header>
 
-      {/* Mobile full-screen overlay */}
+      {/* ═══════════════════ "Ще" SIDEBAR OVERLAY ═══════════════════ */}
       <div
-        className="fixed inset-0 z-40 lg:hidden flex flex-col transition-all duration-500"
+        className="fixed inset-0 z-40 lg:hidden transition-opacity duration-300"
         style={{
+          background: "rgba(0,0,0,0.5)",
+          opacity: moreOpen ? 1 : 0,
+          pointerEvents: moreOpen ? "auto" : "none",
+        }}
+        onClick={() => setMoreOpen(false)}
+      />
+
+      <aside
+        className="fixed top-0 right-0 bottom-0 z-50 lg:hidden flex flex-col transition-transform duration-400"
+        style={{
+          width: "min(300px, 85vw)",
           background: "#1a1208",
-          opacity: mobileOpen ? 1 : 0,
-          pointerEvents: mobileOpen ? "auto" : "none",
-          transform: mobileOpen ? "translateY(0)" : "translateY(-12px)",
+          borderLeft: "1px solid rgba(255,255,255,0.07)",
+          transform: moreOpen ? "translateX(0)" : "translateX(100%)",
+          paddingBottom: "calc(64px + env(safe-area-inset-bottom))",
         }}
       >
-        {/* Декоративна лінія зверху */}
-        <div className="h-px w-full" style={{ background: "rgba(196,154,60,0.25)", marginTop: "4rem" }} />
+        {/* Header сайдбару */}
+        <div className="flex items-center justify-between px-6 py-5" style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+          <span
+            className="text-[0.6rem] tracking-[0.25em] uppercase"
+            style={{ color: "rgba(255,255,255,0.3)" }}
+          >
+            {t("nav.more")}
+          </span>
+          <button
+            onClick={() => setMoreOpen(false)}
+            className="p-1.5"
+            style={{ color: "rgba(255,255,255,0.4)" }}
+          >
+            <X size={18} />
+          </button>
+        </div>
 
-        <nav className="flex flex-col justify-center flex-1 px-8">
-          <ul className="flex flex-col gap-1">
-            {links.map((l, i) => {
-              const active = pathname === l.href;
-              return (
-                <li
-                  key={l.href}
+        {/* Навігаційні посилання (Про нас, Контакти) */}
+        <nav className="flex flex-col px-6 pt-6 gap-1">
+          {moreLinks.map((l, i) => {
+            const active = pathname === l.href;
+            return (
+              <Link
+                key={l.href}
+                href={l.href}
+                className="flex items-center py-3.5"
+                style={{
+                  borderBottom: "1px solid rgba(255,255,255,0.05)",
+                  transform: moreOpen ? "translateX(0)" : "translateX(12px)",
+                  opacity: moreOpen ? 1 : 0,
+                  transition: `transform 0.35s ease ${moreOpen ? i * 60 : 0}ms, opacity 0.35s ease ${moreOpen ? i * 60 : 0}ms`,
+                }}
+              >
+                <span
                   style={{
-                    transform: mobileOpen ? "translateX(0)" : "translateX(-16px)",
-                    opacity: mobileOpen ? 1 : 0,
-                    transition: `transform 0.4s ease ${mobileOpen ? i * 60 : 0}ms, opacity 0.4s ease ${mobileOpen ? i * 60 : 0}ms`,
+                    fontFamily: "var(--font-cormorant), serif",
+                    fontSize: "1.6rem",
+                    fontWeight: 300,
+                    color: active ? "#c49a3c" : "#e8ddd4",
+                    letterSpacing: "0.03em",
                   }}
                 >
-                  <Link
-                    href={l.href}
-                    className="group flex items-center py-4"
-                  >
-                    <span
-                      style={{
-                        fontFamily: "var(--font-cormorant), serif",
-                        fontSize: "clamp(2rem, 10vw, 2.8rem)",
-                        fontWeight: 300,
-                        letterSpacing: "0.04em",
-                        color: active ? "#c49a3c" : "#e8ddd4",
-                        transition: "color 0.3s",
-                      }}
-                    >
-                      {l.label}
-                    </span>
-                  </Link>
-                  <div
-                    className="h-px transition-all duration-300"
-                    style={{ background: active ? "rgba(196,154,60,0.3)" : "rgba(255,255,255,0.06)" }}
-                  />
-                </li>
-              );
-            })}
-          </ul>
+                  {l.label}
+                </span>
+              </Link>
+            );
+          })}
+        </nav>
 
-          {/* Контакти внизу */}
-          <div className="mt-8 pt-6">
-            <p className="text-[0.65rem] tracking-[0.2em] uppercase mb-1" style={{ color: "rgba(255,255,255,0.3)" }}>
+        {/* Нижня частина — телефон + мова */}
+        <div className="mt-auto px-6 pb-6 flex flex-col gap-5">
+          <div>
+            <p className="text-[0.58rem] tracking-[0.22em] uppercase mb-1.5" style={{ color: "rgba(255,255,255,0.28)" }}>
               {t("nav.orders")}
             </p>
             <a
               href="tel:+380991234567"
-              className="text-lg"
-              style={{ fontFamily: "var(--font-cormorant), serif", color: "#c49a3c", letterSpacing: "0.05em" }}
+              style={{ fontFamily: "var(--font-cormorant), serif", fontSize: "1.1rem", color: "#c49a3c", letterSpacing: "0.05em" }}
             >
               +38 (099) 123-45-67
             </a>
           </div>
 
-          {/* Lang switcher — mobile */}
-          <div className="mt-6">
-            <button
-              onClick={() => setLang(lang === "uk" ? "en" : "uk")}
-              className="flex items-center gap-2"
-              style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.7rem", letterSpacing: "0.2em", textTransform: "uppercase" }}
-            >
-              <span style={{ color: lang === "uk" ? "#c49a3c" : "rgba(255,255,255,0.4)" }}>UA</span>
-              <span style={{ color: "rgba(255,255,255,0.2)" }}>/</span>
-              <span style={{ color: lang === "en" ? "#c49a3c" : "rgba(255,255,255,0.4)" }}>EN</span>
-            </button>
+          {/* Перемикач мови */}
+          <div>
+            <p className="text-[0.58rem] tracking-[0.22em] uppercase mb-2" style={{ color: "rgba(255,255,255,0.28)" }}>
+              {t("nav.language")}
+            </p>
+            <div className="flex gap-1 p-0.5 rounded-sm w-fit" style={{ background: "rgba(255,255,255,0.06)" }}>
+              {(["uk", "en"] as const).map((l) => (
+                <button
+                  key={l}
+                  onClick={() => setLang(l)}
+                  className="px-4 py-1.5 rounded-sm text-[0.6rem] tracking-[0.18em] uppercase transition-all duration-200"
+                  style={{
+                    background: lang === l ? "rgba(196,154,60,0.15)" : "transparent",
+                    color: lang === l ? "#c49a3c" : "rgba(255,255,255,0.35)",
+                    border: lang === l ? "1px solid rgba(196,154,60,0.3)" : "1px solid transparent",
+                  }}
+                >
+                  {l === "uk" ? "UA" : "EN"}
+                </button>
+              ))}
+            </div>
           </div>
-        </nav>
-      </div>
+        </div>
+      </aside>
+
+      {/* ═══════════════════ MOBILE BOTTOM NAV ═══════════════════ */}
+      <nav
+        className="fixed bottom-0 left-0 right-0 z-40 lg:hidden flex items-stretch"
+        style={{
+          background: "rgba(22,14,6,0.97)",
+          backdropFilter: "blur(20px)",
+          borderTop: "1px solid rgba(255,255,255,0.07)",
+          height: "calc(60px + env(safe-area-inset-bottom))",
+          paddingBottom: "env(safe-area-inset-bottom)",
+        }}
+      >
+        {/* Головна */}
+        {bottomNav.slice(0, 1).map(({ href, label, Icon, center }) => {
+          const active = pathname === href;
+          return (
+            <Link
+              key={href}
+              href={href}
+              className="flex-1 flex flex-col items-center justify-center gap-1 transition-colors duration-200"
+              style={{ color: active ? "#c49a3c" : "rgba(255,255,255,0.42)" }}
+            >
+              <Icon size={center ? 22 : 19} strokeWidth={active ? 1.8 : 1.5} />
+              <span className="text-[0.52rem] tracking-wider uppercase">{label}</span>
+            </Link>
+          );
+        })}
+
+        {/* Меню (центр) */}
+        {(() => {
+          const { href, label, Icon } = bottomNav[1];
+          const active = pathname === href;
+          return (
+            <Link
+              href={href}
+              className="flex-1 flex flex-col items-center justify-center gap-1 transition-colors duration-200 relative"
+              style={{ color: active ? "#c49a3c" : "rgba(255,255,255,0.62)" }}
+            >
+              {/* Subtle top accent line when active */}
+              {active && (
+                <span
+                  className="absolute top-0 left-1/2 -translate-x-1/2 rounded-b-full"
+                  style={{ width: "28px", height: "2px", background: "#c49a3c" }}
+                />
+              )}
+              <Icon size={22} strokeWidth={active ? 1.8 : 1.6} />
+              <span className="text-[0.52rem] tracking-wider uppercase font-medium">{label}</span>
+            </Link>
+          );
+        })()}
+
+        {/* Бронювання */}
+        {bottomNav.slice(2).map(({ href, label, Icon }) => {
+          const active = pathname === href;
+          return (
+            <Link
+              key={href}
+              href={href}
+              className="flex-1 flex flex-col items-center justify-center gap-1 transition-colors duration-200"
+              style={{ color: active ? "#c49a3c" : "rgba(255,255,255,0.42)" }}
+            >
+              <Icon size={19} strokeWidth={active ? 1.8 : 1.5} />
+              <span className="text-[0.52rem] tracking-wider uppercase">{label}</span>
+            </Link>
+          );
+        })}
+
+        {/* Кошик */}
+        <button
+          onClick={toggleCart}
+          className="flex-1 flex flex-col items-center justify-center gap-1 transition-colors duration-200 relative"
+          style={{ color: count > 0 ? "rgba(255,255,255,0.75)" : "rgba(255,255,255,0.42)" }}
+          aria-label={t("cart.title")}
+        >
+          <span className="relative">
+            <ShoppingCart size={19} strokeWidth={1.5} />
+            {count > 0 && (
+              <span
+                className="absolute -top-1.5 -right-1.5 w-4 h-4 rounded-full text-white flex items-center justify-center"
+                style={{ background: "#8b1a2e", fontSize: "0.48rem", fontWeight: 700 }}
+              >
+                {count}
+              </span>
+            )}
+          </span>
+          <span className="text-[0.52rem] tracking-wider uppercase">{t("nav.cart")}</span>
+        </button>
+
+        {/* Ще */}
+        <button
+          onClick={() => setMoreOpen((v) => !v)}
+          className="flex-1 flex flex-col items-center justify-center gap-1 transition-colors duration-200"
+          style={{ color: moreOpen ? "#c49a3c" : "rgba(255,255,255,0.42)" }}
+          aria-label={t("nav.more")}
+        >
+          {moreOpen ? <X size={19} strokeWidth={1.5} /> : <MoreHorizontal size={19} strokeWidth={1.5} />}
+          <span className="text-[0.52rem] tracking-wider uppercase">{t("nav.more")}</span>
+        </button>
+      </nav>
 
       <CartDrawer />
     </>

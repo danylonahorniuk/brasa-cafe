@@ -9,6 +9,9 @@ export const en = {
     orders: "Orders",
     openMenu: "Open menu",
     closeMenu: "Close menu",
+    cart: "Cart",
+    more: "More",
+    language: "Language",
   },
   footer: {
     tagline: "A place where taste meets atmosphere. Pizza, rolls, burgers and signature cocktails.",

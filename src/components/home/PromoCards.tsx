@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 import Link from "next/link";
 import { X, ArrowRight } from "lucide-react";
@@ -28,7 +29,7 @@ function PromoModal({ promo, onClose }: { promo: Promo; onClose: () => void }) {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
-  return (
+  const modal = (
     <div
       className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-10"
       style={{
@@ -119,6 +120,8 @@ function PromoModal({ promo, onClose }: { promo: Promo; onClose: () => void }) {
       </div>
     </div>
   );
+
+  return createPortal(modal, document.body);
 }
 
 /* ─── Секція акцій ─── */
